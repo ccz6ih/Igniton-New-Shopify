@@ -25,17 +25,20 @@
       </h2>
     {%- endif -%}
     
-    <div class="ig-products-showcase__grid">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          
-          {%- when 'product_card' -%}
-            <a 
-              href="{{ block.settings.link }}" 
-              class="ig-products-showcase__card{% if block.settings.featured %} ig-products-showcase__card--featured{% endif %}"
-              {{ block.shopify_attributes }}
-              {% if block.settings.featured %}style="grid-column: 1 / -1; background: {{ block.settings.featured_bg }};"{% endif %}
-            >
+    <div class="ig-products-showcase__layout">
+      <div class="ig-products-showcase__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            
+            {%- when 'product_card' -%}
+              <a 
+                href="{{ block.settings.link }}" 
+                class="ig-products-showcase__card{% if block.settings.featured %} ig-products-showcase__card--featured{% endif %}{% if forloop.first %} is-active{% endif %}"
+                {{ block.shopify_attributes }}
+                data-product-image="{% if block.settings.product_image %}{{ block.settings.product_image | image_url: width: 1200 }}{% endif %}"
+                data-product-id="{{ block.id }}"
+                {% if block.settings.featured %}style="grid-column: 1 / -1; background: {{ block.settings.featured_bg }};"{% endif %}
+              >
               {%- if block.settings.tag != blank -%}
                 <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
               {%- endif -%}
@@ -83,9 +86,50 @@
           
         {%- endcase -%}
       {%- endfor -%}
+      </div>
+      
+      <div class="ig-products-showcase__image-display">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product_card' and block.settings.product_image != blank -%}
+            <div 
+              class="ig-products-showcase__image{% if forloop.first %} is-active{% endif %}"
+              data-product-id="{{ block.id }}"
+            >
+              {{ block.settings.product_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'ig-products-showcase__img' }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+(function() {
+  const showcaseSection = document.querySelector('#IgProductsShowcase-{{ section.id }}');
+  if (!showcaseSection) return;
+  
+  const cards = showcaseSection.querySelectorAll('.ig-products-showcase__card:not(.ig-products-showcase__card--featured)');
+  const images = showcaseSection.querySelectorAll('.ig-products-showcase__image');
+  
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const productId = card.dataset.productId;
+      
+      // Remove active class from all cards and images
+      cards.forEach(c => c.classList.remove('is-active'));
+      images.forEach(img => img.classList.remove('is-active'));
+      
+      // Add active class to current card and matching image
+      card.classList.add('is-active');
+      const matchingImage = showcaseSection.querySelector(`.ig-products-showcase__image[data-product-id="${productId}"]`);
+      if (matchingImage) {
+        matchingImage.classList.add('is-active');
+      }
+    });
+  });
+})();
+</script>
 
 {% schema %}
 {
@@ -141,6 +185,12 @@
       "type": "product_card",
       "name": "Product Card",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image",
+          "info": "Image shown on right when card is hovered"
+        },
         {
           "type": "text",
           "id": "tag",
