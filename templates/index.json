@@ -87,7 +87,9 @@
         "color_scheme": "",
         "min_height": 600,
         "show_orb": true,
-        "orb_opacity": 30
+        "orb_opacity": 0,
+        "heading_size": 5,
+        "text_size": 110
       }
     },
     "ig_trust_bar_qywBVA": {
@@ -144,6 +146,8 @@
           "type": "product_card",
           "settings": {
             "product": "igni-cognition",
+            "show_image": true,
+            "image_size": 180,
             "tag": "Cognition",
             "custom_name": "IgniCognition™",
             "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
@@ -160,6 +164,8 @@
           "type": "product_card",
           "settings": {
             "product": "igni-longevity",
+            "show_image": true,
+            "image_size": 180,
             "tag": "Longevity",
             "custom_name": "IgniLongevity™",
             "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
@@ -176,6 +182,8 @@
           "type": "product_card",
           "settings": {
             "product": "igni-cognition-longevity-pack",
+            "show_image": true,
+            "image_size": 180,
             "tag": "Best Value",
             "custom_name": "The Complete Stack — Cognition + Longevity",
             "custom_description": "Both formulas together for comprehensive brain and body support.",
@@ -199,6 +207,9 @@
         "color_scheme": "",
         "section_label": "Two products. One breakthrough.",
         "section_title": "Every ingredient enhanced for maximum effect.",
+        "heading_size": 3,
+        "product_heading_size": 2,
+        "text_size": 110,
         "padding_top": 100,
         "padding_bottom": 100
       }
@@ -251,6 +262,8 @@
         "background_color": "#f8f5ef",
         "section_label": "How it works",
         "section_title": "Good ingredients aren't enough. They have to work.",
+        "heading_size": 3,
+        "text_size": 110,
         "footer_link_text": "Read the full clinical studies →",
         "footer_link_url": "",
         "padding_top": 100,
@@ -265,7 +278,8 @@
         "background_color": "#b49153",
         "text_color": "#fdfaf5",
         "icon": "🛡",
-        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>",
+        "text_size": 115
       }
     }
   },
