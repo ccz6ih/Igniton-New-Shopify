@@ -12,6 +12,7 @@
   position: relative;
   overflow: hidden;
   background: var(--ig-warm-white);
+  isolation: isolate;
 }
 
 /* ─── Background Image ─── */
@@ -37,7 +38,11 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  /* Alignment controlled via inline styles */
+  width: 100%;
+  height: 100%;
+  /* Default alignment - overridden by position classes */
+  align-items: flex-start;
+  justify-content: center;
 }
 
 /* ─── Eyebrow Text ─── */
@@ -194,6 +199,131 @@
   z-index: 1;
   filter: blur(0.5px);
   will-change: transform, opacity;
+  mix-blend-mode: normal;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Desktop Content Positioning (9-Position Grid)
+   ═══════════════════════════════════════════════════════════ */
+
+@media screen and (min-width: 750px) {
+  .ig-hero__content.ig-hero__content--top-left {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .ig-hero__content.ig-hero__content--top-center {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .ig-hero__content.ig-hero__content--top-right {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .ig-hero__content.ig-hero__content--middle-left {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .ig-hero__content.ig-hero__content--middle-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ig-hero__content.ig-hero__content--middle-right {
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .ig-hero__content.ig-hero__content--bottom-left {
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .ig-hero__content.ig-hero__content--bottom-center {
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .ig-hero__content.ig-hero__content--bottom-right {
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Text Alignment Within Positioned Content
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-hero--content-align-left .ig-hero__eyebrow,
+.ig-hero--content-align-left .ig-hero__headline,
+.ig-hero--content-align-left .ig-hero__sub {
+  text-align: left;
+}
+
+.ig-hero--content-align-center .ig-hero__eyebrow,
+.ig-hero--content-align-center .ig-hero__headline,
+.ig-hero--content-align-center .ig-hero__sub {
+  text-align: center;
+}
+
+.ig-hero--content-align-right .ig-hero__eyebrow,
+.ig-hero--content-align-right .ig-hero__headline,
+.ig-hero--content-align-right .ig-hero__sub {
+  text-align: right;
+}
+
+.ig-hero--content-align-left .ig-hero__actions,
+.ig-hero--content-align-left .ig-hero__proof {
+  justify-content: flex-start;
+}
+
+.ig-hero--content-align-center .ig-hero__actions,
+.ig-hero--content-align-center .ig-hero__proof {
+  justify-content: center;
+}
+
+.ig-hero--content-align-right .ig-hero__actions,
+.ig-hero--content-align-right .ig-hero__proof {
+  justify-content: flex-end;
+}
+
+/* Mobile alignment */
+@media screen and (max-width: 749px) {
+  .ig-hero--content-align-mobile-left .ig-hero__eyebrow,
+  .ig-hero--content-align-mobile-left .ig-hero__headline,
+  .ig-hero--content-align-mobile-left .ig-hero__sub {
+    text-align: left;
+  }
+
+  .ig-hero--content-align-mobile-center .ig-hero__eyebrow,
+  .ig-hero--content-align-mobile-center .ig-hero__headline,
+  .ig-hero--content-align-mobile-center .ig-hero__sub {
+    text-align: center;
+  }
+
+  .ig-hero--content-align-mobile-right .ig-hero__eyebrow,
+  .ig-hero--content-align-mobile-right .ig-hero__headline,
+  .ig-hero--content-align-mobile-right .ig-hero__sub {
+    text-align: right;
+  }
+  
+  .ig-hero--content-align-mobile-left .ig-hero__actions,
+  .ig-hero--content-align-mobile-left .ig-hero__proof {
+    justify-content: flex-start;
+  }
+
+  .ig-hero--content-align-mobile-center .ig-hero__actions,
+  .ig-hero--content-align-mobile-center .ig-hero__proof {
+    justify-content: center;
+  }
+
+  .ig-hero--content-align-mobile-right .ig-hero__actions,
+  .ig-hero--content-align-mobile-right .ig-hero__proof {
+    justify-content: flex-end;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════

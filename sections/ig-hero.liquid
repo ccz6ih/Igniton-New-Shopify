@@ -19,26 +19,6 @@
     {% endif %}
   }
   
-  #IgHero-{{ section.id }} .ig-hero__content {
-    align-items: {% if section.settings.text_alignment == 'center' %}center{% elsif section.settings.text_alignment == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
-  }
-  
-  #IgHero-{{ section.id }} .ig-hero__eyebrow,
-  #IgHero-{{ section.id }} .ig-hero__headline,
-  #IgHero-{{ section.id }} .ig-hero__sub {
-    text-align: {{ section.settings.text_alignment }};
-  }
-  
-  #IgHero-{{ section.id }} .ig-hero__actions {
-    {% if section.settings.text_alignment == 'center' %}
-      justify-content: center;
-    {% elsif section.settings.text_alignment == 'right' %}
-      justify-content: flex-end;
-    {% else %}
-      justify-content: flex-start;
-    {% endif %}
-  }
-  
   #IgHero-{{ section.id }} .ig-hero__headline {
     font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
   }
@@ -54,7 +34,7 @@
 
 <section 
   id="IgHero-{{ section.id }}" 
-  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} ig-hero--content-align-{{ section.settings.desktop_content_alignment }} ig-hero--content-align-mobile-{{ section.settings.mobile_content_alignment }} color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
   {%- if section.settings.background_image != blank -%}
     <div class="ig-hero__bg-image">
@@ -63,10 +43,10 @@
   {%- endif -%}
   
   {%- if section.settings.show_orb -%}
-    <div class="ig-hero__orb"></div>
+    <div class="ig-hero__orb" aria-hidden="true"></div>
   {%- endif -%}
   
-  <div class="ig-hero__content page-width">
+  <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }} page-width">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         
@@ -238,8 +218,52 @@
     },
     {
       "type": "select",
-      "id": "text_alignment",
-      "label": "Text alignment",
+      "id": "desktop_content_position",
+      "label": "Desktop content position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "middle-left"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "label": "Desktop content alignment",
       "options": [
         {
           "value": "left",
@@ -254,7 +278,28 @@
           "label": "Right"
         }
       ],
-      "default": "left"
+      "default": "left",
+      "info": "Text alignment within the positioned content area"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "label": "Mobile content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
     },
     {
       "type": "select",
