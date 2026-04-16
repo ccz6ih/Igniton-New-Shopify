@@ -88,7 +88,7 @@
         "min_height": 700,
         "show_orb": true,
         "orb_position": "center",
-        "orb_opacity": 0,
+        "orb_opacity": 50,
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
