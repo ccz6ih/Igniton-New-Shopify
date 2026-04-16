@@ -49,6 +49,23 @@
                 {% if custom_bg != blank %}style="background-color: {{ custom_bg }};"{% endif %}
                 {{ block.shopify_attributes }}
               >
+                {%- if block.settings.show_image and product != blank and product.featured_image != blank -%}
+                  <div class="ig-product-card__image-wrapper">
+                    <img
+                      src="{{ product.featured_image | image_url: width: 600 }}"
+                      srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                              {{ product.featured_image | image_url: width: 600 }} 600w,
+                              {{ product.featured_image | image_url: width: 900 }} 900w"
+                      sizes="(min-width: 990px) {{ block.settings.image_size }}px, (min-width: 750px) 50vw, 100vw"
+                      alt="{{ product.featured_image.alt | default: product.title }}"
+                      class="ig-product-card__image"
+                      loading="lazy"
+                      width="{{ block.settings.image_size }}"
+                      height="{{ block.settings.image_size }}"
+                    >
+                  </div>
+                {%- endif -%}
+
                 {%- if block.settings.tag != blank -%}
                   <p class="ig-product-card__tag">{{ block.settings.tag }}</p>
                 {%- endif -%}
@@ -187,6 +204,30 @@
           "type": "product",
           "id": "product",
           "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "Product image"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_image",
+          "default": true,
+          "label": "Show product image"
+        },
+        {
+          "type": "range",
+          "id": "image_size",
+          "min": 80,
+          "max": 300,
+          "step": 10,
+          "default": 180,
+          "unit": "px",
+          "label": "Image size"
+        },
+        {
+          "type": "header",
+          "content": "Content"
         },
         {
           "type": "text",
