@@ -39,17 +39,19 @@
   height: min(850px, 60vw);
   border-radius: 50%;
   background: radial-gradient(
-    circle at 35% 35%,
-    rgb(180, 145, 83) 0%,
-    rgb(201, 169, 110) 15%,
-    rgb(180, 145, 83) 35%,
-    rgb(201, 169, 110) 55%,
-    rgba(180, 145, 83, 0.6) 75%,
-    rgba(180, 145, 83, 0.2) 88%,
+    circle at 40% 40%,
+    #D4AF37 0%,
+    #C9A96E 20%,
+    #B49153 40%,
+    rgba(180, 145, 83, 0.7) 60%,
+    rgba(180, 145, 83, 0.4) 75%,
+    rgba(180, 145, 83, 0.15) 88%,
     transparent 100%
   );
   pointer-events: none;
   z-index: 1;
+  /* DEBUG: Temporary border to see if orb is rendering */
+  box-shadow: 0 0 0 3px red;
   /* Opacity controlled via inline styles from section settings */
 }
 

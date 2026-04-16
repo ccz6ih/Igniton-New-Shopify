@@ -89,12 +89,12 @@
         "show_orb": true,
         "orb_position": "center",
         "orb_opacity": 85,
-        "desktop_content_position": "middle-left",
+        "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
-        "mobile_content_alignment": "center",
+        "mobile_content_alignment": "left",
         "text_animation": "fade-in",
-        "heading_size": 5.5,
-        "text_size": 125
+        "heading_size": 6,
+        "text_size": 130
       }
     },
     "ig_trust_bar_qywBVA": {
