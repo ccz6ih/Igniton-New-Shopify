@@ -86,10 +86,9 @@
       "settings": {
         "color_scheme": "",
         "min_height": 700,
-        "background_image": "shopify://shop_images/rendermiddle.jpg",
         "show_orb": true,
-        "orb_position": "left",
-        "orb_opacity": 0,
+        "orb_position": "center",
+        "orb_opacity": 100,
         "desktop_content_position": "middle-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "center",
