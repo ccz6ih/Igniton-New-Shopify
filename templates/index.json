@@ -52,7 +52,8 @@
       ],
       "name": "Igniton Trust Bar",
       "settings": {
-        "color_scheme": ""
+        "color_scheme": "",
+        "font_size": 125
       }
     },
     "ig_products_grid_zjycby": {
