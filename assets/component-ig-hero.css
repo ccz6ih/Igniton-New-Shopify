@@ -37,7 +37,7 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  /* Alignment controlled via inline styles */
 }
 
 /* ─── Eyebrow Text ─── */
@@ -173,6 +173,7 @@
 /* ─── Decorative Orb ─── */
 .ig-hero__orb {
   position: absolute;
+  /* Position controlled via inline styles */
   right: -5vw;
   top: 50%;
   transform: translateY(-50%);
@@ -181,16 +182,18 @@
   border-radius: 50%;
   background: radial-gradient(
     circle at 40% 40%,
-    rgba(180, 145, 83, 0.55) 0%,
-    rgba(180, 145, 83, 0.38) 25%,
-    rgba(201, 169, 110, 0.25) 45%,
-    rgba(180, 145, 83, 0.12) 65%,
-    rgba(180, 145, 83, 0.05) 82%,
+    rgba(180, 145, 83, 0.65) 0%,
+    rgba(201, 169, 110, 0.48) 20%,
+    rgba(180, 145, 83, 0.35) 40%,
+    rgba(201, 169, 110, 0.22) 60%,
+    rgba(180, 145, 83, 0.10) 78%,
+    rgba(180, 145, 83, 0.03) 90%,
     transparent 100%
   );
   pointer-events: none;
   z-index: 1;
-  filter: blur(1px);
+  filter: blur(0.5px);
+  will-change: transform, opacity;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -389,6 +392,37 @@
 .ig-hero--anim-none .ig-hero__proof {
   opacity: 1;
   animation: none;
+}
+
+/* ─── Default Fade Up (when class not set or for backwards compatibility) ─── */
+.ig-hero:not([class*="--anim-"]) .ig-hero__eyebrow,
+.ig-hero--anim- .ig-hero__eyebrow {
+  opacity: 0;
+  animation: ig-fadeUp 0.8s ease 0.2s forwards;
+}
+
+.ig-hero:not([class*="--anim-"]) .ig-hero__headline,
+.ig-hero--anim- .ig-hero__headline {
+  opacity: 0;
+  animation: ig-fadeUp 0.9s ease 0.35s forwards;
+}
+
+.ig-hero:not([class*="--anim-"]) .ig-hero__sub,
+.ig-hero--anim- .ig-hero__sub {
+  opacity: 0;
+  animation: ig-fadeUp 0.9s ease 0.5s forwards;
+}
+
+.ig-hero:not([class*="--anim-"]) .ig-hero__actions,
+.ig-hero--anim- .ig-hero__actions {
+  opacity: 0;
+  animation: ig-fadeUp 0.9s ease 0.65s forwards;
+}
+
+.ig-hero:not([class*="--anim-"]) .ig-hero__proof,
+.ig-hero--anim- .ig-hero__proof {
+  opacity: 0;
+  animation: ig-fadeUp 0.9s ease 0.8s forwards;
 }
 
 /* ─── Respect Reduced Motion Preference ─── */

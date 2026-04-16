@@ -6,15 +6,37 @@
   }
   
   #IgHero-{{ section.id }} .ig-hero__orb {
-    opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
-    {% if section.settings.orb_position == 'left' %}right: auto; left: -8vw;{% endif %}
-    {% if section.settings.orb_position == 'center' %}right: 50%; transform: translate(50%, -50%);{% endif %}
+    opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }} !important;
+    {% if section.settings.orb_position == 'left' %}
+      right: auto !important;
+      left: -5vw !important;
+    {% elsif section.settings.orb_position == 'center' %}
+      right: auto !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    {% else %}
+      right: -5vw !important;
+    {% endif %}
   }
   
   #IgHero-{{ section.id }} .ig-hero__content {
+    align-items: {% if section.settings.text_alignment == 'center' %}center{% elsif section.settings.text_alignment == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
+  }
+  
+  #IgHero-{{ section.id }} .ig-hero__eyebrow,
+  #IgHero-{{ section.id }} .ig-hero__headline,
+  #IgHero-{{ section.id }} .ig-hero__sub {
     text-align: {{ section.settings.text_alignment }};
-    {% if section.settings.text_alignment == 'center' %}align-items: center;{% endif %}
-    {% if section.settings.text_alignment == 'right' %}align-items: flex-end;{% endif %}
+  }
+  
+  #IgHero-{{ section.id }} .ig-hero__actions {
+    {% if section.settings.text_alignment == 'center' %}
+      justify-content: center;
+    {% elsif section.settings.text_alignment == 'right' %}
+      justify-content: flex-end;
+    {% else %}
+      justify-content: flex-start;
+    {% endif %}
   }
   
   #IgHero-{{ section.id }} .ig-hero__headline {
@@ -177,7 +199,8 @@
       "type": "checkbox",
       "id": "show_orb",
       "default": true,
-      "label": "Show decorative orb"
+      "label": "Show decorative orb",
+      "info": "Golden gradient orb background element"
     },
     {
       "type": "select",
