@@ -51,7 +51,7 @@
 }
 
 .ig-products-showcase__card--featured .ig-products-showcase__name {
-  font-size: 1.5rem;
+  font-size: calc(var(--font-heading-scale) * 2rem);
   max-width: 100%;
 }
 
@@ -61,7 +61,7 @@
 
 /* ─── Tag ─── */
 .ig-products-showcase__tag {
-  font-size: 0.7rem;
+  font-size: calc(var(--font-body-scale) * 0.85rem);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -71,7 +71,7 @@
 
 /* ─── Product Name ─── */
 .ig-products-showcase__name {
-  font-size: 1.4rem;
+  font-size: calc(var(--font-heading-scale) * 1.8rem);
   font-weight: 400;
   letter-spacing: -0.01em;
   color: var(--ig-ink);
@@ -81,7 +81,7 @@
 
 /* ─── Description ─── */
 .ig-products-showcase__desc {
-  font-size: 0.95rem;
+  font-size: calc(var(--font-body-scale) * 1.1rem);
   color: var(--ig-muted);
   line-height: 1.7;
   margin-bottom: 1.8rem;
@@ -107,14 +107,14 @@
 }
 
 .ig-products-showcase__stat-num {
-  font-size: 1.1rem;
+  font-size: calc(var(--font-heading-scale) * 1.3rem);
   font-weight: 400;
   color: var(--ig-ink);
   line-height: 1;
 }
 
 .ig-products-showcase__stat-label {
-  font-size: 0.72rem;
+  font-size: calc(var(--font-body-scale) * 0.85rem);
   color: var(--ig-muted);
   letter-spacing: 0.02em;
   line-height: 1.4;
@@ -130,9 +130,9 @@
 
 /* ─── Price ─── */
 .ig-products-showcase__price {
-  font-size: 0.88rem;
+  font-size: calc(var(--font-body-scale) * 1rem);
   color: var(--ig-muted);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .ig-products-showcase__price strong {
@@ -140,17 +140,22 @@
   font-weight: 500;
 }
 
-/* ─── Link ─── */
+/* ─── Button/Link ─── */
 .ig-products-showcase__link {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.82rem;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.8rem;
+  background: var(--ig-ink);
+  color: var(--ig-warm-white);
+  font-size: calc(var(--font-body-scale) * 0.95rem);
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ig-ink);
-  transition: gap 0.2s ease;
+  border-radius: 2px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  margin-top: auto;
 }
 
 .ig-products-showcase__link span {
@@ -159,11 +164,12 @@
 }
 
 .ig-products-showcase__card:hover .ig-products-showcase__link {
-  gap: 0.6rem;
+  background: var(--ig-ember);
+  transform: translateY(-1px);
 }
 
 .ig-products-showcase__card:hover .ig-products-showcase__link span {
-  transform: translateX(2px);
+  transform: translateX(3px);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -236,16 +242,21 @@
   }
 
   .ig-products-showcase__name {
-    font-size: 1.3rem;
+    font-size: calc(var(--font-heading-scale) * 1.6rem);
   }
 
   .ig-products-showcase__card--featured .ig-products-showcase__name {
-    font-size: 1.3rem;
+    font-size: calc(var(--font-heading-scale) * 1.7rem);
   }
 
   .ig-products-showcase__desc {
-    font-size: 0.9rem;
+    font-size: calc(var(--font-body-scale) * 1rem);
     margin-bottom: 1.5rem;
+  }
+  
+  .ig-products-showcase__link {
+    padding: 0.8rem 1.5rem;
+    font-size: calc(var(--font-body-scale) * 0.9rem);
   }
 
   .ig-products-showcase__stats {
