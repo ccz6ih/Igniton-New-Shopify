@@ -29,7 +29,6 @@
   padding: 2.5rem 2rem;
   background: var(--ig-card-bg);
   border-radius: 4px;
-  text-decoration: none;
   color: inherit;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -141,36 +140,10 @@
 }
 
 /* ─── Button/Link ─── */
-.ig-products-showcase__link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.9rem 1.8rem;
-  background: var(--ig-ink);
-  color: var(--ig-warm-white);
-  font-size: calc(var(--font-body-scale) * 0.95rem);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: 2px;
-  transition: background 0.2s ease, transform 0.2s ease;
+.ig-proDawn Button Spacing ─── */
+.ig-products-showcase__card .button {
   margin-top: auto;
-}
-
-.ig-products-showcase__link span {
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
-
-.ig-products-showcase__card:hover .ig-products-showcase__link {
-  background: var(--ig-ember);
-  transform: translateY(-1px);
-}
-
-.ig-products-showcase__card:hover .ig-products-showcase__link span {
-  transform: translateX(3px);
-}
+  width: 100%
 
 /* ═══════════════════════════════════════════════════════════
    Image Display (Right Side)
@@ -281,9 +254,9 @@
 
   .ig-products-showcase__stats {
     gap: 1.5rem;
-  }
-}
-
+  }card .button {
+    padding: 1.2rem 2.6rem;
+    min-height: calc(4rem + var(--buttons-border-width) * 2
 /* ─── Accessibility ─── */
 @media (prefers-reduced-motion: reduce) {
   .ig-products-showcase__card {

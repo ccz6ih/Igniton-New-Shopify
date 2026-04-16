@@ -43,8 +43,7 @@
               endif
             -%}
             
-            <a 
-              href="{{ product_url }}" 
+            <div 
               class="ig-products-showcase__card{% if forloop.first %} is-active{% endif %}"
               {{ block.shopify_attributes }}
               data-product-id="{{ block.id }}"
@@ -102,11 +101,14 @@
                 {%- endif -%}
                 
                 {%- if block.settings.link_text != blank -%}
-                  <span class="ig-products-showcase__link">
-                    {{ block.settings.link_text }} <span>→</span>
-                  </span>
+                  <a 
+                    href="{{ product_url }}"
+                    class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
+                  >
+                    {{ block.settings.link_text }}
+                  </a>
                 {%- endif -%}
-              </a>
+              </div>
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -145,8 +147,7 @@
           endif
         -%}
         
-        <a 
-          href="{{ product_url }}" 
+        <div 
           class="ig-products-showcase__card ig-products-showcase__card--featured"
           {{ block.shopify_attributes }}
           style="background: {{ block.settings.featured_bg }};"
@@ -203,11 +204,14 @@
           {%- endif -%}
           
           {%- if block.settings.link_text != blank -%}
-            <span class="ig-products-showcase__link">
-              {{ block.settings.link_text }} <span>→</span>
-            </span>
+            <a 
+              href="{{ product_url }}"
+              class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
+            >
+              {{ block.settings.link_text }}
+            </a>
           {%- endif -%}
-        </a>
+        </div>
       {%- endif -%}
     {%- endfor -%}
   </div>
@@ -407,7 +411,13 @@
           "type": "text",
           "id": "link_text",
           "default": "Shop Now",
-          "label": "Link text"
+          "label": "Button text"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary",
+          "default": false,
+          "label": "Use secondary button style"
         }
       ]
     }
