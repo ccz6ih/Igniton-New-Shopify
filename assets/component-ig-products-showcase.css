@@ -44,10 +44,10 @@
   box-shadow: 0 2px 12px rgba(18, 18, 65, 0.06);
 }
 
-/* ─── Featured Card (Bundle) ─── */
+/* ─── Featured Card (Bundle) - Full width below layout ─── */
 .ig-products-showcase__card--featured {
   padding: 2.5rem;
-  grid-column: 1 / -1;
+  margin-top: 2rem;
 }
 
 .ig-products-showcase__card--featured .ig-products-showcase__name {
