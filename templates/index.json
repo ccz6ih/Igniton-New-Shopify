@@ -87,14 +87,18 @@
         "color_scheme": "",
         "min_height": 700,
         "show_orb": true,
-        "orb_position": "center",
-        "orb_opacity": 50,
+        "orb_style": "amber",
+        "orb_position": "right",
+        "orb_offset_x": 20,
+        "orb_size": 425,
+        "orb_opacity": 70,
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "text_animation": "fade-in",
         "heading_size": 6,
-        "text_size": 130
+        "text_size": 130,
+        "proof_num_size": 3
       }
     },
     "ig_trust_bar_qywBVA": {
