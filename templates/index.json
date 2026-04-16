@@ -42,7 +42,7 @@
         "stat_fwPKVF": {
           "type": "stat",
           "settings": {
-            "number": "100",
+            "number": "83",
             "unit": "%",
             "label": "Short-term memory improvement"
           }
@@ -67,7 +67,7 @@
           "type": "stat",
           "settings": {
             "number": "0",
-            "unit": "%",
+            "unit": "",
             "label": "Stimulants, fillers, or excipients"
           }
         }
@@ -92,8 +92,8 @@
         "orb_opacity": 75,
         "text_alignment": "left",
         "text_animation": "scale-up",
-        "heading_size": 5,
-        "text_size": 110
+        "heading_size": 5.5,
+        "text_size": 125
       }
     },
     "ig_trust_bar_qywBVA": {
