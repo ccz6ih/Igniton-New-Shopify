@@ -40,17 +40,17 @@
   border-radius: 50%;
   background: radial-gradient(
     circle at 35% 35%,
-    rgba(180, 145, 83, 0.85) 0%,
-    rgba(201, 169, 110, 0.7) 15%,
-    rgba(180, 145, 83, 0.5) 35%,
-    rgba(201, 169, 110, 0.35) 55%,
-    rgba(180, 145, 83, 0.18) 75%,
-    rgba(180, 145, 83, 0.08) 88%,
+    rgb(180, 145, 83) 0%,
+    rgb(201, 169, 110) 15%,
+    rgb(180, 145, 83) 35%,
+    rgb(201, 169, 110) 55%,
+    rgba(180, 145, 83, 0.6) 75%,
+    rgba(180, 145, 83, 0.2) 88%,
     transparent 100%
   );
   pointer-events: none;
   z-index: 1;
-  opacity: 1;
+  /* Opacity controlled via inline styles from section settings */
 }
 
 /* ─── Content Positioning Container (Full Section) ─── */

@@ -7,6 +7,7 @@
   
   #IgHero-{{ section.id }} .ig-hero__orb {
     opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }} !important;
+    filter: blur(0px) !important;
     {% if section.settings.orb_position == 'left' %}
       right: auto !important;
       left: -5vw !important;
@@ -15,7 +16,7 @@
       left: 50% !important;
       transform: translate(-50%, -50%) !important;
     {% else %}
-      right: -5vw !important;
+      right: -8% !important;
     {% endif %}
   }
   
@@ -34,7 +35,7 @@
 
 <section 
   id="IgHero-{{ section.id }}" 
-  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} ig-hero--content-align-{{ section.settings.desktop_content_alignment }} ig-hero--content-align-mobile-{{ section.settings.mobile_content_alignment }} color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} ig-hero--content-align-{{ section.settings.desktop_content_alignment }} ig-hero--content-align-mobile-{{ section.settings.mobile_content_alignment }} color-{{ section.settings.color_scheme }}"
 >
   {%- if section.settings.background_image != blank -%}
     <div class="ig-hero__bg-image">
@@ -53,27 +54,27 @@
         
         {%- when 'eyebrow' -%}
           {%- if block.settings.text != blank -%}
-            <p class="ig-hero__eyebrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+            <p class="ig-hero__eyebrow" {{ block.shopify_attributes }}>
               {{ block.settings.text }}
             </p>
           {%- endif -%}
         
         {%- when 'headline' -%}
           {%- if block.settings.heading != blank -%}
-            <h1 class="ig-hero__headline ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
-              {{ block.settings.heading }}
+            <h1 class="ig-hero__headline ig-font-display" {{ block.shopify_attributes }}>
+              {{ block.settings.heading | newline_to_br }}
             </h1>
           {%- endif -%}
         
         {%- when 'subheadline' -%}
           {%- if block.settings.text != blank -%}
-            <div class="ig-hero__sub ig-font-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+            <div class="ig-hero__sub ig-font-body" {{ block.shopify_attributes }}>
               {{ block.settings.text }}
             </div>
           {%- endif -%}
         
         {%- when 'buttons' -%}
-          <div class="ig-hero__actions{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+          <div class="ig-hero__actions" {{ block.shopify_attributes }}>
             {%- if block.settings.button_label_1 != blank -%}
               <a 
                 {% if block.settings.button_link_1 == blank %}
@@ -102,7 +103,7 @@
           </div>
         
         {%- when 'proof_stats' -%}
-          <div class="ig-hero__proof{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+          <div class="ig-hero__proof" {{ block.shopify_attributes }}>
             {%- for subblock in block.settings -%}
               {%- comment -%} Proof stats will be rendered from nested blocks {%- endcomment -%}
             {%- endfor -%}
@@ -380,10 +381,11 @@
       "limit": 1,
       "settings": [
         {
-          "type": "inline_richtext",
+          "type": "textarea",
           "id": "heading",
-          "default": "Think faster. Age <em>slower.</em> Feel the difference.",
-          "label": "Heading"
+          "default": "Think faster.\nAge slower.\nFeel the difference.",
+          "label": "Heading",
+          "info": "Use line breaks for dramatic impact. Supports <em>italic</em> formatting."
         }
       ]
     },
