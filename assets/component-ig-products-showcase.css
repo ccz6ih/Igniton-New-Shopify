@@ -1,18 +1,25 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Products Showcase Component
-   Clean text-based product cards with horizontal stats
+   Clean text-based product cards with interactive image switcher
    ═══════════════════════════════════════════════════════════ */
 
 .ig-products-showcase {
   padding: 5rem 0;
 }
 
+/* ─── Layout Container ─── */
+.ig-products-showcase__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
 /* ─── Grid Layout ─── */
 .ig-products-showcase__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 2rem;
-  margin-top: 3rem;
 }
 
 /* ─── Product Card ─── */
@@ -32,9 +39,15 @@
   box-shadow: 0 4px 20px rgba(18, 18, 65, 0.08);
 }
 
+.ig-products-showcase__card.is-active {
+  background: rgba(18, 18, 65, 0.06);
+  box-shadow: 0 2px 12px rgba(18, 18, 65, 0.06);
+}
+
 /* ─── Featured Card (Bundle) ─── */
 .ig-products-showcase__card--featured {
   padding: 2.5rem;
+  grid-column: 1 / -1;
 }
 
 .ig-products-showcase__card--featured .ig-products-showcase__name {
@@ -154,6 +167,43 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   Image Display (Right Side)
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-products-showcase__image-display {
+  position: relative;
+  background: var(--ig-card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  min-height: 500px;
+}
+
+.ig-products-showcase__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.ig-products-showcase__image.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.ig-products-showcase__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════
    Responsive Styles
    ═══════════════════════════════════════════════════════════ */
 
@@ -163,10 +213,18 @@
     padding: 4rem 0;
   }
 
-  .ig-products-showcase__grid {
+  .ig-products-showcase__layout {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .ig-products-showcase__image-display {
+    min-height: 300px;
+    order: -1;
+  }
+
+  .ig-products-showcase__grid {
     gap: 1.5rem;
-    margin-top: 2rem;
   }
 
   .ig-products-showcase__card {
