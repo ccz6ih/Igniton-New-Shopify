@@ -7,6 +7,14 @@
   
   #IgHero-{{ section.id }} .ig-hero__orb {
     opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
+    {% if section.settings.orb_position == 'left' %}right: auto; left: -8vw;{% endif %}
+    {% if section.settings.orb_position == 'center' %}right: 50%; transform: translate(50%, -50%);{% endif %}
+  }
+  
+  #IgHero-{{ section.id }} .ig-hero__content {
+    text-align: {{ section.settings.text_alignment }};
+    {% if section.settings.text_alignment == 'center' %}align-items: center;{% endif %}
+    {% if section.settings.text_alignment == 'right' %}align-items: flex-end;{% endif %}
   }
   
   #IgHero-{{ section.id }} .ig-hero__headline {
@@ -24,7 +32,7 @@
 
 <section 
   id="IgHero-{{ section.id }}" 
-  class="ig-hero color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
   {%- if section.settings.background_image != blank -%}
     <div class="ig-hero__bg-image">
@@ -172,14 +180,91 @@
       "label": "Show decorative orb"
     },
     {
+      "type": "select",
+      "id": "orb_position",
+      "label": "Orb position",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "right"
+    },
+    {
       "type": "range",
       "id": "orb_opacity",
       "min": 0,
       "max": 100,
       "step": 5,
-      "default": 60,
+      "default": 80,
       "unit": "%",
       "label": "Orb opacity"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_animation",
+      "label": "Text animation",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade up"
+        },
+        {
+          "value": "fade-in",
+          "label": "Fade in"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide from left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide from right"
+        },
+        {
+          "value": "scale-up",
+          "label": "Scale up"
+        }
+      ],
+      "default": "fade-up",
+      "info": "Pure CSS animations, no JavaScript required"
     },
     {
       "type": "header",
