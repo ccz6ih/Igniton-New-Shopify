@@ -46,7 +46,8 @@
     <div class="ig-hero__orb" aria-hidden="true"></div>
   {%- endif -%}
   
-  <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }} page-width">
+  <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }}">
+    <div class="ig-hero__inner page-width">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         

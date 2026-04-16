@@ -1,18 +1,15 @@
 /* ═══════════════════════════════════════════════════════════
-   Igniton Hero Component
-   Based on brand guidelines and homepage-2 design
+   Igniton Hero Component - Purpose-Built Positioning System
    ═══════════════════════════════════════════════════════════ */
 
 .ig-hero {
-  min-height: var(--ig-hero-min-height, 700px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 9rem 0 5rem;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ig-hero-min-height, 700px);
   overflow: hidden;
   background: var(--ig-warm-white);
-  isolation: isolate;
 }
 
 /* ─── Background Image ─── */
@@ -32,17 +29,48 @@
   opacity: 0.15;
 }
 
-/* ─── Content Container ─── */
+/* ─── Decorative Orb - HIGHLY VISIBLE ─── */
+.ig-hero__orb {
+  position: absolute;
+  right: -8%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(850px, 60vw);
+  height: min(850px, 60vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(180, 145, 83, 0.85) 0%,
+    rgba(201, 169, 110, 0.7) 15%,
+    rgba(180, 145, 83, 0.5) 35%,
+    rgba(201, 169, 110, 0.35) 55%,
+    rgba(180, 145, 83, 0.18) 75%,
+    rgba(180, 145, 83, 0.08) 88%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 1;
+}
+
+/* ─── Content Positioning Container (Full Section) ─── */
 .ig-hero__content {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
   width: 100%;
   height: 100%;
-  /* Default alignment - overridden by position classes */
+  display: flex;
   align-items: flex-start;
   justify-content: center;
+  padding: 0 5rem;
+}
+
+/* ─── Inner Content Wrapper (Max-Width Container) ─── */
+.ig-hero__inner {
+  display: flex;
+  flex-direction: column;
+  padding: 8rem 0 5rem;
+  width: 100%;
 }
 
 /* ─── Eyebrow Text ─── */
@@ -175,81 +203,60 @@
   margin: 0.2rem 0;
 }
 
-/* ─── Decorative Orb ─── */
-.ig-hero__orb {
-  position: absolute;
-  /* Position controlled via inline styles */
-  right: -5vw;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(500px, 60vw, 850px);
-  height: clamp(500px, 60vw, 850px);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 40% 40%,
-    rgba(180, 145, 83, 0.65) 0%,
-    rgba(201, 169, 110, 0.48) 20%,
-    rgba(180, 145, 83, 0.35) 40%,
-    rgba(201, 169, 110, 0.22) 60%,
-    rgba(180, 145, 83, 0.10) 78%,
-    rgba(180, 145, 83, 0.03) 90%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-  filter: blur(0.5px);
-  will-change: transform, opacity;
-  mix-blend-mode: normal;
-}
+/* Remove duplicate orb styles - already defined above */
 
 /* ═══════════════════════════════════════════════════════════
    Desktop Content Positioning (9-Position Grid)
+   Positions the ENTIRE content wrapper within the section
    ═══════════════════════════════════════════════════════════ */
 
 @media screen and (min-width: 750px) {
-  .ig-hero__content.ig-hero__content--top-left {
-    align-items: flex-start;
-    justify-content: flex-start;
+  /* Top Row */
+  .ig-hero__content--top-left {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
   }
 
-  .ig-hero__content.ig-hero__content--top-center {
-    align-items: center;
-    justify-content: flex-start;
+  .ig-hero__content--top-center {
+    align-items: center !important;
+    justify-content: flex-start !important;
   }
 
-  .ig-hero__content.ig-hero__content--top-right {
-    align-items: flex-end;
-    justify-content: flex-start;
+  .ig-hero__content--top-right {
+    align-items: flex-end !important;
+    justify-content: flex-start !important;
   }
 
-  .ig-hero__content.ig-hero__content--middle-left {
-    align-items: flex-start;
-    justify-content: center;
+  /* Middle Row */
+  .ig-hero__content--middle-left {
+    align-items: flex-start !important;
+    justify-content: center !important;
   }
 
-  .ig-hero__content.ig-hero__content--middle-center {
-    align-items: center;
-    justify-content: center;
+  .ig-hero__content--middle-center {
+    align-items: center !important;
+    justify-content: center !important;
   }
 
-  .ig-hero__content.ig-hero__content--middle-right {
-    align-items: flex-end;
-    justify-content: center;
+  .ig-hero__content--middle-right {
+    align-items: flex-end !important;
+    justify-content: center !important;
   }
 
-  .ig-hero__content.ig-hero__content--bottom-left {
-    align-items: flex-start;
-    justify-content: flex-end;
+  /* Bottom Row */
+  .ig-hero__content--bottom-left {
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
   }
 
-  .ig-hero__content.ig-hero__content--bottom-center {
-    align-items: center;
-    justify-content: flex-end;
+  .ig-hero__content--bottom-center {
+    align-items: center !important;
+    justify-content: flex-end !important;
   }
 
-  .ig-hero__content.ig-hero__content--bottom-right {
-    align-items: flex-end;
-    justify-content: flex-end;
+  .ig-hero__content--bottom-right {
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
   }
 }
 
@@ -575,7 +582,16 @@
 /* ─── Responsive - Mobile ─── */
 @media screen and (max-width: 749px) {
   .ig-hero {
-    min-height: auto;
+    min-height: 600px;
+  }
+
+  .ig-hero__content {
+    padding: 0 2rem;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .ig-hero__inner {
     padding: 6rem 0 4rem;
   }
 
@@ -631,8 +647,8 @@
 
 /* ─── Responsive - Tablet ─── */
 @media screen and (min-width: 750px) and (max-width: 989px) {
-  .ig-hero {
-    padding: 8rem 0 4.5rem;
+  .ig-hero__inner {
+    padding: 7rem 0 4.5rem;
   }
 
   .ig-hero__headline {
