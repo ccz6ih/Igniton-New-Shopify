@@ -91,7 +91,7 @@
         "orb_position": "center",
         "orb_opacity": 75,
         "text_alignment": "left",
-        "text_animation": "scale-up",
+        "text_animation": "slide-left",
         "heading_size": 5.5,
         "text_size": 125
       }
