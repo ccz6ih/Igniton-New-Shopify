@@ -84,13 +84,13 @@
       ],
       "name": "Igniton Hero",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "min_height": 600,
         "background_image": "shopify://shop_images/loveasafields.jpg",
         "show_orb": true,
         "orb_opacity": 65,
-        "heading_size": 5,
-        "text_size": 110
+        "heading_size": 5.5,
+        "text_size": 115
       }
     },
     "ig_trust_bar_qywBVA": {
