@@ -2,8 +2,7 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+  .section-{{ section.id }}-padding {    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
@@ -12,6 +11,18 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+  
+  #IgProductsGrid-{{ section.id }} .ig-section-title {
+    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
+  }
+  
+  #IgProductsGrid-{{ section.id }} .ig-product-card__name {
+    font-size: calc(var(--font-heading-scale) * {{ section.settings.product_heading_size }}rem);
+  }
+  
+  #IgProductsGrid-{{ section.id }} .ig-product-card__desc {
+    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
   }
 {%- endstyle -%}
 
@@ -168,6 +179,40 @@
       "id": "section_title",
       "default": "Every ingredient enhanced for maximum effect.",
       "label": "Section title"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 5,
+      "step": 0.5,
+      "default": 3,
+      "unit": "rem",
+      "label": "Section heading size"
+    },
+    {
+      "type": "range",
+      "id": "product_heading_size",
+      "min": 1.5,
+      "max": 3,
+      "step": 0.1,
+      "default": 2,
+      "unit": "rem",
+      "label": "Product name size"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80,
+      "max": 140,
+      "step": 5,
+      "default": 110,
+      "unit": "%",
+      "label": "Body text size"
     },
     {
       "type": "header",

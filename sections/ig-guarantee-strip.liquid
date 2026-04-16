@@ -5,6 +5,10 @@
     background: {{ section.settings.background_color }};
     color: {{ section.settings.text_color }};
   }
+  
+  #IgGuaranteeStrip-{{ section.id }} .ig-guarantee-strip__text {
+    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
+  }
 {%- endstyle -%}
 
 <section 
@@ -63,6 +67,20 @@
       "id": "guarantee_text",
       "label": "Guarantee text",
       "default": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80,
+      "max": 150,
+      "step": 5,
+      "default": 115,
+      "unit": "%",
+      "label": "Text size"
     }
   ],
   "presets": [

@@ -12,6 +12,18 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+  
+  #IgResultsSplit-{{ section.id }} .ig-section-title {
+    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
+  }
+  
+  #IgResultsSplit-{{ section.id }} .ig-results-split__stat-num {
+    font-size: calc(var(--font-heading-scale) * {{ section.settings.stat_size }}rem);
+  }
+  
+  #IgResultsSplit-{{ section.id }} .ig-results-split__quote {
+    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
+  }
 {%- endstyle -%}
 
 <section 
@@ -165,6 +177,40 @@
       "type": "url",
       "id": "reviews_link_url",
       "label": "Reviews link URL"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 5,
+      "step": 0.5,
+      "default": 3,
+      "unit": "rem",
+      "label": "Section heading size"
+    },
+    {
+      "type": "range",
+      "id": "stat_size",
+      "min": 2,
+      "max": 5,
+      "step": 0.5,
+      "default": 3.5,
+      "unit": "rem",
+      "label": "Stat number size"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80,
+      "max": 140,
+      "step": 5,
+      "default": 110,
+      "unit": "%",
+      "label": "Text size"
     },
     {
       "type": "header",
