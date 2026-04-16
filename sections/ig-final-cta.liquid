@@ -1,0 +1,198 @@
+{{ 'component-ig-final-cta.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgFinalCta-{{ section.id }}" 
+  class="ig-final-cta section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}{% if section.settings.enable_gradient %} ig-final-cta--gradient{% endif %}"
+>
+  <div class="page-width">
+    <div class="ig-final-cta__content">
+      {%- if section.settings.section_label != blank -%}
+        <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.section_label }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.section_title != blank -%}
+        <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.section_title }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle_text != blank -%}
+        <div class="ig-final-cta__subtitle ig-font-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.subtitle_text }}
+        </div>
+      {%- endif -%}
+
+      {%- assign button_blocks = section.blocks | where: "type", "button" -%}
+      {%- if button_blocks.size > 0 -%}
+        <div class="ig-final-cta__buttons{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {%- for block in button_blocks -%}
+            <a 
+              href="{{ block.settings.button_link }}" 
+              class="ig-btn ig-btn--{{ block.settings.button_style }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.button_label }}
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.footer_text != blank -%}
+        <div class="ig-final-cta__footer ig-font-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.footer_text }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Final CTA",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gradient",
+      "default": true,
+      "label": "Enable radial gradient background",
+      "info": "Subtle gradient effect behind the content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Ready to start",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Most customers feel the difference within two weeks.",
+      "label": "Section title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle_text",
+      "label": "Subtitle text",
+      "default": "<p>Backed by a 30-day guarantee. Subscribe and save 20%.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "<p>Questions? <a href=\"#\">Read the FAQ</a> or <a href=\"#\">contact us</a>.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 120,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 120,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "Shop IgniCognition",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary (dark)"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary (link)"
+            },
+            {
+              "value": "muted",
+              "label": "Muted (gray)"
+            }
+          ],
+          "default": "primary",
+          "label": "Button style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Final CTA",
+      "blocks": [
+        {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniCognition",
+            "button_style": "primary"
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniLongevity",
+            "button_style": "muted"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

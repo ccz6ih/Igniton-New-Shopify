@@ -1,0 +1,90 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton Guarantee Strip Component
+   Full-width guarantee/trust banner
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-guarantee-strip {
+  background: var(--ig-ember);
+  color: var(--ig-warm-white);
+  padding: 1.5rem 1.5rem;
+}
+
+.ig-guarantee-strip__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+/* ─── Icon ─── */
+.ig-guarantee-strip__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ─── Text ─── */
+.ig-guarantee-strip__text {
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+.ig-guarantee-strip__text p {
+  margin: 0;
+  display: inline;
+}
+
+.ig-guarantee-strip__text strong {
+  font-weight: 500;
+}
+
+/* ─── Responsive - Mobile ─── */
+@media screen and (max-width: 749px) {
+  .ig-guarantee-strip {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .ig-guarantee-strip__container {
+    gap: 0.8rem;
+  }
+
+  .ig-guarantee-strip__icon {
+    font-size: 1.3rem;
+  }
+
+  .ig-guarantee-strip__text {
+    font-size: 0.82rem;
+  }
+}
+
+/* ─── Responsive - Tablet ─── */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .ig-guarantee-strip {
+    padding: 1.4rem 2rem;
+  }
+}
+
+/* ─── Color scheme variations ─── */
+.ig-guarantee-strip.color-accent {
+  background: var(--ig-ember);
+  color: var(--ig-warm-white);
+}
+
+.ig-guarantee-strip.color-inverse {
+  background: var(--ig-ink);
+  color: var(--ig-warm-white);
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-contrast: high) {
+  .ig-guarantee-strip {
+    border-top: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+  }
+}

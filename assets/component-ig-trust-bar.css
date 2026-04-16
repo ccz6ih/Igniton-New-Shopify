@@ -1,0 +1,100 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton Trust Bar Component
+   Horizontal trust signals strip
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-trust-bar {
+  background: var(--ig-ink);
+  color: var(--ig-warm-white);
+  padding: 1rem 1.5rem;
+}
+
+.ig-trust-bar__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.ig-trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.ig-trust-bar__item:hover {
+  opacity: 1;
+}
+
+.ig-trust-bar__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ig-ember-light);
+  flex-shrink: 0;
+}
+
+.ig-trust-bar__text {
+  white-space: nowrap;
+}
+
+/* ─── Responsive - Mobile ─── */
+@media screen and (max-width: 749px) {
+  .ig-trust-bar {
+    padding: 1rem 1.5rem;
+  }
+
+  .ig-trust-bar__container {
+    gap: 1.5rem;
+    justify-content: flex-start;
+  }
+
+  .ig-trust-bar__item {
+    font-size: 0.75rem;
+  }
+
+  .ig-trust-bar__text {
+    white-space: normal;
+  }
+}
+
+/* ─── Responsive - Tablet ─── */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .ig-trust-bar__container {
+    gap: 2rem;
+  }
+}
+
+/* ─── Color Scheme Support ─── */
+.ig-trust-bar.color-scheme-1,
+.ig-trust-bar.color-scheme-2 {
+  /* Dark background schemes */
+  background: var(--ig-ink);
+  color: var(--ig-warm-white);
+}
+
+.ig-trust-bar.color-scheme-3,
+.ig-trust-bar.color-inverse {
+  /* Light background schemes */
+  background: var(--ig-warm-white);
+  color: var(--ig-ink);
+}
+
+.ig-trust-bar.color-inverse .ig-trust-bar__dot {
+  background: var(--ig-ember);
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ig-trust-bar__item {
+    transition: none;
+  }
+}

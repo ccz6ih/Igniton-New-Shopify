@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton Why Different Component
+   Feature cards on dark background
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-why-different {
+  background: var(--ig-ink);
+  color: var(--ig-warm-white);
+}
+
+.ig-why-different .ig-section-label {
+  color: var(--ig-ember-light);
+}
+
+.ig-why-different .ig-section-title {
+  color: var(--ig-warm-white);
+}
+
+/* ─── Feature Grid ─── */
+.ig-why-different__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-top: 3rem;
+}
+
+.ig-why-different__placeholder {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: rgba(253, 250, 245, 0.5);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* ─── Feature Card ─── */
+.ig-why-different__card {
+  background: var(--ig-ink);
+  padding: 2.5rem 2rem;
+  transition: background 0.25s ease;
+}
+
+.ig-why-different__card:hover {
+  background: #191940;
+}
+
+/* ─── Icon ─── */
+.ig-why-different__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  background: var(--ig-ember);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.ig-why-different__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.ig-why-different__icon-emoji {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ─── Title ─── */
+.ig-why-different__title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+  color: var(--ig-warm-white);
+}
+
+/* ─── Description ─── */
+.ig-why-different__desc {
+  font-size: 0.88rem;
+  color: rgba(253, 250, 245, 0.55);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ─── Responsive - Mobile ─── */
+@media screen and (max-width: 749px) {
+  .ig-why-different__grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .ig-why-different__card {
+    padding: 2rem 1.5rem;
+  }
+
+  .ig-why-different__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ig-why-different__icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ig-why-different__title {
+    font-size: 0.9rem;
+  }
+
+  .ig-why-different__desc {
+    font-size: 0.85rem;
+  }
+}
+
+/* ─── Responsive - Tablet ─── */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .ig-why-different__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── Desktop - 4 columns ─── */
+@media screen and (min-width: 990px) {
+  .ig-why-different__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ig-why-different__card {
+    transition: none;
+  }
+}
+
+/* ─── High Contrast Mode ─── */
+@media (prefers-contrast: high) {
+  .ig-why-different__card {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .ig-why-different__icon {
+    border: 2px solid currentColor;
+  }
+}

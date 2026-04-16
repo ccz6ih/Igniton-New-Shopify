@@ -1,0 +1,217 @@
+{{ 'component-ig-why-different.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #IgWhyDifferent-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgWhyDifferent-{{ section.id }}" 
+  class="ig-why-different section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+>
+  <div class="page-width">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_title != blank -%}
+      <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_title }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="ig-why-different__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'feature_card' -%}
+              <div class="ig-why-different__card" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon_svg != blank or block.settings.icon_emoji != blank -%}
+                  <div class="ig-why-different__icon" {% if block.settings.icon_bg_color != blank %}style="background: {{ block.settings.icon_bg_color }};"{% endif %}>
+                    {%- if block.settings.icon_emoji != blank -%}
+                      <span class="ig-why-different__icon-emoji">{{ block.settings.icon_emoji }}</span>
+                    {%- elsif block.settings.icon_svg != blank -%}
+                      {{ block.settings.icon_svg }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                
+                <div class="ig-why-different__title ig-font-body">
+                  {{ block.settings.title }}
+                </div>
+                
+                <div class="ig-why-different__desc ig-font-body">
+                  {{ block.settings.description }}
+                </div>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="ig-why-different__placeholder">
+        <p>Add feature cards to highlight what makes you different.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Why Different",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#121241"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#fdfaf5"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Why Igniton is different",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Not just what's in it.<br>What's been done to it.",
+      "label": "Section title"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_card",
+      "name": "Feature Card",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Icon emoji",
+          "info": "Use an emoji (e.g., ✓, 🔬, ⚡). Leave blank if using SVG."
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG code",
+          "info": "Paste SVG code here. Leave blank if using emoji."
+        },
+        {
+          "type": "color",
+          "id": "icon_bg_color",
+          "label": "Icon background color",
+          "default": "#b49153"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "No fillers. Ever.",
+          "label": "Feature title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "default": "Every capsule contains only active ingredients — no excipients, no flow agents, no bulking compounds. Pure, dense nutrition.",
+          "label": "Feature description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Why Different",
+      "blocks": [
+        {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z\"/></svg>",
+            "title": "No fillers. Ever.",
+            "description": "Every capsule contains only active ingredients — no excipients, no flow agents, no bulking compounds. Pure, dense nutrition."
+          }
+        },
+        {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z\"/></svg>",
+            "title": "Enhanced, not just formulated",
+            "description": "Ingredients are processed using cold plasma and laser-photonics technology — a process shown to increase bioavailability at the cellular level."
+          }
+        },
+        {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\"/></svg>",
+            "title": "University-tested, not just claimed",
+            "description": "Results come from peer-reviewed, randomized controlled trials published in academic journals — not from internal marketing metrics."
+          }
+        },
+        {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 10V3L4 14h7v7l9-11h-7z\"/></svg>",
+            "title": "No stimulants. No crash.",
+            "description": "Cognitive benefits come from enhanced cellular function, not caffeine or synthetic stimulants. Sustained energy without the inevitable afternoon drop."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Igniton™ — Think Faster. Age Slower.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #121241;
+    --paper: #f8f5ef;
+    --warm-white: #fdfaf5;
+    --ember: #b49153;
+    --ember-light: #c9a96e;
+    --gold: #b49153;
+    --muted: #6b6660;
+    --border: rgba(18,18,65,0.1);
+    --card-bg: rgba(18,18,65,0.03);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 72px;
+    background: rgba(253,250,245,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--ember); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+    font-size: 0.85rem; font-weight: 400; letter-spacing: 0.04em;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--warm-white) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--ember) !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 9rem 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7vw, 6.2rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.35s forwards;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--ember);
+  }
+
+  .hero-sub {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.5s forwards;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-top: 2.8rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.65s forwards;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--warm-white);
+    padding: 0.9rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--ember); transform: translateY(-1px); }
+
+  .btn-secondary {
+    font-size: 0.85rem; color: var(--muted); text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--ink); border-color: var(--ink); }
+
+  .hero-proof {
+    display: flex; gap: 2.5rem; margin-top: 4rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+  .proof-item { display: flex; flex-direction: column; }
+  .proof-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem; font-weight: 300;
+    color: var(--ink); line-height: 1;
+  }
+  .proof-num span { color: var(--ember); font-size: 1.4rem; vertical-align: super; }
+  .proof-label {
+    font-size: 0.78rem; color: var(--muted);
+    letter-spacing: 0.04em; margin-top: 0.3rem;
+    max-width: 120px; line-height: 1.4;
+  }
+  .proof-divider {
+    width: 1px; background: var(--border); align-self: stretch; margin: 0.2rem 0;
+  }
+
+  /* Decorative orb */
+  .hero-orb {
+    position: absolute; right: -8vw; top: 50%;
+    transform: translateY(-50%);
+    width: clamp(400px, 55vw, 750px);
+    height: clamp(400px, 55vw, 750px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #f2e4cc 0%, #e8d4b0 40%, #d4b882 70%, transparent 100%);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* ─── TRUST BAR ─── */
+  .trust-bar {
+    background: var(--ink);
+    color: var(--warm-white);
+    padding: 1rem 3rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.8rem; font-weight: 400; letter-spacing: 0.05em;
+    opacity: 0.85;
+  }
+  .trust-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--ember-light); flex-shrink: 0;
+  }
+
+  /* ─── PRODUCTS ─── */
+  .section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ember); font-weight: 500; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; line-height: 1.15;
+    max-width: 600px; margin-bottom: 3.5rem;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .product-card {
+    background: var(--warm-white);
+    padding: 3rem 2.5rem;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+    cursor: pointer;
+    text-decoration: none; color: inherit;
+  }
+  .product-card:hover { background: #fdf8f2; }
+  .product-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--ember); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .product-card:hover::before { transform: scaleX(1); }
+
+  .product-tag {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ember); font-weight: 500; margin-bottom: 1.2rem;
+  }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 400;
+    margin-bottom: 0.7rem; line-height: 1.1;
+  }
+  .product-desc {
+    font-size: 0.92rem; color: var(--muted); line-height: 1.65;
+    margin-bottom: 2rem; font-weight: 300; flex: 1;
+  }
+
+  .product-stats {
+    display: flex; gap: 1.5rem; margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 300; color: var(--ink); line-height: 1;
+  }
+  .stat-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+
+  .product-link {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink);
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: gap 0.2s;
+  }
+  .product-card:hover .product-link { gap: 0.8rem; }
+
+  .product-price {
+    font-size: 0.88rem; color: var(--muted); margin-bottom: 0.5rem;
+  }
+  .product-price strong { color: var(--ink); font-weight: 500; }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section {
+    padding: 7rem 3rem;
+    background: var(--paper);
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0; margin-top: 0;
+    border: 1px solid var(--border);
+  }
+  .step {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300;
+    color: var(--border); line-height: 1;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  .step-title {
+    font-size: 0.95rem; font-weight: 500;
+    margin-bottom: 0.6rem; color: var(--ink);
+  }
+  .step-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+  /* ─── PROOF / RESULTS ─── */
+  .proof-section { padding: 7rem 3rem; }
+
+  .proof-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+
+  .big-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+  .big-stat {
+    background: var(--warm-white);
+    padding: 2.5rem 2rem;
+  }
+  .big-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300; color: var(--ember);
+    line-height: 1; margin-bottom: 0.5rem;
+  }
+  .big-stat-label { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+  .big-stat-source { font-size: 0.72rem; color: var(--border); margin-top: 0.5rem; letter-spacing: 0.04em; }
+
+  .proof-right { display: flex; flex-direction: column; gap: 1.5rem; padding-top: 0.5rem; }
+  .proof-right .section-title { margin-bottom: 1.5rem; }
+
+  .review-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+  .review-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic; font-weight: 300;
+    line-height: 1.6; color: var(--ink); margin-bottom: 0.8rem;
+  }
+  .review-meta { font-size: 0.78rem; color: var(--muted); }
+  .stars { color: var(--gold); letter-spacing: 0.05em; margin-bottom: 0.5rem; font-size: 0.75rem; }
+
+  /* ─── GUARANTEE STRIP ─── */
+  .guarantee-strip {
+    background: var(--ember);
+    color: var(--warm-white);
+    padding: 1.5rem 3rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    text-align: center;
+  }
+  .guarantee-text {
+    font-size: 0.88rem; font-weight: 400; letter-spacing: 0.03em;
+  }
+  .guarantee-text strong { font-weight: 500; }
+
+  /* ─── WHY DIFFERENT ─── */
+  .diff-section {
+    padding: 7rem 3rem;
+    background: var(--ink); color: var(--warm-white);
+  }
+  .diff-section .section-label { color: var(--ember-light); }
+  .diff-section .section-title { color: var(--warm-white); }
+  .diff-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px; background: rgba(255,255,255,0.08);
+    margin-top: 3rem;
+  }
+  .diff-card {
+    background: var(--ink);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+  }
+  .diff-card:hover { background: #191940; }
+  .diff-icon {
+    width: 36px; height: 36px; border-radius: 2px;
+    background: var(--ember); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+  .diff-icon svg { width: 18px; height: 18px; fill: white; }
+  .diff-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.6rem; }
+  .diff-desc { font-size: 0.88rem; color: rgba(253,250,245,0.55); line-height: 1.65; font-weight: 300; }
+
+  /* ─── FINAL CTA ─── */
+  .cta-section {
+    padding: 8rem 3rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(200,74,30,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section .section-label { display: inline-block; }
+  .cta-section .section-title { margin: 0 auto 1rem; text-align: center; }
+  .cta-subtitle {
+    font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .cta-buttons { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0d0d2b;
+    color: rgba(253,250,245,0.5);
+    padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; color: var(--warm-white); font-weight: 400;
+  }
+  .footer-logo span { color: var(--ember); }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a { color: rgba(253,250,245,0.5); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--warm-white); }
+  .footer-legal { font-size: 0.72rem; line-height: 1.6; max-width: 600px; opacity: 0.4; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero, .section, .how-section, .proof-section, .diff-section, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .proof-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .trust-bar { gap: 1.5rem; padding: 1rem 1.5rem; }
+    .hero-proof { flex-wrap: wrap; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Igni<span>ton</span>™</a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#science">Science</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#products" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb"></div>
+  <p class="hero-eyebrow">Clinically studied · University proven · No stimulants</p>
+  <h1 class="hero-headline">
+    Think faster.<br>
+    Age <em>slower.</em><br>
+    Feel the difference.
+  </h1>
+  <p class="hero-sub">
+    Memory, focus, and cognitive speed — measurably improved in 30 days. 
+    Longevity biomarkers reduced. No caffeine, no crash, no fillers.
+  </p>
+  <div class="hero-actions">
+    <a href="#products" class="btn-primary">Try Igniton</a>
+    <a href="#results" class="btn-secondary">See the clinical results →</a>
+  </div>
+  <div class="hero-proof">
+    <div class="proof-item">
+      <span class="proof-num">100<span>%</span></span>
+      <span class="proof-label">Short-term memory improvement</span>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-item">
+      <span class="proof-num">51<span>%</span></span>
+      <span class="proof-label">Improvement in attention</span>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-item">
+      <span class="proof-num">30</span>
+      <span class="proof-label">Days to measurable results</span>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-item">
+      <span class="proof-num">0</span>
+      <span class="proof-label">Stimulants, fillers, or excipients</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-dot"></span>University-led clinical trials</div>
+  <div class="trust-item"><span class="trust-dot"></span>Published in peer-reviewed journals</div>
+  <div class="trust-item"><span class="trust-dot"></span>GRAS-certified ingredients</div>
+  <div class="trust-item"><span class="trust-dot"></span>30-day satisfaction guarantee</div>
+  <div class="trust-item"><span class="trust-dot"></span>Made in Colorado, USA</div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <p class="section-label reveal">Two products. One breakthrough.</p>
+  <h2 class="section-title reveal">Every ingredient enhanced for maximum effect.</h2>
+  <div class="products-grid reveal">
+
+    <a class="product-card" href="#">
+      <p class="product-tag">Cognition</p>
+      <h3 class="product-name">IgniCognition™</h3>
+      <p class="product-desc">
+        Clinically proven to improve memory, focus, and mental speed — 
+        without stimulants or the inevitable crash. Your sharpest thinking, 
+        sustained throughout the day.
+      </p>
+      <div class="product-stats">
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Memory improvement</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">83%</span>
+          <span class="stat-label">Performance quality</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">30 days</span>
+          <span class="stat-label">To measurable results</span>
+        </div>
+      </div>
+      <p class="product-price">From <strong>$89</strong> · Subscribe & save 20%</p>
+      <span class="product-link">Shop IgniCognition <span>→</span></span>
+    </a>
+
+    <a class="product-card" href="#">
+      <p class="product-tag">Longevity</p>
+      <h3 class="product-name">IgniLongevity™</h3>
+      <p class="product-desc">
+        Targets the inflammatory and aging biomarkers that predict your 
+        10-year health trajectory. Support your body's natural repair 
+        systems — so you don't just live longer, you feel better doing it.
+      </p>
+      <div class="product-stats">
+        <div class="stat">
+          <span class="stat-num">hs-CRP</span>
+          <span class="stat-label">Inflammation marker</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">NAD⁺</span>
+          <span class="stat-label">Cellular energy support</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">60 days</span>
+          <span class="stat-label">To longevity results</span>
+        </div>
+      </div>
+      <p class="product-price">From <strong>$99</strong> · Subscribe & save 20%</p>
+      <span class="product-link">Shop IgniLongevity <span>→</span></span>
+    </a>
+
+    <a class="product-card" href="#" style="grid-column: 1 / -1; background: #f5f0e8;">
+      <p class="product-tag">Best Value</p>
+      <h3 class="product-name" style="font-size:1.5rem;">The Complete Stack — Cognition + Longevity</h3>
+      <p class="product-desc" style="max-width:600px;">
+        Both formulas together for comprehensive brain and body support. 
+        The most complete approach to human performance and longevity.
+      </p>
+      <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
+        <p class="product-price" style="margin:0;">From <strong>$159</strong> · Save $29 vs. buying separately</p>
+        <span class="product-link">Shop the Bundle <span>→</span></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="science">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label reveal">How it works</p>
+    <h2 class="section-title reveal">
+      Good ingredients aren't enough.<br>They have to work.
+    </h2>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Gold-standard ingredients</div>
+        <div class="step-desc">Every compound selected based on clinical evidence — Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10. No fillers. No excipients.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Enhanced with cold plasma</div>
+        <div class="step-desc">Ingredients are processed through a proprietary cold plasma and laser-photonics system developed over 30 years of advanced physics research.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Greater bioavailability</div>
+        <div class="step-desc">The enhancement process increases cellular uptake — so more of what you take actually reaches the cells that need it.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Measurable results</div>
+        <div class="step-desc">University-led trials showed statistically significant improvements over the same unenhanced formula — proven to work better, not just different.</div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem; color:var(--muted); margin-top:1rem;">
+      <a href="#" style="color:var(--ember); text-decoration:none;">Read the full clinical studies →</a>
+    </p>
+  </div>
+</section>
+
+<!-- GUARANTEE STRIP -->
+<div class="guarantee-strip">
+  <span>🛡</span>
+  <p class="guarantee-text">
+    <strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.
+  </p>
+</div>
+
+<!-- RESULTS -->
+<section class="proof-section" id="results">
+  <div class="proof-layout">
+    <div>
+      <p class="section-label reveal">Clinical results</p>
+      <h2 class="section-title reveal">Numbers from the university study, not our marketing team.</h2>
+      <div class="big-stat-grid reveal">
+        <div class="big-stat">
+          <div class="big-stat-num">100%</div>
+          <div class="big-stat-label">Short-term & operational memory improvement</div>
+          <div class="big-stat-source">IgniCognition trial · 90 days · n=80</div>
+        </div>
+        <div class="big-stat">
+          <div class="big-stat-num">83%</div>
+          <div class="big-stat-label">Quality of performance improvement</div>
+          <div class="big-stat-source">IgniCognition trial · 90 days · n=80</div>
+        </div>
+        <div class="big-stat">
+          <div class="big-stat-num">51%</div>
+          <div class="big-stat-label">Sustained attention improvement</div>
+          <div class="big-stat-source">IgniCognition trial · 90 days · n=80</div>
+        </div>
+        <div class="big-stat">
+          <div class="big-stat-num">30d</div>
+          <div class="big-stat-label">When most users first notice the difference</div>
+          <div class="big-stat-source">Based on participant-reported outcomes</div>
+        </div>
+      </div>
+      <p style="font-size:0.78rem; color:var(--muted); margin-top:1rem; line-height:1.6;">
+        ** These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease. 
+        <a href="#" style="color:var(--ember);">View full study methodology →</a>
+      </p>
+    </div>
+
+    <div class="proof-right reveal">
+      <p class="section-label">What customers say</p>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"My brain is sharper than it's been in a long time. And my shoulder finally seems to be getting better. This stuff works."</p>
+        <p class="review-meta">Verified customer · IgniCognition</p>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I'm 71 years old. I can't believe the difference — my mind is very sharp and I feel amazing. You are changing my life one day at a time."</p>
+        <p class="review-meta">Verified customer · IgniCognition</p>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I feel so much sharper and my mind feels so clear after taking this for over two weeks."</p>
+        <p class="review-meta">Verified customer · IgniCognition</p>
+      </div>
+      <a href="#" style="font-size:0.82rem; color:var(--ember); text-decoration:none;">Read all reviews →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY DIFFERENT -->
+<section class="diff-section">
+  <p class="section-label reveal">Why Igniton is different</p>
+  <h2 class="section-title reveal">Not just what's in it.<br>What's been done to it.</h2>
+  <div class="diff-grid reveal">
+    <div class="diff-card">
+      <div class="diff-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="diff-title">No fillers. Ever.</div>
+      <div class="diff-desc">Every capsule contains only active ingredients — no excipients, no flow agents, no bulking compounds. Pure, dense nutrition.</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">
+        <svg viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+      </div>
+      <div class="diff-title">Enhanced, not just formulated</div>
+      <div class="diff-desc">Ingredients are processed using cold plasma and laser-photonics technology — a process shown to increase bioavailability at the cellular level.</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      </div>
+      <div class="diff-title">University-tested, not just claimed</div>
+      <div class="diff-desc">Results come from peer-reviewed, randomized controlled trials published in academic journals — not from internal marketing metrics.</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">
+        <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <div class="diff-title">No stimulants. No crash.</div>
+      <div class="diff-desc">Cognitive benefits come from enhanced cellular function, not caffeine or synthetic stimulants. Sustained energy without the inevitable afternoon drop.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="faq">
+  <p class="section-label reveal">Ready to start</p>
+  <h2 class="section-title reveal">
+    Most customers feel the difference within two weeks.
+  </h2>
+  <p class="cta-subtitle reveal">Backed by a 30-day guarantee. Subscribe and save 20%.</p>
+  <div class="cta-buttons reveal">
+    <a href="#products" class="btn-primary">Shop IgniCognition</a>
+    <a href="#products" class="btn-primary" style="background:#6b6660;">Shop IgniLongevity</a>
+  </div>
+  <p style="font-size:0.78rem; color:var(--muted); margin-top:1.5rem;">Questions? <a href="#" style="color:var(--ember);">Read the FAQ</a> or <a href="#" style="color:var(--ember);">contact us</a>.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Igni<span>ton</span>™</div>
+    <p style="font-size:0.75rem; margin-top:0.4rem; opacity:0.5;">Quantum-enhanced supplements. Made in Colorado.</p>
+  </div>
+  <div class="footer-links">
+    <a href="#">Products</a>
+    <a href="#">Science</a>
+    <a href="#">Ingredients</a>
+    <a href="#">Studies</a>
+    <a href="#">About</a>
+    <a href="#">FAQ</a>
+    <a href="#">Contact</a>
+  </div>
+  <p class="footer-legal">** These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease. © 2026 Igniton™. All rights reserved.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 20 ? '0 1px 20px rgba(0,0,0,0.06)' : 'none';
+  });
+</script>
+</body>
+</html>

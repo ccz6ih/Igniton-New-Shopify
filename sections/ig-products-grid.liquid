@@ -1,0 +1,325 @@
+{{ 'component-ig-products-grid.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgProductsGrid-{{ section.id }}" 
+  class="ig-products-grid section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+>
+  <div class="page-width">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_title != blank -%}
+      <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_title }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="ig-products-grid__wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'product_card' -%}
+              {%- liquid
+                assign product = block.settings.product
+                assign is_full_width = block.settings.full_width
+                assign custom_bg = block.settings.custom_background
+              -%}
+
+              <a 
+                href="{% if product != blank %}{{ product.url }}{% else %}{{ block.settings.custom_link }}{% endif %}" 
+                class="ig-product-card{% if is_full_width %} ig-product-card--full{% endif %}{% if custom_bg != blank %} ig-product-card--custom-bg{% endif %}"
+                {% if custom_bg != blank %}style="background-color: {{ custom_bg }};"{% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.tag != blank -%}
+                  <p class="ig-product-card__tag">{{ block.settings.tag }}</p>
+                {%- endif -%}
+
+                <h3 class="ig-product-card__name ig-font-display">
+                  {% if product != blank and block.settings.custom_name == blank %}
+                    {{ product.title }}
+                  {% else %}
+                    {{ block.settings.custom_name }}
+                  {% endif %}
+                </h3>
+
+                <div class="ig-product-card__desc ig-font-body">
+                  {% if block.settings.custom_description != blank %}
+                    {{ block.settings.custom_description }}
+                  {% elsif product != blank %}
+                    {{ product.description | strip_html | truncate: 180 }}
+                  {% else %}
+                    <p>Add a product or custom description to complete this card.</p>
+                  {% endif %}
+                </div>
+
+                {%- comment -%} Render stats if any exist for this block {%- endcomment -%}
+                {%- assign has_stats = false -%}
+                {%- for stat_block in section.blocks -%}
+                  {%- if stat_block.type == 'stat' and stat_block.settings.parent_block_id == block.id -%}
+                    {%- assign has_stats = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if has_stats -%}
+                  <div class="ig-product-card__stats">
+                    {%- for stat_block in section.blocks -%}
+                      {%- if stat_block.type == 'stat' and stat_block.settings.parent_block_id == block.id -%}
+                        <div class="ig-product-card__stat" {{ stat_block.shopify_attributes }}>
+                          <span class="ig-product-card__stat-num ig-font-display">
+                            {{ stat_block.settings.stat_number }}
+                          </span>
+                          <span class="ig-product-card__stat-label ig-font-body">
+                            {{ stat_block.settings.stat_label }}
+                          </span>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.show_price and product != blank -%}
+                  <div class="ig-product-card__price ig-font-body">
+                    From <strong>{{ product.price | money }}</strong>
+                    {%- if block.settings.price_note != blank -%}
+                      <span class="ig-product-card__price-note"> · {{ block.settings.price_note }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- elsif block.settings.custom_price != blank -%}
+                  <div class="ig-product-card__price ig-font-body">
+                    {{ block.settings.custom_price }}
+                  </div>
+                {%- endif -%}
+
+                <span class="ig-product-card__link ig-font-body">
+                  {{ block.settings.link_text | default: 'Shop Now' }} <span class="ig-product-card__arrow">→</span>
+                </span>
+              </a>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="ig-products-grid__placeholder">
+        <p>Add product cards to showcase your products.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Products Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Two products. One breakthrough.",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Every ingredient enhanced for maximum effect.",
+      "label": "Section title"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "default": "Cognition",
+          "label": "Tag text"
+        },
+        {
+          "type": "text",
+          "id": "custom_name",
+          "label": "Custom name",
+          "info": "Leave blank to use product title"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_description",
+          "label": "Custom description",
+          "info": "Leave blank to use product description"
+        },
+        {
+          "type": "header",
+          "content": "Price settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "default": true,
+          "label": "Show product price"
+        },
+        {
+          "type": "text",
+          "id": "price_note",
+          "default": "Subscribe & save 20%",
+          "label": "Price note"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom price text",
+          "info": "Overrides product price if set"
+        },
+        {
+          "type": "header",
+          "content": "Link settings"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom link",
+          "info": "Used if no product is selected"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "default": "Shop Now →",
+          "label": "Link text"
+        },
+        {
+          "type": "header",
+          "content": "Card styling"
+        },
+        {
+          "type": "checkbox",
+          "id": "full_width",
+          "default": false,
+          "label": "Full width card",
+          "info": "Spans entire grid width (for bundle cards)"
+        },
+        {
+          "type": "color",
+          "id": "custom_background",
+          "label": "Custom background color",
+          "info": "Leave blank for default"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Product Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "parent_block_id",
+          "label": "Parent card ID",
+          "info": "Must match the ID of the product card this stat belongs to. Check the block ID in the sidebar."
+        },
+        {
+          "type": "text",
+          "id": "stat_number",
+          "default": "100%",
+          "label": "Stat number"
+        },
+        {
+          "type": "text",
+          "id": "stat_label",
+          "default": "Memory improvement",
+          "label": "Stat label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Products Grid",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "tag": "Cognition",
+            "custom_name": "IgniCognition™",
+            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash."
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "tag": "Longevity",
+            "custom_name": "IgniLongevity™",
+            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory."
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "tag": "Best Value",
+            "custom_name": "The Complete Stack — Cognition + Longevity",
+            "custom_description": "Both formulas together for comprehensive brain and body support.",
+            "full_width": true,
+            "custom_background": "#f5f0e8"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

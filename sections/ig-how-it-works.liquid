@@ -1,0 +1,219 @@
+{{ 'component-ig-how-it-works.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #IgHowItWorks-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgHowItWorks-{{ section.id }}" 
+  class="ig-how-it-works section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+>
+  <div class="page-width">
+    <div class="ig-how-it-works__container">
+      {%- if section.settings.section_label != blank -%}
+        <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.section_label }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.section_title != blank -%}
+        <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.section_title }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="ig-how-it-works__steps{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'step' -%}
+                <div class="ig-how-it-works__step" {{ block.shopify_attributes }}>
+                  <div class="ig-how-it-works__step-num ig-font-display">
+                    {{ block.settings.step_number }}
+                  </div>
+                  <div class="ig-how-it-works__step-title ig-font-body">
+                    {{ block.settings.step_title }}
+                  </div>
+                  <div class="ig-how-it-works__step-desc ig-font-body">
+                    {{ block.settings.step_description }}
+                  </div>
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.footer_link_text != blank -%}
+          <div class="ig-how-it-works__footer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            <a 
+              href="{{ section.settings.footer_link_url }}" 
+              class="ig-how-it-works__link"
+            >
+              {{ section.settings.footer_link_text }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="ig-how-it-works__placeholder">
+          <p>Add step blocks to explain your process.</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton How It Works",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f8f5ef"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "How it works",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Good ingredients aren't enough.<br>They have to work.",
+      "label": "Section title"
+    },
+    {
+      "type": "header",
+      "content": "Footer link"
+    },
+    {
+      "type": "text",
+      "id": "footer_link_text",
+      "label": "Link text",
+      "default": "Read the full clinical studies →"
+    },
+    {
+      "type": "url",
+      "id": "footer_link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "default": "01",
+          "label": "Step number",
+          "info": "e.g., 01, 02, 03"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "default": "Gold-standard ingredients",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_description",
+          "default": "Every compound selected based on clinical evidence — Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10. No fillers. No excipients.",
+          "label": "Step description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Gold-standard ingredients",
+            "step_description": "Every compound selected based on clinical evidence — Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10. No fillers. No excipients."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Enhanced with cold plasma",
+            "step_description": "Ingredients are processed through a proprietary cold plasma and laser-photonics system developed over 30 years of advanced physics research."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Greater bioavailability",
+            "step_description": "The enhancement process increases cellular uptake — so more of what you take actually reaches the cells that need it."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "step_title": "Measurable results",
+            "step_description": "University-led trials showed statistically significant improvements over the same unenhanced formula — proven to work better, not just different."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

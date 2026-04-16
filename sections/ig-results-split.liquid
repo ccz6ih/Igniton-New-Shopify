@@ -1,0 +1,312 @@
+{{ 'component-ig-results-split.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgResultsSplit-{{ section.id }}" 
+  class="ig-results-split section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+>
+  <div class="page-width">
+    <div class="ig-results-split__layout">
+      {%- comment -%} Left side: Stats grid {%- endcomment -%}
+      <div class="ig-results-split__left">
+        {%- if section.settings.section_label != blank -%}
+          <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.section_label }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.section_title != blank -%}
+          <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.section_title }}
+          </h2>
+        {%- endif -%}
+
+        {%- assign stat_blocks = section.blocks | where: "type", "big_stat" -%}
+        {%- if stat_blocks.size > 0 -%}
+          <div class="ig-results-split__stats-grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {%- for block in stat_blocks -%}
+              <div class="ig-results-split__stat" {{ block.shopify_attributes }}>
+                <div class="ig-results-split__stat-num ig-font-display">
+                  {{ block.settings.stat_number }}
+                </div>
+                <div class="ig-results-split__stat-label ig-font-body">
+                  {{ block.settings.stat_label }}
+                </div>
+                {%- if block.settings.stat_source != blank -%}
+                  <div class="ig-results-split__stat-source ig-font-body">
+                    {{ block.settings.stat_source }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.disclaimer_text != blank -%}
+          <div class="ig-results-split__disclaimer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.disclaimer_text }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right side: Testimonials {%- endcomment -%}
+      <div class="ig-results-split__right{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- if section.settings.testimonials_label != blank -%}
+          <p class="ig-section-label">
+            {{ section.settings.testimonials_label }}
+          </p>
+        {%- endif -%}
+
+        {%- assign testimonial_blocks = section.blocks | where: "type", "testimonial" -%}
+        {%- if testimonial_blocks.size > 0 -%}
+          <div class="ig-results-split__testimonials">
+            {%- for block in testimonial_blocks -%}
+              <div class="ig-results-split__testimonial" {{ block.shopify_attributes }}>
+                {%- if block.settings.star_rating > 0 -%}
+                  <div class="ig-results-split__stars">
+                    {%- for i in (1..block.settings.star_rating) -%}
+                      ★
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+                <p class="ig-results-split__quote ig-font-display">
+                  {{ block.settings.quote }}
+                </p>
+                {%- if block.settings.customer_meta != blank -%}
+                  <p class="ig-results-split__meta ig-font-body">
+                    {{ block.settings.customer_meta }}
+                  </p>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.reviews_link_text != blank -%}
+          <a 
+            href="{{ section.settings.reviews_link_url }}" 
+            class="ig-results-split__reviews-link ig-font-body"
+          >
+            {{ section.settings.reviews_link_text }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Results Split",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Left side - Stats"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Clinical results",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Numbers from the university study, not our marketing team.",
+      "label": "Section title"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer_text",
+      "label": "Disclaimer text",
+      "default": "<p>** These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Right side - Testimonials"
+    },
+    {
+      "type": "text",
+      "id": "testimonials_label",
+      "default": "What customers say",
+      "label": "Testimonials label"
+    },
+    {
+      "type": "text",
+      "id": "reviews_link_text",
+      "label": "Reviews link text",
+      "default": "Read all reviews →"
+    },
+    {
+      "type": "url",
+      "id": "reviews_link_url",
+      "label": "Reviews link URL"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "big_stat",
+      "name": "Big Stat",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_number",
+          "default": "100%",
+          "label": "Stat number"
+        },
+        {
+          "type": "text",
+          "id": "stat_label",
+          "default": "Short-term & operational memory improvement",
+          "label": "Stat label"
+        },
+        {
+          "type": "text",
+          "id": "stat_source",
+          "label": "Source citation",
+          "default": "IgniCognition trial · 90 days · n=80"
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "star_rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Star rating"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "default": "My brain is sharper than it's been in a long time. This stuff works.",
+          "label": "Customer quote"
+        },
+        {
+          "type": "text",
+          "id": "customer_meta",
+          "default": "Verified customer · IgniCognition",
+          "label": "Customer info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Results Split",
+      "blocks": [
+        {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "100%",
+            "stat_label": "Short-term & operational memory improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80"
+          }
+        },
+        {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "83%",
+            "stat_label": "Quality of performance improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80"
+          }
+        },
+        {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "51%",
+            "stat_label": "Sustained attention improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80"
+          }
+        },
+        {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "30d",
+            "stat_label": "When most users first notice the difference",
+            "stat_source": "Based on participant-reported outcomes"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "My brain is sharper than it's been in a long time. And my shoulder finally seems to be getting better. This stuff works.",
+            "customer_meta": "Verified customer · IgniCognition"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I'm 71 years old. I can't believe the difference — my mind is very sharp and I feel amazing. You are changing my life one day at a time.",
+            "customer_meta": "Verified customer · IgniCognition"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I feel so much sharper and my mind feels so clear after taking this for over two weeks.",
+            "customer_meta": "Verified customer · IgniCognition"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

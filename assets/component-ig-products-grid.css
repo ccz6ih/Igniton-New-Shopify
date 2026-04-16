@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton Products Grid Component
+   Product showcase cards with stats
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-products-grid {
+  background: var(--ig-warm-white);
+}
+
+/* ─── Section Header ─── */
+.ig-section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ig-ember);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.ig-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.15;
+  max-width: 600px;
+  margin-bottom: 3.5rem;
+  color: var(--ig-ink);
+}
+
+/* ─── Products Grid ─── */
+.ig-products-grid__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5px;
+  background: var(--ig-border);
+  border: 1px solid var(--ig-border);
+}
+
+.ig-products-grid__placeholder {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--ig-muted);
+  background: var(--ig-card-bg);
+  border: 1px dashed var(--ig-border);
+  border-radius: 4px;
+}
+
+/* ─── Product Card ─── */
+.ig-product-card {
+  background: var(--ig-warm-white);
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ig-product-card:hover {
+  background: #fdf8f2;
+}
+
+.ig-product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--ig-ember);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.ig-product-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Full width card (for bundles) */
+.ig-product-card--full {
+  grid-column: 1 / -1;
+}
+
+.ig-product-card--custom-bg {
+  background: var(--custom-bg, #f5f0e8);
+}
+
+.ig-product-card--custom-bg:hover {
+  background: var(--custom-bg, #f5f0e8);
+  filter: brightness(0.98);
+}
+
+/* ─── Card Elements ─── */
+.ig-product-card__tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ig-ember);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+
+.ig-product-card__name {
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 0.7rem;
+  line-height: 1.1;
+  color: var(--ig-ink);
+}
+
+.ig-product-card--full .ig-product-card__name {
+  font-size: 1.5rem;
+}
+
+.ig-product-card__desc {
+  font-size: 0.92rem;
+  color: var(--ig-muted);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  flex: 1;
+}
+
+.ig-product-card__desc p {
+  margin: 0;
+}
+
+/* ─── Stats ─── */
+.ig-product-card__stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ig-border);
+  flex-wrap: wrap;
+}
+
+.ig-product-card__stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.ig-product-card__stat-num {
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: var(--ig-ink);
+  line-height: 1;
+}
+
+.ig-product-card__stat-label {
+  font-size: 0.72rem;
+  color: var(--ig-muted);
+  margin-top: 0.2rem;
+}
+
+/* ─── Price ─── */
+.ig-product-card__price {
+  font-size: 0.88rem;
+  color: var(--ig-muted);
+  margin-bottom: 0.5rem;
+}
+
+.ig-product-card__price strong {
+  color: var(--ig-ink);
+  font-weight: 500;
+}
+
+.ig-product-card__price-note {
+  font-size: 0.85rem;
+}
+
+/* ─── Link ─── */
+.ig-product-card__link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ig-ink);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.2s ease;
+  margin-top: auto;
+}
+
+.ig-product-card:hover .ig-product-card__link {
+  gap: 0.8rem;
+}
+
+.ig-product-card__arrow {
+  transition: transform 0.2s ease;
+}
+
+/* ─── Full width card adjustments ─── */
+.ig-product-card--full {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ig-product-card--full .ig-product-card__desc {
+  max-width: 600px;
+  flex: 1 1 auto;
+}
+
+.ig-product-card--full .ig-product-card__stats {
+  border-top: none;
+  padding-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+}
+
+.ig-product-card--full .ig-product-card__price {
+  margin-right: 1.5rem;
+}
+
+/* ─── Responsive - Mobile ─── */
+@media screen and (max-width: 749px) {
+  .ig-section-title {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .ig-products-grid__wrapper {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .ig-product-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .ig-product-card__name {
+    font-size: 1.6rem;
+  }
+
+  .ig-product-card--full .ig-product-card__name {
+    font-size: 1.3rem;
+  }
+
+  .ig-product-card__stats {
+    gap: 1rem;
+  }
+
+  .ig-product-card__stat-num {
+    font-size: 1.5rem;
+  }
+
+  .ig-product-card--full {
+    flex-direction: column;
+  }
+
+  .ig-product-card--full .ig-product-card__stats {
+    margin-left: 0;
+  }
+}
+
+/* ─── Responsive - Tablet ─── */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .ig-products-grid__wrapper {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .ig-product-card {
+    padding: 2.8rem 2.2rem;
+  }
+
+  .ig-product-card__name {
+    font-size: 1.8rem;
+  }
+}
+
+/* ─── Desktop - Large screens ─── */
+@media screen and (min-width: 1200px) {
+  .ig-products-grid__wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ig-product-card--full {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ig-product-card::before,
+  .ig-product-card__link,
+  .ig-product-card__arrow {
+    transition: none;
+  }
+
+  .ig-product-card:hover .ig-product-card__link {
+    gap: 0.5rem;
+  }
+}
+
+/* ─── Focus states ─── */
+.ig-product-card:focus-visible {
+  outline: 2px solid var(--ig-ember);
+  outline-offset: 2px;
+}
+
+.ig-product-card:focus-visible::before {
+  transform: scaleX(1);
+}

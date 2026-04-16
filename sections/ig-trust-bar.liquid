@@ -1,0 +1,85 @@
+{{ 'component-ig-trust-bar.css' | asset_url | stylesheet_tag }}
+
+<section 
+  id="IgTrustBar-{{ section.id }}" 
+  class="ig-trust-bar color-{{ section.settings.color_scheme }}"
+>
+  <div class="ig-trust-bar__container">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'trust_item' -%}
+          <div class="ig-trust-bar__item" {{ block.shopify_attributes }}>
+            <span class="ig-trust-bar__dot"></span>
+            <span class="ig-trust-bar__text">{{ block.settings.text }}</span>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Trust Bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "University-led clinical trials",
+          "label": "Trust item text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Trust Bar",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "text": "University-led clinical trials"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "text": "Published in peer-reviewed journals"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "text": "GRAS-certified ingredients"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "text": "30-day satisfaction guarantee"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "text": "Made in Colorado, USA"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

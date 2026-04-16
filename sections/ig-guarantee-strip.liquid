@@ -1,0 +1,78 @@
+{{ 'component-ig-guarantee-strip.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #IgGuaranteeStrip-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgGuaranteeStrip-{{ section.id }}" 
+  class="ig-guarantee-strip color-{{ section.settings.color_scheme }}"
+>
+  <div class="ig-guarantee-strip__container">
+    {%- if section.settings.icon != blank -%}
+      <span class="ig-guarantee-strip__icon">{{ section.settings.icon }}</span>
+    {%- endif -%}
+    
+    {%- if section.settings.guarantee_text != blank -%}
+      <div class="ig-guarantee-strip__text ig-font-body">
+        {{ section.settings.guarantee_text }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Guarantee Strip",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#b49153"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#fdfaf5"
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon/Emoji",
+      "default": "🛡",
+      "info": "Use an emoji or leave blank"
+    },
+    {
+      "type": "richtext",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Guarantee Strip",
+      "settings": {
+        "icon": "🛡",
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

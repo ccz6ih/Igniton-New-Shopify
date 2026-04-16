@@ -1,0 +1,208 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton Final CTA Component
+   Centered call-to-action with optional radial gradient
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-final-cta {
+  background: var(--ig-warm-white);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Gradient Variant ─── */
+.ig-final-cta--gradient::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(180, 145, 83, 0.08) 0%,
+    rgba(180, 145, 83, 0.02) 40%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ─── Content Container ─── */
+.ig-final-cta__content {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.ig-final-cta .ig-section-label {
+  margin-bottom: 0.8rem;
+}
+
+.ig-final-cta .ig-section-title {
+  margin-bottom: 1.2rem;
+}
+
+/* ─── Subtitle ─── */
+.ig-final-cta__subtitle {
+  font-size: 1.08rem;
+  color: var(--ig-muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.ig-final-cta__subtitle p {
+  margin: 0;
+}
+
+/* ─── Buttons ─── */
+.ig-final-cta__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Button styles (reusable across components) */
+.ig-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 2rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+
+.ig-btn--primary {
+  background: var(--ig-ink);
+  color: white;
+}
+
+.ig-btn--primary:hover {
+  background: #1a1a52;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(18, 18, 65, 0.2);
+}
+
+.ig-btn--secondary {
+  background: transparent;
+  color: var(--ig-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 0.8rem 0.5rem;
+}
+
+.ig-btn--secondary:hover {
+  color: var(--ig-ember);
+  text-decoration-color: var(--ig-ember);
+}
+
+.ig-btn--muted {
+  background: var(--ig-card-bg);
+  color: var(--ig-ink);
+  border: 1px solid var(--ig-border);
+}
+
+.ig-btn--muted:hover {
+  background: rgba(18, 18, 65, 0.06);
+  border-color: rgba(18, 18, 65, 0.2);
+}
+
+/* ─── Footer Text ─── */
+.ig-final-cta__footer {
+  font-size: 0.82rem;
+  color: var(--ig-muted);
+  line-height: 1.5;
+}
+
+.ig-final-cta__footer p {
+  margin: 0;
+}
+
+.ig-final-cta__footer a {
+  color: var(--ig-ember);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ig-final-cta__footer a:hover {
+  color: var(--ig-ember-light);
+  text-decoration: underline;
+}
+
+/* ─── Responsive - Mobile ─── */
+@media screen and (max-width: 749px) {
+  .ig-final-cta--gradient::before {
+    width: 500px;
+    height: 500px;
+  }
+
+  .ig-final-cta__subtitle {
+    font-size: 1rem;
+  }
+
+  .ig-final-cta__buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ig-btn {
+    width: 100%;
+    min-width: 200px;
+  }
+
+  .ig-btn--secondary {
+    width: auto;
+  }
+}
+
+/* ─── Responsive - Tablet ─── */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .ig-final-cta--gradient::before {
+    width: 600px;
+    height: 600px;
+  }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ig-btn {
+    transition: none;
+  }
+
+  .ig-btn--primary:hover {
+    transform: none;
+  }
+}
+
+/* ─── Focus States ─── */
+.ig-btn:focus-visible {
+  outline: 2px solid var(--ig-ember);
+  outline-offset: 3px;
+}
+
+.ig-final-cta__footer a:focus-visible {
+  outline: 2px solid var(--ig-ember);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── High Contrast Mode ─── */
+@media (prefers-contrast: high) {
+  .ig-btn--primary {
+    border: 2px solid currentColor;
+  }
+
+  .ig-btn--muted {
+    border: 2px solid currentColor;
+  }
+}

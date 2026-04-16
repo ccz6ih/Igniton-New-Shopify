@@ -1,0 +1,309 @@
+{{ 'component-ig-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #IgHero-{{ section.id }} {
+    --ig-hero-min-height: {{ section.settings.min_height }}px;
+  }
+  
+  #IgHero-{{ section.id }} .ig-hero__orb {
+    opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
+  }
+{%- endstyle -%}
+
+<section 
+  id="IgHero-{{ section.id }}" 
+  class="ig-hero color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+>
+  {%- if section.settings.show_orb -%}
+    <div class="ig-hero__orb"></div>
+  {%- endif -%}
+  
+  <div class="ig-hero__content page-width">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        
+        {%- when 'eyebrow' -%}
+          {%- if block.settings.text != blank -%}
+            <p class="ig-hero__eyebrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </p>
+          {%- endif -%}
+        
+        {%- when 'headline' -%}
+          {%- if block.settings.heading != blank -%}
+            <h1 class="ig-hero__headline ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+              {{ block.settings.heading }}
+            </h1>
+          {%- endif -%}
+        
+        {%- when 'subheadline' -%}
+          {%- if block.settings.text != blank -%}
+            <div class="ig-hero__sub ig-font-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+        
+        {%- when 'buttons' -%}
+          <div class="ig-hero__actions{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.button_label_1 != blank -%}
+              <a 
+                {% if block.settings.button_link_1 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_1 }}"
+                {% endif %}
+                class="ig-btn ig-btn--primary"
+              >
+                {{ block.settings.button_label_1 | escape }}
+              </a>
+            {%- endif -%}
+            
+            {%- if block.settings.button_label_2 != blank -%}
+              <a 
+                {% if block.settings.button_link_2 == blank %}
+                  role="link" aria-disabled="true"
+                {% else %}
+                  href="{{ block.settings.button_link_2 }}"
+                {% endif %}
+                class="ig-btn ig-btn--secondary"
+              >
+                {{ block.settings.button_label_2 | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+        
+        {%- when 'proof_stats' -%}
+          <div class="ig-hero__proof{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+            {%- for subblock in block.settings -%}
+              {%- comment -%} Proof stats will be rendered from nested blocks {%- endcomment -%}
+            {%- endfor -%}
+          </div>
+        
+      {%- endcase -%}
+    {%- endfor -%}
+    
+    {%- comment -%} Render proof stats if any exist {%- endcomment -%}
+    {%- assign has_stats = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'stat' -%}
+        {%- assign has_stats = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    
+    {%- if has_stats -%}
+      <div class="ig-hero__proof{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- assign stat_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            {%- if stat_count > 0 -%}
+              <div class="ig-hero__proof-divider"></div>
+            {%- endif -%}
+            <div class="ig-hero__proof-item" {{ block.shopify_attributes }}>
+              <span class="ig-hero__proof-num ig-font-display">
+                {{ block.settings.number }}
+                {%- if block.settings.unit != blank -%}
+                  <span class="ig-hero__proof-unit">{{ block.settings.unit }}</span>
+                {%- endif -%}
+              </span>
+              <span class="ig-hero__proof-label ig-font-body">{{ block.settings.label }}</span>
+            </div>
+            {%- assign stat_count = stat_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Igniton Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "default": 700,
+      "unit": "px",
+      "label": "Minimum height"
+    },
+    {
+      "type": "header",
+      "content": "Decorative Orb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_orb",
+      "default": true,
+      "label": "Show decorative orb"
+    },
+    {
+      "type": "range",
+      "id": "orb_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 35,
+      "unit": "%",
+      "label": "Orb opacity"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "Eyebrow Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Clinically studied · University proven · No stimulants",
+          "label": "Eyebrow text"
+        }
+      ]
+    },
+    {
+      "type": "headline",
+      "name": "Headline",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Think faster.<br>Age <em>slower.</em><br>Feel the difference.",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "subheadline",
+      "name": "Subheadline",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.</p>",
+          "label": "Subheadline text"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "Try Igniton",
+          "label": "Primary button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Primary button link"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "default": "See the clinical results →",
+          "label": "Secondary button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Secondary button link"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Proof Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "default": "100",
+          "label": "Number"
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "default": "%",
+          "label": "Unit (optional)",
+          "info": "Leave blank for no unit"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "default": "Short-term memory improvement",
+          "label": "Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Igniton Hero",
+      "blocks": [
+        {
+          "type": "eyebrow"
+        },
+        {
+          "type": "headline"
+        },
+        {
+          "type": "subheadline"
+        },
+        {
+          "type": "buttons"
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "100",
+            "unit": "%",
+            "label": "Short-term memory improvement"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "51",
+            "unit": "%",
+            "label": "Improvement in attention"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "30",
+            "unit": "",
+            "label": "Days to measurable results"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "0",
+            "unit": "",
+            "label": "Stimulants, fillers, or excipients"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

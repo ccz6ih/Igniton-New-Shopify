@@ -1,0 +1,215 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton Results Split Component
+   Split layout: Stats grid on left, testimonials on right
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-results-split {
+  background: var(--ig-warm-white);
+}
+
+/* ─── Split Layout ─── */
+.ig-results-split__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* ─── Left Side (Stats) ─── */
+.ig-results-split__left {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Stats Grid ─── */
+.ig-results-split__stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--ig-border);
+  margin-bottom: 1rem;
+}
+
+.ig-results-split__stat {
+  background: var(--ig-warm-white);
+  padding: 2.5rem 2rem;
+  transition: background 0.3s ease;
+}
+
+.ig-results-split__stat:hover {
+  background: #fdfaf5;
+}
+
+.ig-results-split__stat-num {
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--ig-ember);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.ig-results-split__stat-label {
+  font-size: 0.85rem;
+  color: var(--ig-muted);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.ig-results-split__stat-source {
+  font-size: 0.72rem;
+  color: var(--ig-border);
+  margin-top: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Disclaimer ─── */
+.ig-results-split__disclaimer {
+  font-size: 0.78rem;
+  color: var(--ig-muted);
+  line-height: 1.6;
+}
+
+.ig-results-split__disclaimer p {
+  margin: 0;
+}
+
+.ig-results-split__disclaimer a {
+  color: var(--ig-ember);
+  text-decoration: none;
+}
+
+.ig-results-split__disclaimer a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Right Side (Testimonials) ─── */
+.ig-results-split__right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.ig-results-split__right .ig-section-label {
+  margin-bottom: 0;
+}
+
+/* ─── Testimonials ─── */
+.ig-results-split__testimonials {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ig-results-split__testimonial {
+  padding: 1.5rem;
+  border: 1px solid var(--ig-border);
+  background: var(--ig-card-bg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ig-results-split__testimonial:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(18, 18, 65, 0.08);
+}
+
+.ig-results-split__stars {
+  color: var(--ig-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.ig-results-split__quote {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--ig-ink);
+  margin-bottom: 0.8rem;
+}
+
+.ig-results-split__meta {
+  font-size: 0.78rem;
+  color: var(--ig-muted);
+  margin: 0;
+}
+
+/* ─── Reviews Link ─── */
+.ig-results-split__reviews-link {
+  font-size: 0.82rem;
+  color: var(--ig-ember);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.ig-results-split__reviews-link:hover {
+  color: var(--ig-ember-light);
+}
+
+/* ─── Responsive - Mobile ─── */
+@media screen and (max-width: 749px) {
+  .ig-results-split__layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .ig-results-split__stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ig-results-split__stat {
+    padding: 2rem 1.5rem;
+  }
+
+  .ig-results-split__stat-num {
+    font-size: 2.8rem;
+  }
+
+  .ig-results-split__stat-label {
+    font-size: 0.82rem;
+  }
+
+  .ig-results-split__quote {
+    font-size: 1rem;
+  }
+
+  .ig-results-split__testimonial {
+    padding: 1.2rem;
+  }
+}
+
+/* ─── Responsive - Tablet ─── */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .ig-results-split__layout {
+    gap: 3rem;
+  }
+
+  .ig-results-split__stat-num {
+    font-size: 3rem;
+  }
+
+  .ig-results-split__quote {
+    font-size: 1.05rem;
+  }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ig-results-split__stat,
+  .ig-results-split__testimonial {
+    transition: none;
+  }
+
+  .ig-results-split__testimonial:hover {
+    transform: none;
+  }
+}
+
+/* ─── Focus states ─── */
+.ig-results-split__reviews-link:focus-visible {
+  outline: 2px solid var(--ig-ember);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
