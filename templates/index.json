@@ -9,28 +9,28 @@
  */
 {
   "sections": {
-    "ig_hero_dgrfKc": {
+    "ig_hero_f8eHk9": {
       "type": "ig-hero",
       "blocks": {
-        "eyebrow_q99gLb": {
+        "eyebrow_HPNGH4": {
           "type": "eyebrow",
           "settings": {
             "text": "Clinically studied · University proven · No stimulants"
           }
         },
-        "headline_ip6qbq": {
+        "headline_DiEygD": {
           "type": "headline",
           "settings": {
             "heading": "Think faster. Age <em>slower.</em> Feel the difference."
           }
         },
-        "subheadline_gKCH63": {
+        "subheadline_UfhyAg": {
           "type": "subheadline",
           "settings": {
             "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.</p>"
           }
         },
-        "buttons_Fie3rW": {
+        "buttons_ACHtnU": {
           "type": "buttons",
           "settings": {
             "button_label_1": "Try Igniton",
@@ -39,15 +39,15 @@
             "button_link_2": ""
           }
         },
-        "stat_9jTV37": {
+        "stat_fwPKVF": {
           "type": "stat",
           "settings": {
-            "number": "83",
+            "number": "100",
             "unit": "%",
             "label": "Short-term memory improvement"
           }
         },
-        "stat_tWccTW": {
+        "stat_8taXJN": {
           "type": "stat",
           "settings": {
             "number": "51",
@@ -55,7 +55,7 @@
             "label": "Improvement in attention"
           }
         },
-        "stat_TqcCfR": {
+        "stat_HXmCG6": {
           "type": "stat",
           "settings": {
             "number": "30",
@@ -63,34 +63,37 @@
             "label": "Days to measurable results"
           }
         },
-        "stat_T6VktE": {
+        "stat_rwUPHj": {
           "type": "stat",
           "settings": {
             "number": "0",
-            "unit": "",
+            "unit": "%",
             "label": "Stimulants, fillers, or excipients"
           }
         }
       },
       "block_order": [
-        "eyebrow_q99gLb",
-        "headline_ip6qbq",
-        "subheadline_gKCH63",
-        "buttons_Fie3rW",
-        "stat_9jTV37",
-        "stat_tWccTW",
-        "stat_TqcCfR",
-        "stat_T6VktE"
+        "eyebrow_HPNGH4",
+        "headline_DiEygD",
+        "subheadline_UfhyAg",
+        "buttons_ACHtnU",
+        "stat_fwPKVF",
+        "stat_8taXJN",
+        "stat_HXmCG6",
+        "stat_rwUPHj"
       ],
       "name": "Igniton Hero",
       "settings": {
-        "color_scheme": "scheme-1",
-        "min_height": 600,
-        "background_image": "shopify://shop_images/loveasafields.jpg",
+        "color_scheme": "",
+        "min_height": 700,
+        "background_image": "shopify://shop_images/rendermiddle.jpg",
         "show_orb": true,
-        "orb_opacity": 65,
-        "heading_size": 5.5,
-        "text_size": 115
+        "orb_position": "center",
+        "orb_opacity": 75,
+        "text_alignment": "left",
+        "text_animation": "scale-up",
+        "heading_size": 5,
+        "text_size": 110
       }
     },
     "ig_trust_bar_qywBVA": {
@@ -285,7 +288,7 @@
     }
   },
   "order": [
-    "ig_hero_dgrfKc",
+    "ig_hero_f8eHk9",
     "ig_trust_bar_qywBVA",
     "ig_products_grid_zjycby",
     "ig_how_it_works_8BeyQe",
