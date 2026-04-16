@@ -25,82 +25,191 @@
       </h2>
     {%- endif -%}
     
+    {%- liquid
+      assign regular_cards = section.blocks | where: 'type', 'product_card'
+      assign featured_cards = ''
+      assign non_featured_cards = ''
+    -%}
+    
     <div class="ig-products-showcase__layout">
       <div class="ig-products-showcase__grid">
         {%- for block in section.blocks -%}
-          {%- case block.type -%}
+          {%- if block.type == 'product_card' and block.settings.featured != true -%}
+            {%- liquid
+              assign product = block.settings.product
+              assign product_url = block.settings.custom_link
+              if product != blank
+                assign product_url = product.url
+              endif
+            -%}
             
-            {%- when 'product_card' -%}
-              <a 
-                href="{{ block.settings.link }}" 
-                class="ig-products-showcase__card{% if block.settings.featured %} ig-products-showcase__card--featured{% endif %}{% if forloop.first %} is-active{% endif %}"
-                {{ block.shopify_attributes }}
-                data-product-image="{% if block.settings.product_image %}{{ block.settings.product_image | image_url: width: 1200 }}{% endif %}"
-                data-product-id="{{ block.id }}"
-                {% if block.settings.featured %}style="grid-column: 1 / -1; background: {{ block.settings.featured_bg }};"{% endif %}
-              >
-              {%- if block.settings.tag != blank -%}
-                <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
-              {%- endif -%}
-              
-              {%- if block.settings.product_name != blank -%}
+            <a 
+              href="{{ product_url }}" 
+              class="ig-products-showcase__card{% if forloop.first %} is-active{% endif %}"
+              {{ block.shopify_attributes }}
+              data-product-id="{{ block.id }}"
+              data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
+            >
+                {%- if block.settings.tag != blank -%}
+                  <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
+                {%- endif -%}
+                
                 <h3 class="ig-products-showcase__name ig-font-display">
-                  {{ block.settings.product_name }}
+                  {%- if block.settings.custom_name != blank -%}
+                    {{ block.settings.custom_name }}
+                  {%- elsif product != blank -%}
+                    {{ product.title }}
+                  {%- else -%}
+                    Product name
+                  {%- endif -%}
                 </h3>
-              {%- endif -%}
-              
-              {%- if block.settings.description != blank -%}
-                <div class="ig-products-showcase__desc ig-font-body">
-                  {{ block.settings.description }}
-                </div>
-              {%- endif -%}
-              
-              {%- if block.settings.show_stats -%}
-                <div class="ig-products-showcase__stats{% if block.settings.featured %} ig-products-showcase__stats--featured{% endif %}">
-                  {%- for i in (1..3) -%}
-                    {%- assign stat_num_key = 'stat_' | append: i | append: '_num' -%}
-                    {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
-                    {%- assign stat_num = block.settings[stat_num_key] -%}
-                    {%- assign stat_label = block.settings[stat_label_key] -%}
-                    
-                    {%- if stat_num != blank -%}
-                      <div class="ig-products-showcase__stat">
-                        <span class="ig-products-showcase__stat-num">{{ stat_num }}</span>
-                        <span class="ig-products-showcase__stat-label">{{ stat_label }}</span>
-                      </div>
+                
+                {%- if block.settings.custom_description != blank or product.description != blank -%}
+                  <div class="ig-products-showcase__desc ig-font-body">
+                    {%- if block.settings.custom_description != blank -%}
+                      {{ block.settings.custom_description }}
+                    {%- elsif product != blank -%}
+                      {{ product.description | strip_html | truncatewords: 30 }}
                     {%- endif -%}
-                  {%- endfor -%}
-                </div>
-              {%- endif -%}
+                  </div>
+                {%- endif -%}
               
-              {%- if block.settings.price_text != blank -%}
-                <p class="ig-products-showcase__price">{{ block.settings.price_text }}</p>
-              {%- endif -%}
-              
-              {%- if block.settings.link_text != blank -%}
-                <span class="ig-products-showcase__link">
-                  {{ block.settings.link_text }} <span>→</span>
-                </span>
-              {%- endif -%}
-            </a>
-          
-        {%- endcase -%}
-      {%- endfor -%}
+                {%- if block.settings.show_stats -%}
+                  <div class="ig-products-showcase__stats">
+                    {%- for i in (1..3) -%}
+                      {%- assign stat_num_key = 'stat_' | append: i | append: '_num' -%}
+                      {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
+                      {%- assign stat_num = block.settings[stat_num_key] -%}
+                      {%- assign stat_label = block.settings[stat_label_key] -%}
+                      
+                      {%- if stat_num != blank -%}
+                        <div class="ig-products-showcase__stat">
+                          <span class="ig-products-showcase__stat-num">{{ stat_num }}</span>
+                          <span class="ig-products-showcase__stat-label">{{ stat_label }}</span>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+                
+                {%- if block.settings.show_price and product != blank -%}
+                  <p class="ig-products-showcase__price">
+                    From <strong>{{ product.price | money }}</strong>
+                    {%- if block.settings.price_note != blank -%}
+                      · {{ block.settings.price_note }}
+                    {%- endif -%}
+                  </p>
+                {%- endif -%}
+                
+                {%- if block.settings.link_text != blank -%}
+                  <span class="ig-products-showcase__link">
+                    {{ block.settings.link_text }} <span>→</span>
+                  </span>
+                {%- endif -%}
+              </a>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
       
       <div class="ig-products-showcase__image-display">
+        {%- assign first_non_featured = true -%}
         {%- for block in section.blocks -%}
-          {%- if block.type == 'product_card' and block.settings.product_image != blank -%}
-            <div 
-              class="ig-products-showcase__image{% if forloop.first %} is-active{% endif %}"
-              data-product-id="{{ block.id }}"
-            >
-              {{ block.settings.product_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'ig-products-showcase__img' }}
-            </div>
+          {%- if block.type == 'product_card' and block.settings.featured != true -%}
+            {%- liquid
+              assign product = block.settings.product
+              assign product_image = product.featured_image
+            -%}
+            
+            {%- if product_image != blank -%}
+              <div 
+                class="ig-products-showcase__image{% if first_non_featured %} is-active{% endif %}"
+                data-product-id="{{ block.id }}"
+              >
+                {{ product_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'ig-products-showcase__img', alt: product.title }}
+              </div>
+              {%- assign first_non_featured = false -%}
+            {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
     </div>
+    
+    {%- comment -%} Featured Bundle Card (Full Width Below) {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product_card' and block.settings.featured == true -%}
+        {%- liquid
+          assign product = block.settings.product
+          assign product_url = block.settings.custom_link
+          if product != blank
+            assign product_url = product.url
+          endif
+        -%}
+        
+        <a 
+          href="{{ product_url }}" 
+          class="ig-products-showcase__card ig-products-showcase__card--featured"
+          {{ block.shopify_attributes }}
+          style="background: {{ block.settings.featured_bg }};"
+        >
+          {%- if block.settings.tag != blank -%}
+            <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
+          {%- endif -%}
+          
+          <h3 class="ig-products-showcase__name ig-font-display">
+            {%- if block.settings.custom_name != blank -%}
+              {{ block.settings.custom_name }}
+            {%- elsif product != blank -%}
+              {{ product.title }}
+            {%- else -%}
+              Product name
+            {%- endif -%}
+          </h3>
+          
+          {%- if block.settings.custom_description != blank or product.description != blank -%}
+            <div class="ig-products-showcase__desc ig-font-body">
+              {%- if block.settings.custom_description != blank -%}
+                {{ block.settings.custom_description }}
+              {%- elsif product != blank -%}
+                {{ product.description | strip_html | truncatewords: 30 }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          
+          {%- if block.settings.show_stats -%}
+            <div class="ig-products-showcase__stats ig-products-showcase__stats--featured">
+              {%- for i in (1..3) -%}
+                {%- assign stat_num_key = 'stat_' | append: i | append: '_num' -%}
+                {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
+                {%- assign stat_num = block.settings[stat_num_key] -%}
+                {%- assign stat_label = block.settings[stat_label_key] -%}
+                
+                {%- if stat_num != blank -%}
+                  <div class="ig-products-showcase__stat">
+                    <span class="ig-products-showcase__stat-num">{{ stat_num }}</span>
+                    <span class="ig-products-showcase__stat-label">{{ stat_label }}</span>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          
+          {%- if block.settings.show_price and product != blank -%}
+            <p class="ig-products-showcase__price">
+              From <strong>{{ product.price | money }}</strong>
+              {%- if block.settings.price_note != blank -%}
+                · {{ block.settings.price_note }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+          
+          {%- if block.settings.link_text != blank -%}
+            <span class="ig-products-showcase__link">
+              {{ block.settings.link_text }} <span>→</span>
+            </span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 </section>
 
@@ -186,10 +295,27 @@
       "name": "Product Card",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "product_image",
-          "label": "Product image",
-          "info": "Image shown on right when card is hovered"
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Product image will be shown on right when hovered"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "default": false,
+          "label": "Featured card (bundle)",
+          "info": "Makes card full-width and places it below the grid"
+        },
+        {
+          "type": "color",
+          "id": "featured_bg",
+          "label": "Featured card background",
+          "default": "#fdfaf5"
+        },
+        {
+          "type": "header",
+          "content": "Content"
         },
         {
           "type": "text",
@@ -199,15 +325,19 @@
         },
         {
           "type": "text",
-          "id": "product_name",
-          "default": "IgniCognition™",
-          "label": "Product name"
+          "id": "custom_name",
+          "label": "Custom name",
+          "info": "Leave blank to use product title"
         },
         {
-          "type": "richtext",
-          "id": "description",
-          "default": "<p>Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash. Your sharpest thinking, sustained throughout the day.</p>",
-          "label": "Description"
+          "type": "textarea",
+          "id": "custom_description",
+          "label": "Custom description",
+          "info": "Leave blank to use product description"
+        },
+        {
+          "type": "header",
+          "content": "Stats"
         },
         {
           "type": "checkbox",
@@ -252,38 +382,32 @@
           "label": "Stat 3 - Label"
         },
         {
-          "type": "inline_richtext",
-          "id": "price_text",
-          "default": "From <strong>$89</strong> · Subscribe & save 20%",
-          "label": "Price text"
+          "type": "header",
+          "content": "Price and link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "default": true,
+          "label": "Show product price"
+        },
+        {
+          "type": "text",
+          "id": "price_note",
+          "default": "Subscribe & save 20%",
+          "label": "Price note"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom link",
+          "info": "Used if no product selected"
         },
         {
           "type": "text",
           "id": "link_text",
-          "default": "Shop IgniCognition",
+          "default": "Shop Now",
           "label": "Link text"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link URL"
-        },
-        {
-          "type": "header",
-          "content": "Featured Card Options"
-        },
-        {
-          "type": "checkbox",
-          "id": "featured",
-          "default": false,
-          "label": "Full-width featured card",
-          "info": "Use for bundle/combo products"
-        },
-        {
-          "type": "color",
-          "id": "featured_bg",
-          "default": "#f5f0e8",
-          "label": "Featured card background"
         }
       ]
     }
@@ -296,14 +420,14 @@
           "type": "product_card",
           "settings": {
             "tag": "Cognition",
-            "product_name": "IgniCognition™",
+            "custom_name": "IgniCognition™",
+            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash. Your sharpest thinking, sustained throughout the day.",
             "stat_1_num": "100%",
             "stat_1_label": "Memory improvement",
             "stat_2_num": "83%",
             "stat_2_label": "Performance quality",
             "stat_3_num": "30 days",
             "stat_3_label": "To measurable results",
-            "price_text": "From <strong>$89</strong> · Subscribe & save 20%",
             "link_text": "Shop IgniCognition"
           }
         },
@@ -311,15 +435,14 @@
           "type": "product_card",
           "settings": {
             "tag": "Longevity",
-            "product_name": "IgniLongevity™",
-            "description": "<p>Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory. Support your body's natural repair systems — so you don't just live longer, you feel better doing it.</p>",
+            "custom_name": "IgniLongevity™",
+            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory. Support your body's natural repair systems — so you don't just live longer, you feel better doing it.",
             "stat_1_num": "hs-CRP",
             "stat_1_label": "Inflammation marker",
             "stat_2_num": "NAD⁺",
             "stat_2_label": "Cellular energy support",
             "stat_3_num": "60 days",
             "stat_3_label": "To longevity results",
-            "price_text": "From <strong>$99</strong> · Subscribe & save 20%",
             "link_text": "Shop IgniLongevity"
           }
         },
@@ -327,10 +450,9 @@
           "type": "product_card",
           "settings": {
             "tag": "Best Value",
-            "product_name": "The Complete Stack — Cognition + Longevity",
-            "description": "<p>Both formulas together for comprehensive brain and body support. The most complete approach to human performance and longevity.</p>",
+            "custom_name": "The Complete Stack — Cognition + Longevity",
+            "custom_description": "Both formulas together for comprehensive brain and body support. The most complete approach to human performance and longevity.",
             "show_stats": false,
-            "price_text": "From <strong>$159</strong> · Save $29 vs. buying separately",
             "link_text": "Shop the Bundle",
             "featured": true
           }
