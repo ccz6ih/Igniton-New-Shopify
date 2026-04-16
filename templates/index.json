@@ -256,12 +256,24 @@
         "padding_top": 100,
         "padding_bottom": 100
       }
+    },
+    "ig_guarantee_strip_FWmACi": {
+      "type": "ig-guarantee-strip",
+      "name": "Igniton Guarantee Strip",
+      "settings": {
+        "color_scheme": "",
+        "background_color": "#b49153",
+        "text_color": "#fdfaf5",
+        "icon": "🛡",
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+      }
     }
   },
   "order": [
     "ig_hero_dgrfKc",
     "ig_trust_bar_qywBVA",
     "ig_products_grid_zjycby",
-    "ig_how_it_works_8BeyQe"
+    "ig_how_it_works_8BeyQe",
+    "ig_guarantee_strip_FWmACi"
   ]
 }
