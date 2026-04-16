@@ -8,12 +8,30 @@
   #IgHero-{{ section.id }} .ig-hero__orb {
     opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
   }
+  
+  #IgHero-{{ section.id }} .ig-hero__headline {
+    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
+  }
+  
+  #IgHero-{{ section.id }} .ig-hero__sub {
+    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
+  }
+  
+  #IgHero-{{ section.id }} .ig-hero__eyebrow {
+    font-size: calc(0.78rem * {{ section.settings.text_size | divided_by: 100.0 }});
+  }
 {%- endstyle -%}
 
 <section 
   id="IgHero-{{ section.id }}" 
   class="ig-hero color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
+  {%- if section.settings.background_image != blank -%}
+    <div class="ig-hero__bg-image">
+      {{ section.settings.background_image | image_url: width: 1920 | image_tag: loading: 'lazy', class: 'ig-hero__bg-img', alt: section.settings.background_image.alt }}
+    </div>
+  {%- endif -%}
+  
   {%- if section.settings.show_orb -%}
     <div class="ig-hero__orb"></div>
   {%- endif -%}
@@ -140,7 +158,12 @@
     },
     {
       "type": "header",
-      "content": "Decorative Orb"
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
     },
     {
       "type": "checkbox",
@@ -154,9 +177,33 @@
       "min": 0,
       "max": 100,
       "step": 5,
-      "default": 35,
+      "default": 60,
       "unit": "%",
       "label": "Orb opacity"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 3,
+      "max": 8,
+      "step": 0.5,
+      "default": 5,
+      "unit": "rem",
+      "label": "Heading size"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80,
+      "max": 150,
+      "step": 5,
+      "default": 110,
+      "unit": "%",
+      "label": "Text size"
     }
   ],
   "blocks": [
