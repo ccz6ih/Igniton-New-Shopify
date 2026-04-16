@@ -86,8 +86,9 @@
       "settings": {
         "color_scheme": "",
         "min_height": 600,
+        "background_image": "shopify://shop_images/loveasafields.jpg",
         "show_orb": true,
-        "orb_opacity": 0,
+        "orb_opacity": 65,
         "heading_size": 5,
         "text_size": 110
       }
