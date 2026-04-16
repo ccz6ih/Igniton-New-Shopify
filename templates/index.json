@@ -21,7 +21,7 @@
         "headline_DiEygD": {
           "type": "headline",
           "settings": {
-            "heading": "Think faster. Age <em>slower.</em> Feel the difference."
+            "heading": "Think faster.<br> Age <em>slower.<br></em> Feel the difference."
           }
         },
         "subheadline_UfhyAg": {
@@ -88,11 +88,11 @@
         "min_height": 700,
         "show_orb": true,
         "orb_position": "center",
-        "orb_opacity": 100,
+        "orb_opacity": 85,
         "desktop_content_position": "middle-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "center",
-        "text_animation": "fade-up",
+        "text_animation": "fade-in",
         "heading_size": 5.5,
         "text_size": 125
       }
