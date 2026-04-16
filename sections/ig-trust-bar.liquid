@@ -1,5 +1,17 @@
 {{ 'component-ig-trust-bar.css' | asset_url | stylesheet_tag }}
 
+{%- style -%}
+  #IgTrustBar-{{ section.id }} .ig-trust-bar__item {
+    font-size: {{ section.settings.font_size | times: 0.01 }}rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    #IgTrustBar-{{ section.id }} .ig-trust-bar__item {
+      font-size: {{ section.settings.font_size | times: 0.009 }}rem;
+    }
+  }
+{%- endstyle -%}
+
 <section 
   id="IgTrustBar-{{ section.id }}" 
   class="ig-trust-bar color-{{ section.settings.color_scheme }}"
@@ -28,6 +40,17 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 70,
+      "max": 130,
+      "step": 5,
+      "default": 95,
+      "unit": "%",
+      "label": "Font size",
+      "info": "Adjust the size of trust bar text"
     }
   ],
   "blocks": [
