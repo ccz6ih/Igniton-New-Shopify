@@ -3,31 +3,31 @@
 {%- style -%}
   #IgHero-{{ section.id }} {
     --ig-hero-min-height: {{ section.settings.min_height }}px;
+    --ig-orb-opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
+    --ig-orb-size: {{ section.settings.orb_size }}px;
+    --ig-orb-right: {{ section.settings.orb_offset_x }}vw;
+    --ig-proof-num-size: {{ section.settings.proof_num_size }}rem;
   }
-  
+
   #IgHero-{{ section.id }} .ig-hero__orb {
-    opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }} !important;
-    filter: blur(0px) !important;
     {% if section.settings.orb_position == 'left' %}
-      right: auto !important;
-      left: -5vw !important;
+      right: auto;
+      left: {{ section.settings.orb_offset_x }}vw;
     {% elsif section.settings.orb_position == 'center' %}
-      right: auto !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-    {% else %}
-      right: -8% !important;
+      right: auto;
+      left: 50%;
+      transform: translate(-50%, -50%);
     {% endif %}
   }
-  
+
   #IgHero-{{ section.id }} .ig-hero__headline {
     font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
   }
-  
+
   #IgHero-{{ section.id }} .ig-hero__sub {
     font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
   }
-  
+
   #IgHero-{{ section.id }} .ig-hero__eyebrow {
     font-size: calc(0.78rem * {{ section.settings.text_size | divided_by: 100.0 }});
   }
@@ -44,7 +44,7 @@
   {%- endif -%}
   
   {%- if section.settings.show_orb -%}
-    <div class="ig-hero__orb" aria-hidden="true"></div>
+    <div class="ig-hero__orb ig-hero__orb--{{ section.settings.orb_style }}" aria-hidden="true"></div>
   {%- endif -%}
   
   <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }}">
@@ -186,6 +186,30 @@
     },
     {
       "type": "select",
+      "id": "orb_style",
+      "label": "Orb color style",
+      "options": [
+        {
+          "value": "warm",
+          "label": "Warm cream (soft)"
+        },
+        {
+          "value": "cream",
+          "label": "Pale cream (softest)"
+        },
+        {
+          "value": "gold",
+          "label": "Gold (richer)"
+        },
+        {
+          "value": "amber",
+          "label": "Amber (warmest)"
+        }
+      ],
+      "default": "warm"
+    },
+    {
+      "type": "select",
       "id": "orb_position",
       "label": "Orb position",
       "options": [
@@ -206,11 +230,32 @@
     },
     {
       "type": "range",
+      "id": "orb_offset_x",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "default": -8,
+      "unit": "vw",
+      "label": "Orb horizontal offset",
+      "info": "Negative = push off-screen. Positive = pull onto the page."
+    },
+    {
+      "type": "range",
+      "id": "orb_size",
+      "min": 300,
+      "max": 1200,
+      "step": 25,
+      "default": 750,
+      "unit": "px",
+      "label": "Orb size"
+    },
+    {
+      "type": "range",
       "id": "orb_opacity",
       "min": 0,
       "max": 100,
       "step": 5,
-      "default": 80,
+      "default": 35,
       "unit": "%",
       "label": "Orb opacity"
     },
@@ -359,6 +404,16 @@
       "default": 110,
       "unit": "%",
       "label": "Text size"
+    },
+    {
+      "type": "range",
+      "id": "proof_num_size",
+      "min": 2,
+      "max": 5,
+      "step": 0.1,
+      "default": 3,
+      "unit": "rem",
+      "label": "Proof stat number size"
     }
   ],
   "blocks": [
