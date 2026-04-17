@@ -34,10 +34,10 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "Try Igniton",
-            "button_link_1": "",
+            "button_link_1": "shopify://products/igni-cognition",
             "button_style_1": "primary",
             "button_label_2": "See the clinical results →",
-            "button_link_2": "",
+            "button_link_2": "shopify://pages/igni-longevity-test-report-july-2024",
             "button_style_2": "link"
           }
         },
