@@ -61,12 +61,12 @@
                 {{ block.shopify_attributes }}
               >
                 {%- if block.settings.show_image and product != blank and product.featured_image != blank -%}
-                  <div class="ig-product-card__image-wrapper">
+                  <div class="ig-product-card__image-wrapper" style="--ig-product-image-max: {{ block.settings.image_size }}px;">
                     <img
-                      src="{{ product.featured_image | image_url: width: 600 }}"
-                      srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
-                              {{ product.featured_image | image_url: width: 600 }} 600w,
-                              {{ product.featured_image | image_url: width: 900 }} 900w"
+                      src="{{ product.featured_image | image_url: width: 1200 }}"
+                      srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
+                              {{ product.featured_image | image_url: width: 800 }} 800w,
+                              {{ product.featured_image | image_url: width: 1200 }} 1200w"
                       sizes="(min-width: 990px) {{ block.settings.image_size }}px, (min-width: 750px) 50vw, 100vw"
                       alt="{{ product.featured_image.alt | default: product.title }}"
                       class="ig-product-card__image"
@@ -267,9 +267,9 @@
           "type": "range",
           "id": "image_size",
           "min": 80,
-          "max": 300,
+          "max": 600,
           "step": 10,
-          "default": 180,
+          "default": 220,
           "unit": "px",
           "label": "Image size"
         },

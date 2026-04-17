@@ -27,7 +27,7 @@
         "subheadline_UfhyAg": {
           "type": "subheadline",
           "settings": {
-            "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced.<br> No caffeine, no crash, no fillers.</p>"
+            "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days.Longevity biomarkers reduced.<br> No caffeine, no crash, no fillers.</p>"
           }
         },
         "buttons_ACHtnU": {
@@ -156,6 +156,96 @@
         "font_size": 130
       }
     },
+    "ig_products_grid_zjycby": {
+      "type": "ig-products-grid",
+      "blocks": {
+        "product_card_dXL4h4": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition",
+            "show_image": true,
+            "image_size": 180,
+            "tag": "Cognition",
+            "custom_name": "IgniCognition™",
+            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
+            "show_stats": true,
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To measurable results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_price": "",
+            "custom_link": "",
+            "link_text": "Shop Now →",
+            "full_width": false,
+            "custom_background": "#ffffff"
+          }
+        },
+        "product_card_gLaacK": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-longevity",
+            "show_image": true,
+            "image_size": 180,
+            "tag": "Longevity",
+            "custom_name": "IgniLongevity™",
+            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
+            "show_stats": true,
+            "stat_1_num": "hs-CRP",
+            "stat_1_label": "Inflammation marker",
+            "stat_2_num": "NAD⁺",
+            "stat_2_label": "Cellular energy support",
+            "stat_3_num": "60 days",
+            "stat_3_label": "To longevity results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_price": "",
+            "custom_link": "",
+            "link_text": "Shop Now →",
+            "full_width": false,
+            "custom_background": ""
+          }
+        },
+        "product_card_mMMaGN": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition-longevity-pack",
+            "show_image": true,
+            "image_size": 180,
+            "tag": "Best Value",
+            "custom_name": "The Complete Stack — Cognition + Longevity",
+            "custom_description": "Both formulas together for comprehensive brain and body support.",
+            "show_stats": false,
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_price": "",
+            "custom_link": "",
+            "link_text": "Shop Now →",
+            "full_width": true,
+            "custom_background": "#f5f0e8"
+          }
+        }
+      },
+      "block_order": [
+        "product_card_dXL4h4",
+        "product_card_gLaacK",
+        "product_card_mMMaGN"
+      ],
+      "name": "Igniton Products Grid",
+      "settings": {
+        "color_scheme": "",
+        "section_label": "Two products. One breakthrough.",
+        "section_title": "Every ingredient enhanced for maximum effect.",
+        "heading_size": 4.5,
+        "product_heading_size": 2.8,
+        "text_size": 140,
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
     "ig_how_it_works_8BeyQe": {
       "type": "ig-how-it-works",
       "blocks": {
@@ -202,10 +292,10 @@
       "settings": {
         "color_scheme": "",
         "background_color": "#f5f0e8",
-        "section_label": "<em>How it works</em>",
+        "section_label": "How it works",
         "section_title": "Good ingredients aren't enough. They have to work.",
         "heading_size": 5,
-        "text_size": 135,
+        "text_size": 130,
         "footer_link_text": "Read the full clinical studies →",
         "footer_link_url": "",
         "padding_top": 100,
@@ -246,6 +336,7 @@
   "order": [
     "ig_hero_f8eHk9",
     "ig_trust_bar_qywBVA",
+    "ig_products_grid_zjycby",
     "ig_how_it_works_8BeyQe",
     "featured_blog_JWPYVA",
     "ig_guarantee_strip_FWmACi"
