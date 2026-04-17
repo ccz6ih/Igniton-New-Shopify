@@ -142,7 +142,7 @@
 
 /* Text-link style for secondary CTA (e.g. "See the clinical results →") */
 .ig-hero__link {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.06em;

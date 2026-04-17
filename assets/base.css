@@ -3040,13 +3040,17 @@ details-disclosure > details {
   color: inherit;
 }
 
-/* Igniton Typography Helpers */
+/* Igniton Typography Helpers — use Dawn's native font system */
 .ig-font-display {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
 }
 
 .ig-font-body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
 }
 
 /* Igniton Utility Classes */
