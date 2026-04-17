@@ -102,7 +102,7 @@
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "text_animation": "fade-up",
+        "text_animation": "slide-left",
         "heading_size": 10.5,
         "mobile_heading_scale": 55,
         "text_size": 170,
@@ -154,102 +154,6 @@
       "settings": {
         "color_scheme": "",
         "font_size": 130
-      }
-    },
-    "ig_products_grid_zjycby": {
-      "type": "ig-products-grid",
-      "blocks": {
-        "product_card_dXL4h4": {
-          "type": "product_card",
-          "settings": {
-            "product": "igni-cognition",
-            "show_image": true,
-            "image_size": 460,
-            "tag": "Cognition",
-            "custom_name": "IgniCognition™",
-            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
-            "show_stats": true,
-            "stat_1_num": "83%",
-            "stat_1_label": "Cognitive Improvement",
-            "stat_2_num": "43%",
-            "stat_2_label": "Operational Memory",
-            "stat_3_num": "30 days",
-            "stat_3_label": "Til you notice results",
-            "show_price": true,
-            "price_note": "Subscribe & save 20%",
-            "custom_price": "",
-            "custom_link": "",
-            "link_text": "Shop Now →",
-            "full_width": false,
-            "custom_background": "#ffffff"
-          }
-        },
-        "product_card_gLaacK": {
-          "type": "product_card",
-          "settings": {
-            "product": "igni-longevity",
-            "show_image": true,
-            "image_size": 460,
-            "tag": "Longevity",
-            "custom_name": "IgniLongevity™",
-            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
-            "show_stats": true,
-            "stat_1_num": "",
-            "stat_1_label": "",
-            "stat_2_num": "",
-            "stat_2_label": "",
-            "stat_3_num": "",
-            "stat_3_label": "",
-            "show_price": true,
-            "price_note": "Subscribe & save 20%",
-            "custom_price": "",
-            "custom_link": "",
-            "link_text": "Shop Now →",
-            "full_width": false,
-            "custom_background": ""
-          }
-        },
-        "product_card_mMMaGN": {
-          "type": "product_card",
-          "settings": {
-            "product": "igni-cognition-longevity-pack",
-            "show_image": true,
-            "image_size": 400,
-            "tag": "Best Value",
-            "custom_name": "The Complete Stack — Cognition + Longevity",
-            "custom_description": "Both formulas together for comprehensive brain and body support.",
-            "show_stats": true,
-            "stat_1_num": "",
-            "stat_1_label": "",
-            "stat_2_num": "",
-            "stat_2_label": "",
-            "stat_3_num": "",
-            "stat_3_label": "",
-            "show_price": true,
-            "price_note": "Subscribe & save 15%",
-            "custom_price": "",
-            "custom_link": "",
-            "link_text": "Shop Now →",
-            "full_width": true,
-            "custom_background": "#f5f0e8"
-          }
-        }
-      },
-      "block_order": [
-        "product_card_dXL4h4",
-        "product_card_gLaacK",
-        "product_card_mMMaGN"
-      ],
-      "name": "Igniton Products Grid",
-      "settings": {
-        "color_scheme": "",
-        "section_label": "Two products. One breakthrough.",
-        "section_title": "Every ingredient enhanced for maximum effect.",
-        "heading_size": 4.5,
-        "product_heading_size": 2.8,
-        "text_size": 140,
-        "padding_top": 100,
-        "padding_bottom": 100
       }
     },
     "ig_how_it_works_8BeyQe": {
@@ -337,14 +241,110 @@
         "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>",
         "text_size": 115
       }
+    },
+    "ig_products_grid_mey3Ey": {
+      "type": "ig-products-grid",
+      "blocks": {
+        "product_card_43HthG": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition",
+            "show_image": true,
+            "image_size": 400,
+            "tag": "Cognition",
+            "custom_name": "IgniCognition™",
+            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
+            "show_stats": true,
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To measurable results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_price": "",
+            "custom_link": "",
+            "link_text": "Shop Now →",
+            "full_width": false,
+            "custom_background": ""
+          }
+        },
+        "product_card_Urm3Vr": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-longevity",
+            "show_image": true,
+            "image_size": 400,
+            "tag": "Longevity",
+            "custom_name": "IgniLongevity™",
+            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
+            "show_stats": true,
+            "stat_1_num": "hs-CRP",
+            "stat_1_label": "Inflammation marker",
+            "stat_2_num": "NAD⁺",
+            "stat_2_label": "Cellular energy support",
+            "stat_3_num": "60 days",
+            "stat_3_label": "To longevity results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_price": "",
+            "custom_link": "",
+            "link_text": "Shop Now →",
+            "full_width": false,
+            "custom_background": ""
+          }
+        },
+        "product_card_GxE8VF": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition-longevity-pack",
+            "show_image": true,
+            "image_size": 400,
+            "tag": "Best Value",
+            "custom_name": "The Complete Stack — Cognition + Longevity",
+            "custom_description": "Both formulas together for comprehensive brain and body support.",
+            "show_stats": false,
+            "stat_1_num": "",
+            "stat_1_label": "",
+            "stat_2_num": "",
+            "stat_2_label": "",
+            "stat_3_num": "",
+            "stat_3_label": "",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_price": "",
+            "custom_link": "",
+            "link_text": "Shop Now →",
+            "full_width": true,
+            "custom_background": "#f5f0e8"
+          }
+        }
+      },
+      "block_order": [
+        "product_card_43HthG",
+        "product_card_Urm3Vr",
+        "product_card_GxE8VF"
+      ],
+      "name": "Igniton Products Grid",
+      "settings": {
+        "color_scheme": "",
+        "section_label": "Two products. One breakthrough.",
+        "section_title": "Every ingredient enhanced for maximum effect.",
+        "heading_size": 4,
+        "product_heading_size": 2.7,
+        "text_size": 130,
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
     }
   },
   "order": [
     "ig_hero_f8eHk9",
     "ig_trust_bar_qywBVA",
-    "ig_products_grid_zjycby",
     "ig_how_it_works_8BeyQe",
     "featured_blog_JWPYVA",
-    "ig_guarantee_strip_FWmACi"
+    "ig_guarantee_strip_FWmACi",
+    "ig_products_grid_mey3Ey"
   ]
 }
