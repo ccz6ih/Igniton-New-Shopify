@@ -1,0 +1,40 @@
+{%- comment -%}
+  Shared typography style block for Igniton section headers
+  (section label + section title).
+
+  Every Igniton section that uses .ig-section-label / .ig-section-title
+  renders this snippet to get consistent schema-driven typography
+  controls in the theme editor.
+
+  Required parameters:
+    - section_id_selector: string used as the parent ID selector (e.g. "IgProductsGrid-{{ section.id }}")
+    - label_size: number (percent, 60-180)
+    - label_spacing: number (rem)
+    - heading_size: number (rem)
+    - heading_max_width: number (px)
+    - heading_spacing: number (rem)
+    - mobile_heading_scale: number (percent, 40-100)
+
+  The section schema must define those five range settings. The
+  standard block to paste into new sections lives in:
+  snippets/ig-section-header-settings-reference.liquid
+{%- endcomment -%}
+
+{%- style -%}
+  #{{ section_id_selector }} .ig-section-label {
+    font-size: calc(0.75rem * {{ label_size | divided_by: 100.0 }});
+    margin-bottom: {{ label_spacing }}rem;
+  }
+
+  #{{ section_id_selector }} .ig-section-title {
+    font-size: {{ heading_size }}rem;
+    max-width: {{ heading_max_width }}px;
+    margin-bottom: {{ heading_spacing }}rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id_selector }} .ig-section-title {
+      font-size: calc({{ heading_size }}rem * {{ mobile_heading_scale | divided_by: 100.0 }});
+    }
+  }
+{%- endstyle -%}

@@ -1,10 +1,21 @@
 {{ 'component-ig-products-grid.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
+{% render 'ig-section-header-style',
+  section_id_selector: 'IgProductsGrid-' | append: section.id,
+  label_size: section.settings.label_size,
+  label_spacing: section.settings.label_spacing,
+  heading_size: section.settings.heading_size,
+  heading_max_width: section.settings.heading_max_width,
+  heading_spacing: section.settings.heading_spacing,
+  mobile_heading_scale: section.settings.mobile_heading_scale
+%}
+
 {%- liquid
   assign text_scale = section.settings.text_size | divided_by: 100.0
   assign tag_scale = section.settings.tag_size | divided_by: 100.0
   assign stat_label_scale = section.settings.stat_label_size | divided_by: 100.0
+  assign mobile_scale = section.settings.mobile_heading_scale | divided_by: 100.0
 -%}
 
 {%- style -%}
@@ -18,17 +29,6 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-section-label {
-    font-size: calc(0.75rem * {{ section.settings.label_size | divided_by: 100.0 }});
-    margin-bottom: {{ section.settings.label_spacing }}rem;
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-section-title {
-    font-size: {{ section.settings.heading_size }}rem;
-    max-width: {{ section.settings.heading_max_width }}px;
-    margin-bottom: {{ section.settings.heading_spacing }}rem;
   }
 
   #IgProductsGrid-{{ section.id }} .ig-product-card__name {
@@ -71,14 +71,11 @@
   }
 
   @media screen and (max-width: 749px) {
-    #IgProductsGrid-{{ section.id }} .ig-section-title {
-      font-size: calc({{ section.settings.heading_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
-    }
     #IgProductsGrid-{{ section.id }} .ig-product-card__name {
-      font-size: calc({{ section.settings.product_heading_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+      font-size: calc({{ section.settings.product_heading_size }}rem * {{ mobile_scale }});
     }
     #IgProductsGrid-{{ section.id }} .ig-product-card__stat-num {
-      font-size: calc({{ section.settings.stat_num_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+      font-size: calc({{ section.settings.stat_num_size }}rem * {{ mobile_scale }});
     }
   }
 {%- endstyle -%}
