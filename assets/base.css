@@ -3034,6 +3034,13 @@ details-disclosure > details {
   overflow: hidden !important;
 }
 
+/* Auto-italicized "Igni" prefix (injected by igni-italics.js) */
+.igni-styled {
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--ig-ember);
+}
+
 /* Igniton Typography Helpers */
 .ig-font-display {
   font-family: 'Cormorant Garamond', serif;
