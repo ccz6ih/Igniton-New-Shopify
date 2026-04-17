@@ -156,6 +156,92 @@
         "font_size": 130
       }
     },
+    "ig_how_it_works_8BeyQe": {
+      "type": "ig-how-it-works",
+      "blocks": {
+        "step_zx8aUQ": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Gold-standard ingredients",
+            "step_description": "Every compound selected based on clinical evidence — Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10. No fillers. No excipients."
+          }
+        },
+        "step_gNwTPK": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Enhanced with cold plasma",
+            "step_description": "Ingredients are processed through a proprietary cold plasma and laser-photonics system developed over 30 years of advanced physics research."
+          }
+        },
+        "step_3bcwGY": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Greater bioavailability",
+            "step_description": "The enhancement process increases cellular uptake — so more of what you take actually reaches the cells that need it."
+          }
+        },
+        "step_wptNdf": {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "step_title": "Measurable results",
+            "step_description": "University-led trials showed statistically significant improvements over the same unenhanced formula — proven to work better, not just different."
+          }
+        }
+      },
+      "block_order": [
+        "step_zx8aUQ",
+        "step_gNwTPK",
+        "step_3bcwGY",
+        "step_wptNdf"
+      ],
+      "name": "Igniton How It Works",
+      "settings": {
+        "color_scheme": "",
+        "background_color": "#f5f0e8",
+        "section_label": "How it works",
+        "section_title": "Good ingredients aren't enough. They have to work.",
+        "heading_size": 5,
+        "text_size": 130,
+        "footer_link_text": "Read the full clinical studies →",
+        "footer_link_url": "",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "featured_blog_JWPYVA": {
+      "type": "featured-blog",
+      "name": "t:sections.featured-blog.presets.name",
+      "settings": {
+        "blog": "cognitive-health",
+        "post_limit": 4,
+        "heading": "Blog posts",
+        "heading_size": "h1",
+        "columns_desktop": 4,
+        "show_view_all": true,
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "ig_guarantee_strip_FWmACi": {
+      "type": "ig-guarantee-strip",
+      "name": "Igniton Guarantee Strip",
+      "settings": {
+        "color_scheme": "",
+        "background_color": "#b49153",
+        "text_color": "#fdfaf5",
+        "icon": "🛡",
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>",
+        "text_size": 115
+      }
+    },
     "ig_products_grid_mey3Ey": {
       "type": "ig-products-grid",
       "blocks": {
@@ -251,100 +337,14 @@
         "padding_top": 100,
         "padding_bottom": 100
       }
-    },
-    "featured_blog_JWPYVA": {
-      "type": "featured-blog",
-      "name": "t:sections.featured-blog.presets.name",
-      "settings": {
-        "blog": "cognitive-health",
-        "post_limit": 4,
-        "heading": "Blog posts",
-        "heading_size": "h1",
-        "columns_desktop": 4,
-        "show_view_all": true,
-        "show_image": true,
-        "show_date": true,
-        "show_author": false,
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "ig_guarantee_strip_FWmACi": {
-      "type": "ig-guarantee-strip",
-      "name": "Igniton Guarantee Strip",
-      "settings": {
-        "color_scheme": "",
-        "background_color": "#b49153",
-        "text_color": "#fdfaf5",
-        "icon": "🛡",
-        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>",
-        "text_size": 115
-      }
-    },
-    "ig_how_it_works_yBLzqf": {
-      "type": "ig-how-it-works",
-      "blocks": {
-        "step_KXTTWq": {
-          "type": "step",
-          "settings": {
-            "step_number": "01",
-            "step_title": "Gold-standard ingredients",
-            "step_description": "Every compound selected based on clinical evidence — Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10. No fillers. No excipients."
-          }
-        },
-        "step_nM9jGX": {
-          "type": "step",
-          "settings": {
-            "step_number": "02",
-            "step_title": "Enhanced with cold plasma",
-            "step_description": "Ingredients are processed through a proprietary cold plasma and laser-photonics system developed over 30 years of advanced physics research."
-          }
-        },
-        "step_yWygMG": {
-          "type": "step",
-          "settings": {
-            "step_number": "03",
-            "step_title": "Greater bioavailability",
-            "step_description": "The enhancement process increases cellular uptake — so more of what you take actually reaches the cells that need it."
-          }
-        },
-        "step_e6AYan": {
-          "type": "step",
-          "settings": {
-            "step_number": "04",
-            "step_title": "Measurable results",
-            "step_description": "University-led trials showed statistically significant improvements over the same unenhanced formula — proven to work better, not just different."
-          }
-        }
-      },
-      "block_order": [
-        "step_KXTTWq",
-        "step_nM9jGX",
-        "step_yWygMG",
-        "step_e6AYan"
-      ],
-      "name": "Igniton How It Works",
-      "settings": {
-        "color_scheme": "",
-        "background_color": "#f8f5ef",
-        "section_label": "How it works",
-        "section_title": "Good ingredients aren't enough. They have to work.",
-        "heading_size": 4,
-        "text_size": 110,
-        "footer_link_text": "Read the full clinical studies →",
-        "footer_link_url": "",
-        "padding_top": 100,
-        "padding_bottom": 100
-      }
     }
   },
   "order": [
     "ig_hero_f8eHk9",
     "ig_trust_bar_qywBVA",
-    "ig_products_grid_mey3Ey",
-    "ig_how_it_works_yBLzqf",
+    "ig_how_it_works_8BeyQe",
     "featured_blog_JWPYVA",
-    "ig_guarantee_strip_FWmACi"
+    "ig_guarantee_strip_FWmACi",
+    "ig_products_grid_mey3Ey"
   ]
 }
