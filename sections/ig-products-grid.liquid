@@ -99,30 +99,33 @@
                   {% endif %}
                 </div>
 
-                {%- comment -%} Render stats if any exist for this block {%- endcomment -%}
-                {%- assign has_stats = false -%}
-                {%- for stat_block in section.blocks -%}
-                  {%- if stat_block.type == 'stat' and stat_block.settings.parent_block_id == block.id -%}
-                    {%- assign has_stats = true -%}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
+                {%- if block.settings.show_stats -%}
+                  {%- assign has_any_stat = false -%}
+                  {%- for i in (1..3) -%}
+                    {%- assign num_key = 'stat_' | append: i | append: '_num' -%}
+                    {%- if block.settings[num_key] != blank -%}
+                      {%- assign has_any_stat = true -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
 
-                {%- if has_stats -%}
-                  <div class="ig-product-card__stats">
-                    {%- for stat_block in section.blocks -%}
-                      {%- if stat_block.type == 'stat' and stat_block.settings.parent_block_id == block.id -%}
-                        <div class="ig-product-card__stat" {{ stat_block.shopify_attributes }}>
-                          <span class="ig-product-card__stat-num ig-font-display">
-                            {{ stat_block.settings.stat_number }}
-                          </span>
-                          <span class="ig-product-card__stat-label ig-font-body">
-                            {{ stat_block.settings.stat_label }}
-                          </span>
-                        </div>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </div>
+                  {%- if has_any_stat -%}
+                    <div class="ig-product-card__stats">
+                      {%- for i in (1..3) -%}
+                        {%- assign num_key = 'stat_' | append: i | append: '_num' -%}
+                        {%- assign label_key = 'stat_' | append: i | append: '_label' -%}
+                        {%- assign stat_num = block.settings[num_key] -%}
+                        {%- assign stat_label = block.settings[label_key] -%}
+
+                        {%- if stat_num != blank -%}
+                          <div class="ig-product-card__stat">
+                            <span class="ig-product-card__stat-num ig-font-display">{{ stat_num }}</span>
+                            <span class="ig-product-card__stat-label ig-font-body">{{ stat_label }}</span>
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
                 {%- endif -%}
 
                 {%- if block.settings.show_price and product != blank -%}
@@ -294,6 +297,47 @@
         },
         {
           "type": "header",
+          "content": "Stats"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stats",
+          "default": true,
+          "label": "Show stats"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_num",
+          "label": "Stat 1 — number",
+          "info": "Leave blank to skip"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_label",
+          "label": "Stat 1 — label"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_num",
+          "label": "Stat 2 — number"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_label",
+          "label": "Stat 2 — label"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_num",
+          "label": "Stat 3 — number"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_label",
+          "label": "Stat 3 — label"
+        },
+        {
+          "type": "header",
           "content": "Price settings"
         },
         {
@@ -349,29 +393,6 @@
         }
       ]
     },
-    {
-      "type": "stat",
-      "name": "Product Stat",
-      "settings": [
-        {
-          "type": "text",
-          "id": "parent_block_id",
-          "label": "Parent card ID",
-          "info": "Must match the ID of the product card this stat belongs to. Check the block ID in the sidebar."
-        },
-        {
-          "type": "text",
-          "id": "stat_number",
-          "default": "100%",
-          "label": "Stat number"
-        },
-        {
-          "type": "text",
-          "id": "stat_label",
-          "default": "Memory improvement",
-          "label": "Stat label"
-        }
-      ]
     }
   ],
   "presets": [
@@ -383,7 +404,13 @@
           "settings": {
             "tag": "Cognition",
             "custom_name": "IgniCognition™",
-            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash."
+            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To measurable results"
           }
         },
         {
@@ -391,7 +418,13 @@
           "settings": {
             "tag": "Longevity",
             "custom_name": "IgniLongevity™",
-            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory."
+            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
+            "stat_1_num": "hs-CRP",
+            "stat_1_label": "Inflammation marker",
+            "stat_2_num": "NAD⁺",
+            "stat_2_label": "Cellular energy support",
+            "stat_3_num": "60 days",
+            "stat_3_label": "To longevity results"
           }
         },
         {
@@ -400,6 +433,7 @@
             "tag": "Best Value",
             "custom_name": "The Complete Stack — Cognition + Longevity",
             "custom_description": "Both formulas together for comprehensive brain and body support.",
+            "show_stats": false,
             "full_width": true,
             "custom_background": "#f5f0e8"
           }
