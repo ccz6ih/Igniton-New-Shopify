@@ -281,8 +281,8 @@
         "section_label": "Two products. One breakthrough.",
         "section_title": "Every ingredient enhanced for maximum effect.",
         "heading_size": 3,
-        "product_heading_size": 2,
-        "text_size": 110,
+        "product_heading_size": 2.6,
+        "text_size": 120,
         "padding_top": 100,
         "padding_bottom": 100
       }
