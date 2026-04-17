@@ -27,7 +27,7 @@
         "subheadline_UfhyAg": {
           "type": "subheadline",
           "settings": {
-            "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.</p>"
+            "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced.&lt;br&gt; No caffeine, no crash, no fillers.</p>"
           }
         },
         "buttons_ACHtnU": {
@@ -103,9 +103,10 @@
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "text_animation": "fade-up",
-        "heading_size": 8,
-        "text_size": 150,
-        "proof_num_size": 5
+        "heading_size": 10.5,
+        "mobile_heading_scale": 55,
+        "text_size": 170,
+        "proof_num_size": 5.8
       }
     },
     "ig_trust_bar_qywBVA": {
