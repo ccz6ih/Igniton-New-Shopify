@@ -86,7 +86,7 @@
       ],
       "name": "Igniton Hero",
       "settings": {
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
         "min_height": 750,
         "show_orb": true,
         "orb_image": "shopify://shop_images/Home_Log_V02.jpg",
@@ -200,7 +200,7 @@
       ],
       "name": "Igniton How It Works",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-5",
         "background_color": "#f5f0e8",
         "section_label": "How it works",
         "section_title": "Good ingredients aren't enough. They have to work.",
