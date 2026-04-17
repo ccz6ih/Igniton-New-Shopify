@@ -35,8 +35,10 @@
           "settings": {
             "button_label_1": "Try Igniton",
             "button_link_1": "",
+            "button_style_1": "primary",
             "button_label_2": "See the clinical results →",
-            "button_link_2": ""
+            "button_link_2": "",
+            "button_style_2": "link"
           }
         },
         "stat_fwPKVF": {
@@ -98,7 +100,7 @@
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "text_animation": "fade-in",
+        "text_animation": "scale-up",
         "heading_size": 6,
         "text_size": 130,
         "proof_num_size": 3.8
