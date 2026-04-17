@@ -1,8 +1,15 @@
 {{ 'component-ig-products-grid.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign text_scale = section.settings.text_size | divided_by: 100.0
+  assign tag_scale = section.settings.tag_size | divided_by: 100.0
+  assign stat_label_scale = section.settings.stat_label_size | divided_by: 100.0
+-%}
+
 {%- style -%}
-  .section-{{ section.id }}-padding {    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
@@ -12,17 +19,62 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-  
+
   #IgProductsGrid-{{ section.id }} .ig-section-title {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
+    font-size: {{ section.settings.heading_size }}rem;
   }
-  
+
   #IgProductsGrid-{{ section.id }} .ig-product-card__name {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.product_heading_size }}rem);
+    font-size: {{ section.settings.product_heading_size }}rem;
   }
-  
+
+  #IgProductsGrid-{{ section.id }} .ig-product-card__tag {
+    font-size: calc(0.78rem * {{ tag_scale }});
+  }
+
   #IgProductsGrid-{{ section.id }} .ig-product-card__desc {
-    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
+    font-size: calc(1rem * {{ text_scale }});
+    line-height: 1.75;
+  }
+
+  #IgProductsGrid-{{ section.id }} .ig-product-card__stat-num {
+    font-size: {{ section.settings.stat_num_size }}rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    {% if section.settings.stat_color == 'gold' %}
+      color: var(--ig-ember);
+    {% elsif section.settings.stat_color == 'ink' %}
+      color: var(--ig-ink);
+    {% endif %}
+  }
+
+  #IgProductsGrid-{{ section.id }} .ig-product-card__stat-label {
+    font-size: calc(0.78rem * {{ stat_label_scale }});
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    color: #5a554e;
+  }
+
+  #IgProductsGrid-{{ section.id }} .ig-product-card__price {
+    font-size: calc(0.95rem * {{ text_scale }});
+  }
+
+  #IgProductsGrid-{{ section.id }} .ig-product-card__link {
+    font-size: calc(0.85rem * {{ text_scale }});
+    letter-spacing: 0.12em;
+  }
+
+  @media screen and (max-width: 749px) {
+    #IgProductsGrid-{{ section.id }} .ig-section-title {
+      font-size: calc({{ section.settings.heading_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+    }
+    #IgProductsGrid-{{ section.id }} .ig-product-card__name {
+      font-size: calc({{ section.settings.product_heading_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+    }
+    #IgProductsGrid-{{ section.id }} .ig-product-card__stat-num {
+      font-size: calc({{ section.settings.stat_num_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+    }
   }
 {%- endstyle -%}
 
@@ -199,9 +251,9 @@
       "type": "range",
       "id": "heading_size",
       "min": 2,
-      "max": 5,
-      "step": 0.5,
-      "default": 3,
+      "max": 8,
+      "step": 0.25,
+      "default": 3.5,
       "unit": "rem",
       "label": "Section heading size"
     },
@@ -209,21 +261,72 @@
       "type": "range",
       "id": "product_heading_size",
       "min": 1.5,
-      "max": 3,
+      "max": 4,
       "step": 0.1,
-      "default": 2,
+      "default": 2.4,
       "unit": "rem",
       "label": "Product name size"
     },
     {
       "type": "range",
-      "id": "text_size",
-      "min": 80,
+      "id": "tag_size",
+      "min": 60,
       "max": 140,
       "step": 5,
-      "default": 110,
+      "default": 95,
+      "unit": "%",
+      "label": "Tag / eyebrow size"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80,
+      "max": 180,
+      "step": 5,
+      "default": 115,
       "unit": "%",
       "label": "Body text size"
+    },
+    {
+      "type": "range",
+      "id": "stat_num_size",
+      "min": 1.2,
+      "max": 4,
+      "step": 0.1,
+      "default": 2.4,
+      "unit": "rem",
+      "label": "Stat number size"
+    },
+    {
+      "type": "range",
+      "id": "stat_label_size",
+      "min": 60,
+      "max": 140,
+      "step": 5,
+      "default": 95,
+      "unit": "%",
+      "label": "Stat label size"
+    },
+    {
+      "type": "select",
+      "id": "stat_color",
+      "label": "Stat number color",
+      "options": [
+        { "value": "ink", "label": "Ink (navy)" },
+        { "value": "gold", "label": "Ember gold" }
+      ],
+      "default": "gold"
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_scale",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 65,
+      "unit": "%",
+      "label": "Mobile heading scale",
+      "info": "Scales section title, product name, and stat numbers on screens under 750px."
     },
     {
       "type": "header",
