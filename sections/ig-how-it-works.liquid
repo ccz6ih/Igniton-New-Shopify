@@ -1,91 +1,59 @@
 {{ 'component-ig-how-it-works.css' | asset_url | stylesheet_tag }}
 
-{% render 'ig-section-header-style',
-  section_id_selector: 'IgHowItWorks-' | append: section.id,
-  label_size: section.settings.label_size,
-  label_spacing: section.settings.label_spacing,
-  heading_size: section.settings.heading_size,
-  heading_max_width: section.settings.heading_max_width,
-  heading_spacing: section.settings.heading_spacing,
-  mobile_heading_scale: section.settings.mobile_heading_scale
-%}
+{% render 'ig-section-controls', section: section %}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
-  #IgHowItWorks-{{ section.id }} {
-    background: {{ section.settings.background_color }};
-  }
-
-  #IgHowItWorks-{{ section.id }} .ig-how-it-works__step-desc {
-    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
-  }
-{%- endstyle -%}
-
-<section 
-  id="IgHowItWorks-{{ section.id }}" 
-  class="ig-how-it-works section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+<section
+  id="IgHowItWorks-{{ section.id }}"
+  class="ig-how-it-works color-{{ section.settings.color_scheme }}"
 >
-  <div class="page-width">
-    <div class="ig-how-it-works__container">
-      {%- if section.settings.section_label != blank -%}
-        <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-          {{ section.settings.section_label }}
-        </p>
-      {%- endif -%}
+  <div class="ig-how-it-works__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
 
-      {%- if section.settings.section_title != blank -%}
-        <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-          {{ section.settings.section_title }}
-        </h2>
-      {%- endif -%}
+    {%- if section.settings.section_title != blank -%}
+      <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_title }}
+      </h2>
+    {%- endif -%}
 
-      {%- if section.blocks.size > 0 -%}
-        <div class="ig-how-it-works__steps{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-          {%- for block in section.blocks -%}
-            {%- case block.type -%}
-              {%- when 'step' -%}
-                <div class="ig-how-it-works__step" {{ block.shopify_attributes }}>
-                  <div class="ig-how-it-works__step-num ig-font-display">
-                    {{ block.settings.step_number }}
-                  </div>
-                  <div class="ig-how-it-works__step-title ig-font-body">
-                    {{ block.settings.step_title }}
-                  </div>
-                  <div class="ig-how-it-works__step-desc ig-font-body">
-                    {{ block.settings.step_description }}
-                  </div>
+    {%- if section.blocks.size > 0 -%}
+      <div class="ig-how-it-works__steps{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'step' -%}
+              <div class="ig-how-it-works__step" {{ block.shopify_attributes }}>
+                <div class="ig-how-it-works__step-num ig-font-display">
+                  {{ block.settings.step_number }}
                 </div>
-            {%- endcase -%}
-          {%- endfor -%}
-        </div>
+                <div class="ig-how-it-works__step-title ig-font-body">
+                  {{ block.settings.step_title }}
+                </div>
+                <div class="ig-how-it-works__step-desc ig-font-body">
+                  {{ block.settings.step_description }}
+                </div>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
 
-        {%- if section.settings.footer_link_text != blank -%}
-          <div class="ig-how-it-works__footer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-            <a 
-              href="{{ section.settings.footer_link_url }}" 
-              class="ig-how-it-works__link"
-            >
-              {{ section.settings.footer_link_text }}
-            </a>
-          </div>
-        {%- endif -%}
-      {%- else -%}
-        <div class="ig-how-it-works__placeholder">
-          <p>Add step blocks to explain your process.</p>
+      {%- if section.settings.footer_link_text != blank -%}
+        <div class="ig-how-it-works__footer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <a
+            href="{{ section.settings.footer_link_url }}"
+            class="ig-how-it-works__link"
+          >
+            {{ section.settings.footer_link_text }}
+          </a>
         </div>
       {%- endif -%}
-    </div>
+    {%- else -%}
+      <div class="ig-how-it-works__placeholder">
+        <p>Add step blocks to explain your process.</p>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -99,16 +67,35 @@
   },
   "settings": [
     {
+      "type": "header",
+      "content": "Color"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background color",
-      "default": "#f8f5ef"
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Content"
     },
     {
       "type": "text",
@@ -124,41 +111,56 @@
     },
     {
       "type": "header",
-      "content": "Typography — sliders"
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
     },
     {
       "type": "range",
       "id": "label_size",
-      "min": 60,
-      "max": 180,
-      "step": 5,
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
       "default": 100,
-      "unit": "%",
-      "label": "Section label size"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "min": 2,
-      "max": 8,
-      "step": 0.25,
-      "default": 3,
-      "unit": "rem",
-      "label": "Section heading size"
-    },
-    {
-      "type": "range",
-      "id": "text_size",
-      "min": 80,
-      "max": 180,
-      "step": 5,
-      "default": 115,
-      "unit": "%",
-      "label": "Text size"
-    },
-    {
-      "type": "header",
-      "content": "Typography — options"
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
     },
     {
       "type": "select",
@@ -172,6 +174,18 @@
         { "value": "2",    "label": "Spacious" }
       ],
       "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 8, "step": 0.25,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
     },
     {
       "type": "select",
@@ -202,14 +216,40 @@
       "type": "select",
       "id": "mobile_heading_scale",
       "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
       "options": [
         { "value": "40",  "label": "Aggressive (40%)" },
         { "value": "55",  "label": "Balanced (55%)" },
-        { "value": "70",  "label": "Gentle (70%)" },
-        { "value": "85",  "label": "Subtle (85%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
         { "value": "100", "label": "Same as desktop" }
       ],
       "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.0625,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
     },
     {
       "type": "header",
@@ -225,38 +265,6 @@
       "type": "url",
       "id": "footer_link_url",
       "label": "Link URL"
-    },
-    {
-      "type": "header",
-      "content": "Section padding"
-    },
-    {
-      "type": "select",
-      "id": "padding_top",
-      "label": "Padding top",
-      "options": [
-        { "value": "0",   "label": "None" },
-        { "value": "50",  "label": "Compact" },
-        { "value": "75",  "label": "Normal" },
-        { "value": "100", "label": "Large" },
-        { "value": "125", "label": "Extra large" },
-        { "value": "150", "label": "XXL" }
-      ],
-      "default": "100"
-    },
-    {
-      "type": "select",
-      "id": "padding_bottom",
-      "label": "Padding bottom",
-      "options": [
-        { "value": "0",   "label": "None" },
-        { "value": "50",  "label": "Compact" },
-        { "value": "75",  "label": "Normal" },
-        { "value": "100", "label": "Large" },
-        { "value": "125", "label": "Extra large" },
-        { "value": "150", "label": "XXL" }
-      ],
-      "default": "100"
     }
   ],
   "blocks": [

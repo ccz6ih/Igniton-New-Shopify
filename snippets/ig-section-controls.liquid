@@ -1,0 +1,104 @@
+{%- comment -%}
+  IG Section Controls
+  ───────────────────
+  Emits a scoped <style> block writing the universal Igniton section
+  control values as CSS custom properties onto the section wrapper.
+
+  This is the contract every `ig-*` section consumes. Component CSS
+  reads var(--ig-*) — it never reads section.settings directly.
+
+  USAGE
+  -----
+  Render at the top of any ig-* section template, AFTER the component
+  stylesheet tag:
+
+    {% render 'ig-section-controls', section: section %}
+
+  REQUIRED SECTION SETTINGS
+  -------------------------
+  Your section MUST define the subset of settings it uses. Copy the
+  canonical JSON block from `docs/section-schema-standard.md`. Any
+  setting not defined on the section falls back to a sensible default.
+
+  SETTINGS RECOGNIZED
+  -------------------
+  Container:       container_width
+  Spacing:         padding_block_start_desktop, padding_block_end_desktop,
+                   padding_block_start_mobile, padding_block_end_mobile
+  Label:           label_size, label_spacing
+  Heading:         heading_size, heading_max_width, heading_spacing,
+                   mobile_heading_scale
+  Body:            body_size, body_max_width
+
+  Color scheme is NOT emitted here — apply `color-{{ section.settings.color_scheme }}`
+  directly on your section wrapper (Dawn handles the rest).
+
+  OUTPUTS — CSS custom properties scoped to #shopify-section-{{ section.id }}
+  --------------------------------------------------------------------------
+  --ig-container-width     px or 100% (full bleed)
+  --ig-pad-start           desktop top padding (px)
+  --ig-pad-end             desktop bottom padding (px)
+  --ig-pad-start-m         mobile top padding (px)
+  --ig-pad-end-m           mobile bottom padding (px)
+  --ig-label-scale         numeric multiplier (e.g. 1.0 = 100%)
+  --ig-label-spacing       rem (below label)
+  --ig-heading-size        rem (desktop)
+  --ig-heading-width       px (max-width cap)
+  --ig-heading-spacing     rem (below heading)
+  --ig-mobile-scale        numeric multiplier for mobile heading (e.g. 0.65)
+  --ig-body-size           rem
+  --ig-body-width          px (max-width cap)
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+
+  # Container width — map select values to CSS values
+  assign cw_map = 'narrow:720px,medium:960px,default:1200px,wide:1440px,full:100%' | split: ','
+  assign container_width = '1200px'
+  assign container_setting = s.container_width | default: 'default'
+  for pair in cw_map
+    assign pp = pair | split: ':'
+    if pp[0] == container_setting
+      assign container_width = pp[1]
+    endif
+  endfor
+
+  # Spacing — default 96/96 desktop, 48/48 mobile
+  assign pad_start   = s.padding_block_start_desktop | default: 96
+  assign pad_end     = s.padding_block_end_desktop   | default: 96
+  assign pad_start_m = s.padding_block_start_mobile  | default: 48
+  assign pad_end_m   = s.padding_block_end_mobile    | default: 48
+
+  # Label
+  assign label_size_pct = s.label_size    | default: 100
+  assign label_spacing  = s.label_spacing  | default: 0.75
+
+  # Heading
+  assign heading_size        = s.heading_size        | default: 3.5
+  assign heading_width       = s.heading_max_width   | default: 900
+  assign heading_spacing     = s.heading_spacing     | default: 2.5
+  assign mobile_scale_pct    = s.mobile_heading_scale | default: 65
+
+  # Body
+  assign body_size       = s.body_size       | default: 1
+  assign body_width      = s.body_max_width  | default: 640
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --ig-container-width: {{ container_width }};
+    --ig-pad-start:       {{ pad_start }}px;
+    --ig-pad-end:         {{ pad_end }}px;
+    --ig-pad-start-m:     {{ pad_start_m }}px;
+    --ig-pad-end-m:       {{ pad_end_m }}px;
+    --ig-label-scale:     {{ label_size_pct | divided_by: 100.0 }};
+    --ig-label-spacing:   {{ label_spacing }}rem;
+    --ig-heading-size:    {{ heading_size }}rem;
+    --ig-heading-width:   {{ heading_width }}px;
+    --ig-heading-spacing: {{ heading_spacing }}rem;
+    --ig-mobile-scale:    {{ mobile_scale_pct | divided_by: 100.0 }};
+    --ig-body-size:       {{ body_size }}rem;
+    --ig-body-width:      {{ body_width }}px;
+  }
+{%- endstyle -%}
