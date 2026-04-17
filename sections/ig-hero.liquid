@@ -1,23 +1,70 @@
 {{ 'component-ig-hero.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  case section.settings.orb_style
+    when 'cream'
+      assign orb_c1 = '#faf1df'
+      assign orb_c2 = '#f0e0bf'
+      assign orb_c3 = '#e0c896'
+    when 'gold'
+      assign orb_c1 = '#e8cf9b'
+      assign orb_c2 = '#d4b882'
+      assign orb_c3 = '#b49153'
+    when 'amber'
+      assign orb_c1 = '#f5d9a8'
+      assign orb_c2 = '#e3ba75'
+      assign orb_c3 = '#c99a4f'
+    else
+      assign orb_c1 = '#f2e4cc'
+      assign orb_c2 = '#e8d4b0'
+      assign orb_c3 = '#d4b882'
+  endcase
+-%}
+
 {%- style -%}
   #IgHero-{{ section.id }} {
     --ig-hero-min-height: {{ section.settings.min_height }}px;
-    --ig-orb-opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
-    --ig-orb-size: {{ section.settings.orb_size }}px;
-    --ig-orb-right: {{ section.settings.orb_offset_x }}vw;
     --ig-proof-num-size: {{ section.settings.proof_num_size }}rem;
+    min-height: {{ section.settings.min_height }}px;
+    position: relative;
+    overflow: hidden;
   }
 
   #IgHero-{{ section.id }} .ig-hero__orb {
+    position: absolute;
+    top: 50%;
     {% if section.settings.orb_position == 'left' %}
       right: auto;
       left: {{ section.settings.orb_offset_x }}vw;
+      transform: translateY(-50%);
     {% elsif section.settings.orb_position == 'center' %}
       right: auto;
       left: 50%;
       transform: translate(-50%, -50%);
+    {% else %}
+      left: auto;
+      right: {{ section.settings.orb_offset_x }}vw;
+      transform: translateY(-50%);
     {% endif %}
+    width: {{ section.settings.orb_size }}px;
+    height: {{ section.settings.orb_size }}px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: {{ orb_c2 }};
+    background-image: radial-gradient(circle at 40% 40%, {{ orb_c1 }} 0%, {{ orb_c2 }} 55%, {{ orb_c3 }} 100%);
+    opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  #IgHero-{{ section.id }} .ig-hero__orb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.orb_image_position }};
+    display: block;
+    transform: scale({{ section.settings.orb_image_scale | divided_by: 100.0 }});
+    transform-origin: center center;
   }
 
   #IgHero-{{ section.id }} .ig-hero__headline {
@@ -44,7 +91,15 @@
   {%- endif -%}
   
   {%- if section.settings.show_orb -%}
-    <div class="ig-hero__orb ig-hero__orb--{{ section.settings.orb_style }}" aria-hidden="true"></div>
+    <div class="ig-hero__orb ig-hero__orb--{{ section.settings.orb_style }}" aria-hidden="true">
+      {%- if section.settings.orb_image != blank -%}
+        {{ section.settings.orb_image | image_url: width: 1400 | image_tag:
+          loading: 'eager',
+          class: 'ig-hero__orb-img',
+          alt: section.settings.orb_image.alt
+        }}
+      {%- endif -%}
+    </div>
   {%- endif -%}
   
   <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }}">
@@ -181,8 +236,38 @@
       "type": "checkbox",
       "id": "show_orb",
       "default": true,
-      "label": "Show decorative orb",
-      "info": "Golden gradient orb background element"
+      "label": "Show orb",
+      "info": "Circular element on the hero. Shows a photo if uploaded, otherwise a gradient."
+    },
+    {
+      "type": "image_picker",
+      "id": "orb_image",
+      "label": "Orb image (optional)",
+      "info": "Upload a product photo to display as a circular image. Leave blank for the gradient orb."
+    },
+    {
+      "type": "select",
+      "id": "orb_image_position",
+      "label": "Image focal point",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "orb_image_scale",
+      "min": 80,
+      "max": 180,
+      "step": 5,
+      "default": 100,
+      "unit": "%",
+      "label": "Image zoom",
+      "info": "Zoom the image inside the circle."
     },
     {
       "type": "select",
