@@ -131,26 +131,26 @@
         {%- when 'buttons' -%}
           <div class="ig-hero__actions" {{ block.shopify_attributes }}>
             {%- if block.settings.button_label_1 != blank -%}
-              <a 
+              <a
                 {% if block.settings.button_link_1 == blank %}
                   role="link" aria-disabled="true"
                 {% else %}
                   href="{{ block.settings.button_link_1 }}"
                 {% endif %}
-                class="ig-btn ig-btn--primary"
+                class="button{% if block.settings.button_style_1 == 'secondary' %} button--secondary{% else %} button--primary{% endif %}"
               >
                 {{ block.settings.button_label_1 | escape }}
               </a>
             {%- endif -%}
-            
+
             {%- if block.settings.button_label_2 != blank -%}
-              <a 
+              <a
                 {% if block.settings.button_link_2 == blank %}
                   role="link" aria-disabled="true"
                 {% else %}
                   href="{{ block.settings.button_link_2 }}"
                 {% endif %}
-                class="ig-btn ig-btn--secondary"
+                class="{% if block.settings.button_style_2 == 'link' %}ig-hero__link{% else %}button{% if block.settings.button_style_2 == 'primary' %} button--primary{% else %} button--secondary{% endif %}{% endif %}"
               >
                 {{ block.settings.button_label_2 | escape }}
               </a>
@@ -552,23 +552,44 @@
           "type": "text",
           "id": "button_label_1",
           "default": "Try Igniton",
-          "label": "Primary button label"
+          "label": "Button 1 label"
         },
         {
           "type": "url",
           "id": "button_link_1",
-          "label": "Primary button link"
+          "label": "Button 1 link"
+        },
+        {
+          "type": "select",
+          "id": "button_style_1",
+          "label": "Button 1 style",
+          "options": [
+            { "value": "primary", "label": "Primary (filled)" },
+            { "value": "secondary", "label": "Secondary (outlined)" }
+          ],
+          "default": "primary"
         },
         {
           "type": "text",
           "id": "button_label_2",
           "default": "See the clinical results →",
-          "label": "Secondary button label"
+          "label": "Button 2 label"
         },
         {
           "type": "url",
           "id": "button_link_2",
-          "label": "Secondary button link"
+          "label": "Button 2 link"
+        },
+        {
+          "type": "select",
+          "id": "button_style_2",
+          "label": "Button 2 style",
+          "options": [
+            { "value": "primary", "label": "Primary (filled)" },
+            { "value": "secondary", "label": "Secondary (outlined)" },
+            { "value": "link", "label": "Text link (underlined)" }
+          ],
+          "default": "link"
         }
       ]
     },

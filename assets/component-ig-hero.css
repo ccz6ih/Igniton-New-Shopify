@@ -139,44 +139,23 @@
   margin-top: 2.8rem;
 }
 
-.ig-btn {
-  display: inline-block;
-  padding: 0.9rem 2.2rem;
+/* Text-link style for secondary CTA (e.g. "See the clinical results →") */
+.ig-hero__link {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: #5a554e;
   text-decoration: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s ease;
-}
-
-.ig-btn--primary {
-  background: var(--ig-ink);
-  color: var(--ig-warm-white);
-}
-
-.ig-btn--primary:hover {
-  background: var(--ig-ember);
-  transform: translateY(-1px);
-}
-
-.ig-btn--secondary {
-  font-size: 0.85rem;
-  color: var(--ig-muted);
   border-bottom: 1px solid var(--ig-border);
   padding: 0 0 2px 0;
-  background: transparent;
   transition: color 0.2s, border-color 0.2s;
 }
 
-.ig-btn--secondary:hover {
+.ig-hero__link:hover {
   color: var(--ig-ink);
   border-color: var(--ig-ink);
-  transform: none;
 }
 
 /* ─── Proof Stats ─── */
@@ -635,11 +614,6 @@
     margin-top: 2rem;
   }
 
-  .ig-btn {
-    padding: 0.8rem 1.8rem;
-    font-size: 0.8rem;
-  }
-
   .ig-hero__proof {
     gap: 1.5rem;
     margin-top: 3rem;
@@ -686,18 +660,10 @@
     animation: none;
     opacity: 1;
   }
-
-  .ig-btn--primary:hover {
-    transform: none;
-  }
 }
 
 /* ─── High Contrast Mode ─── */
 @media (prefers-contrast: high) {
-  .ig-btn--primary {
-    border: 2px solid currentColor;
-  }
-
   .ig-hero__proof-divider {
     background: currentColor;
     opacity: 0.3;
