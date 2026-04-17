@@ -247,7 +247,7 @@
     },
     {
       "type": "header",
-      "content": "Typography"
+      "content": "Typography — sliders"
     },
     {
       "type": "range",
@@ -261,16 +261,6 @@
     },
     {
       "type": "range",
-      "id": "label_spacing",
-      "min": 0,
-      "max": 3,
-      "step": 0.25,
-      "default": 0.75,
-      "unit": "rem",
-      "label": "Space below label"
-    },
-    {
-      "type": "range",
       "id": "heading_size",
       "min": 2,
       "max": 8,
@@ -281,27 +271,6 @@
     },
     {
       "type": "range",
-      "id": "heading_max_width",
-      "min": 400,
-      "max": 1400,
-      "step": 25,
-      "default": 900,
-      "unit": "px",
-      "label": "Heading container width",
-      "info": "Wider = more room before the heading wraps."
-    },
-    {
-      "type": "range",
-      "id": "heading_spacing",
-      "min": 0.5,
-      "max": 6,
-      "step": 0.25,
-      "default": 2.5,
-      "unit": "rem",
-      "label": "Space below heading"
-    },
-    {
-      "type": "range",
       "id": "product_heading_size",
       "min": 1.5,
       "max": 4,
@@ -309,16 +278,6 @@
       "default": 2.4,
       "unit": "rem",
       "label": "Product name size"
-    },
-    {
-      "type": "range",
-      "id": "tag_size",
-      "min": 60,
-      "max": 140,
-      "step": 5,
-      "default": 95,
-      "unit": "%",
-      "label": "Tag / eyebrow size"
     },
     {
       "type": "range",
@@ -341,14 +300,72 @@
       "label": "Stat number size"
     },
     {
-      "type": "range",
+      "type": "header",
+      "content": "Typography — options"
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "tag_size",
+      "label": "Tag / eyebrow size",
+      "options": [
+        { "value": "70",  "label": "Extra small" },
+        { "value": "85",  "label": "Small" },
+        { "value": "100", "label": "Normal" },
+        { "value": "120", "label": "Large" },
+        { "value": "140", "label": "Extra large" }
+      ],
+      "default": "100"
+    },
+    {
+      "type": "select",
       "id": "stat_label_size",
-      "min": 60,
-      "max": 140,
-      "step": 5,
-      "default": 95,
-      "unit": "%",
-      "label": "Stat label size"
+      "label": "Stat label size",
+      "options": [
+        { "value": "70",  "label": "Extra small" },
+        { "value": "85",  "label": "Small" },
+        { "value": "100", "label": "Normal" },
+        { "value": "120", "label": "Large" },
+        { "value": "140", "label": "Extra large" }
+      ],
+      "default": "100"
     },
     {
       "type": "select",
@@ -361,39 +378,49 @@
       "default": "gold"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "mobile_heading_scale",
-      "min": 40,
-      "max": 100,
-      "step": 5,
-      "default": 65,
-      "unit": "%",
       "label": "Mobile heading scale",
-      "info": "Scales section title, product name, and stat numbers on screens under 750px."
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "70",  "label": "Gentle (70%)" },
+        { "value": "85",  "label": "Subtle (85%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "55"
     },
     {
       "type": "header",
       "content": "Section padding"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "padding_top",
-      "min": 0,
-      "max": 150,
-      "step": 5,
-      "default": 100,
-      "unit": "px",
-      "label": "Padding top"
+      "label": "Padding top",
+      "options": [
+        { "value": "0",   "label": "None" },
+        { "value": "50",  "label": "Compact" },
+        { "value": "75",  "label": "Normal" },
+        { "value": "100", "label": "Large" },
+        { "value": "125", "label": "Extra large" },
+        { "value": "150", "label": "XXL" }
+      ],
+      "default": "100"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "padding_bottom",
-      "min": 0,
-      "max": 150,
-      "step": 5,
-      "default": 100,
-      "unit": "px",
-      "label": "Padding bottom"
+      "label": "Padding bottom",
+      "options": [
+        { "value": "0",   "label": "None" },
+        { "value": "50",  "label": "Compact" },
+        { "value": "75",  "label": "Normal" },
+        { "value": "100", "label": "Large" },
+        { "value": "125", "label": "Extra large" },
+        { "value": "150", "label": "XXL" }
+      ],
+      "default": "100"
     }
   ],
   "blocks": [
