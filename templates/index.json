@@ -101,7 +101,7 @@
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "text_animation": "scale-up",
-        "heading_size": 8,
+        "heading_size": 7,
         "text_size": 150,
         "proof_num_size": 5
       }
