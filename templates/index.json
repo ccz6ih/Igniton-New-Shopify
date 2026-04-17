@@ -102,7 +102,7 @@
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "text_animation": "scale-up",
+        "text_animation": "fade-up",
         "heading_size": 8,
         "text_size": 150,
         "proof_num_size": 5
