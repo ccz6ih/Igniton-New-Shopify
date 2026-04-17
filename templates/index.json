@@ -164,7 +164,7 @@
           "settings": {
             "product": "igni-cognition",
             "show_image": true,
-            "image_size": 180,
+            "image_size": 460,
             "tag": "Cognition",
             "custom_name": "IgniCognition™",
             "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
@@ -189,7 +189,7 @@
           "settings": {
             "product": "igni-longevity",
             "show_image": true,
-            "image_size": 180,
+            "image_size": 460,
             "tag": "Longevity",
             "custom_name": "IgniLongevity™",
             "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
@@ -214,7 +214,7 @@
           "settings": {
             "product": "igni-cognition-longevity-pack",
             "show_image": true,
-            "image_size": 180,
+            "image_size": 400,
             "tag": "Best Value",
             "custom_name": "The Complete Stack — Cognition + Longevity",
             "custom_description": "Both formulas together for comprehensive brain and body support.",
@@ -226,7 +226,7 @@
             "stat_3_num": "",
             "stat_3_label": "",
             "show_price": true,
-            "price_note": "Subscribe & save 20%",
+            "price_note": "Subscribe & save 15%",
             "custom_price": "",
             "custom_link": "",
             "link_text": "Shop Now →",
