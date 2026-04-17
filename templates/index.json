@@ -101,9 +101,9 @@
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "text_animation": "scale-up",
-        "heading_size": 6,
-        "text_size": 130,
-        "proof_num_size": 3.8
+        "heading_size": 8,
+        "text_size": 150,
+        "proof_num_size": 5
       }
     },
     "ig_trust_bar_qywBVA": {
