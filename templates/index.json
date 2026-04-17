@@ -92,7 +92,7 @@
         "orb_image_scale": 120,
         "orb_style": "amber",
         "orb_position": "right",
-        "orb_offset_x": -10,
+        "orb_offset_x": -4,
         "orb_size": 725,
         "orb_opacity": 65,
         "desktop_content_position": "top-left",
