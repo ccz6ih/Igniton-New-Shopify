@@ -98,7 +98,7 @@
         "orb_size": 600,
         "orb_opacity": 65,
         "content_max_width": 1200,
-        "content_padding_x": 3,
+        "content_padding_x": 5,
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
