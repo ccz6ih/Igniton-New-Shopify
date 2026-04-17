@@ -87,11 +87,14 @@
         "color_scheme": "",
         "min_height": 700,
         "show_orb": true,
+        "orb_image": "shopify://shop_images/Home_Log_V02.jpg",
+        "orb_image_position": "center center",
+        "orb_image_scale": 120,
         "orb_style": "amber",
         "orb_position": "right",
         "orb_offset_x": -10,
-        "orb_size": 300,
-        "orb_opacity": 25,
+        "orb_size": 725,
+        "orb_opacity": 65,
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
@@ -313,7 +316,8 @@
             "show_price": true,
             "price_note": "Subscribe & save 20%",
             "custom_link": "",
-            "link_text": "Shop IgniCognition"
+            "link_text": "Shop IgniCognition",
+            "button_style_secondary": false
           }
         },
         "product_card_RJLiWQ": {
@@ -335,7 +339,8 @@
             "show_price": true,
             "price_note": "Subscribe & save 20%",
             "custom_link": "",
-            "link_text": "Shop IgniLongevity"
+            "link_text": "Shop IgniLongevity",
+            "button_style_secondary": false
           }
         },
         "product_card_xe66yt": {
@@ -357,7 +362,8 @@
             "show_price": true,
             "price_note": "Subscribe & save 20%",
             "custom_link": "",
-            "link_text": "Shop the Bundle"
+            "link_text": "Shop the Bundle",
+            "button_style_secondary": false
           }
         }
       },
