@@ -97,11 +97,13 @@
         "orb_offset_x": 20,
         "orb_size": 600,
         "orb_opacity": 65,
+        "content_max_width": 1200,
+        "content_padding_x": 3,
         "desktop_content_position": "top-left",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "text_animation": "scale-up",
-        "heading_size": 7,
+        "heading_size": 8,
         "text_size": 150,
         "proof_num_size": 5
       }
