@@ -164,7 +164,7 @@
         {%- when 'subheadline' -%}
           {%- if block.settings.text != blank -%}
             <div class="ig-hero__sub ig-font-body" {{ block.shopify_attributes }}>
-              {{ block.settings.text }}
+              {{ block.settings.text | newline_to_br }}
             </div>
           {%- endif -%}
         
@@ -609,10 +609,11 @@
       "limit": 1,
       "settings": [
         {
-          "type": "richtext",
+          "type": "textarea",
           "id": "text",
-          "default": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.</p>",
-          "label": "Subheadline text"
+          "default": "Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.",
+          "label": "Subheadline text",
+          "info": "Press Enter for line breaks. You can also use inline HTML: <br>, <em>italic</em>, <strong>bold</strong>, or <span class=\"ig-font-display\">custom</span>."
         }
       ]
     },
