@@ -85,6 +85,10 @@
   #IgHero-{{ section.id }} .ig-hero__headline {
     font-size: {{ section.settings.heading_size }}rem;
     max-width: none;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+    -webkit-hyphens: none;
   }
 
   #IgHero-{{ section.id }} .ig-hero__sub {
@@ -96,9 +100,23 @@
     font-size: calc(0.78rem * {{ text_scale }});
   }
 
+  #IgHero-{{ section.id }} .ig-hero__proof-num {
+    font-size: {{ section.settings.proof_num_size }}rem;
+  }
+
   #IgHero-{{ section.id }} .ig-hero__proof-label {
     font-size: calc(0.82rem * {{ text_scale }});
     max-width: calc(140px * {{ text_scale }});
+  }
+
+  @media screen and (max-width: 749px) {
+    #IgHero-{{ section.id }} .ig-hero__headline {
+      font-size: calc({{ section.settings.heading_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+    }
+
+    #IgHero-{{ section.id }} .ig-hero__proof-num {
+      font-size: calc({{ section.settings.proof_num_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+    }
   }
 {%- endstyle -%}
 
@@ -519,27 +537,38 @@
       "type": "range",
       "id": "heading_size",
       "min": 3,
-      "max": 8,
+      "max": 14,
       "step": 0.5,
       "default": 5,
       "unit": "rem",
-      "label": "Heading size"
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_scale",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "default": 55,
+      "unit": "%",
+      "label": "Mobile heading scale",
+      "info": "Percentage of desktop heading size used on mobile. Prevents word-break when desktop size is large."
     },
     {
       "type": "range",
       "id": "text_size",
       "min": 80,
-      "max": 150,
+      "max": 220,
       "step": 5,
       "default": 110,
       "unit": "%",
-      "label": "Text size"
+      "label": "Text size (eyebrow, sub, stat labels)"
     },
     {
       "type": "range",
       "id": "proof_num_size",
       "min": 2,
-      "max": 5,
+      "max": 8,
       "step": 0.1,
       "default": 3,
       "unit": "rem",
