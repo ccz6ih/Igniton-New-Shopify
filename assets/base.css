@@ -3037,8 +3037,7 @@ details-disclosure > details {
 /* Auto-italicized "Igni" prefix (injected by igni-italics.js) */
 .igni-styled {
   font-style: italic;
-  font-family: 'Cormorant Garamond', serif;
-  color: var(--ig-ember);
+  color: inherit;
 }
 
 /* Igniton Typography Helpers */
