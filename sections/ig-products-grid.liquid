@@ -20,8 +20,15 @@
     }
   }
 
+  #IgProductsGrid-{{ section.id }} .ig-section-label {
+    font-size: calc(0.75rem * {{ section.settings.label_size | divided_by: 100.0 }});
+    margin-bottom: {{ section.settings.label_spacing }}rem;
+  }
+
   #IgProductsGrid-{{ section.id }} .ig-section-title {
     font-size: {{ section.settings.heading_size }}rem;
+    max-width: {{ section.settings.heading_max_width }}px;
+    margin-bottom: {{ section.settings.heading_spacing }}rem;
   }
 
   #IgProductsGrid-{{ section.id }} .ig-product-card__name {
@@ -247,6 +254,26 @@
     },
     {
       "type": "range",
+      "id": "label_size",
+      "min": 60,
+      "max": 180,
+      "step": 5,
+      "default": 100,
+      "unit": "%",
+      "label": "Section label size"
+    },
+    {
+      "type": "range",
+      "id": "label_spacing",
+      "min": 0,
+      "max": 3,
+      "step": 0.25,
+      "default": 0.75,
+      "unit": "rem",
+      "label": "Space below label"
+    },
+    {
+      "type": "range",
       "id": "heading_size",
       "min": 2,
       "max": 8,
@@ -254,6 +281,27 @@
       "default": 3.5,
       "unit": "rem",
       "label": "Section heading size"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 25,
+      "default": 900,
+      "unit": "px",
+      "label": "Heading container width",
+      "info": "Wider = more room before the heading wraps."
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "min": 0.5,
+      "max": 6,
+      "step": 0.25,
+      "default": 2.5,
+      "unit": "rem",
+      "label": "Space below heading"
     },
     {
       "type": "range",
