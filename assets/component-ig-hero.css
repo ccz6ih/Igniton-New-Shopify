@@ -80,7 +80,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 5rem;
+  padding: 0 3rem;
 }
 
 /* ─── Inner Content Wrapper (Max-Width Container) ─── */
@@ -89,6 +89,7 @@
   flex-direction: column;
   padding: 8rem 0 5rem;
   width: 100%;
+  max-width: 1200px;
 }
 
 /* ─── Eyebrow Text ─── */

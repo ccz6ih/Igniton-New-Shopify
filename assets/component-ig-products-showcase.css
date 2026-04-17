@@ -10,16 +10,30 @@
 /* ─── Layout Container ─── */
 .ig-products-showcase__layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 3rem;
   margin-top: 3rem;
+}
+
+.ig-products-showcase__layout--with-images {
+  grid-template-columns: 1fr 1fr;
+}
+
+.ig-products-showcase__layout--no-images {
+  grid-template-columns: 1fr;
 }
 
 /* ─── Grid Layout ─── */
 .ig-products-showcase__grid {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 2rem;
+}
+
+.ig-products-showcase__layout--with-images .ig-products-showcase__grid {
+  grid-template-columns: 1fr;
+}
+
+.ig-products-showcase__layout--no-images .ig-products-showcase__grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 /* ─── Product Card ─── */
@@ -139,11 +153,11 @@
   font-weight: 500;
 }
 
-/* ─── Button/Link ─── */
-.ig-proDawn Button Spacing ─── */
+/* ─── Dawn Button Spacing ─── */
 .ig-products-showcase__card .button {
   margin-top: auto;
-  width: 100%
+  width: 100%;
+}
 
 /* ═══════════════════════════════════════════════════════════
    Image Display (Right Side)

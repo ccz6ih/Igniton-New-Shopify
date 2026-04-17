@@ -26,12 +26,23 @@
     {%- endif -%}
     
     {%- liquid
-      assign regular_cards = section.blocks | where: 'type', 'product_card'
-      assign featured_cards = ''
-      assign non_featured_cards = ''
+      assign has_product_images = false
+      for block in section.blocks
+        if block.type == 'product_card' and block.settings.featured != true
+          if block.settings.product and block.settings.product.featured_image
+            assign has_product_images = true
+            break
+          endif
+        endif
+      endfor
+
+      assign layout_modifier = 'ig-products-showcase__layout--no-images'
+      if has_product_images
+        assign layout_modifier = 'ig-products-showcase__layout--with-images'
+      endif
     -%}
-    
-    <div class="ig-products-showcase__layout">
+
+    <div class="ig-products-showcase__layout {{ layout_modifier }}">
       <div class="ig-products-showcase__grid">
         {%- for block in section.blocks -%}
           {%- if block.type == 'product_card' and block.settings.featured != true -%}
@@ -113,6 +124,7 @@
         {%- endfor -%}
       </div>
       
+      {%- if has_product_images -%}
       <div class="ig-products-showcase__image-display">
         {%- assign first_non_featured = true -%}
         {%- for block in section.blocks -%}
@@ -121,9 +133,9 @@
               assign product = block.settings.product
               assign product_image = product.featured_image
             -%}
-            
+
             {%- if product_image != blank -%}
-              <div 
+              <div
                 class="ig-products-showcase__image{% if first_non_featured %} is-active{% endif %}"
                 data-product-id="{{ block.id }}"
               >
@@ -134,8 +146,9 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+      {%- endif -%}
     </div>
-    
+
     {%- comment -%} Featured Bundle Card (Full Width Below) {%- endcomment -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'product_card' and block.settings.featured == true -%}

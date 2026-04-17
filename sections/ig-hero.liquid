@@ -21,13 +21,28 @@
   endcase
 -%}
 
+{%- liquid
+  assign text_scale = section.settings.text_size | divided_by: 100.0
+-%}
+
 {%- style -%}
   #IgHero-{{ section.id }} {
     --ig-hero-min-height: {{ section.settings.min_height }}px;
     --ig-proof-num-size: {{ section.settings.proof_num_size }}rem;
+    --ig-hero-content-max-width: {{ section.settings.content_max_width }}px;
+    --ig-hero-content-padding-x: {{ section.settings.content_padding_x }}rem;
     min-height: {{ section.settings.min_height }}px;
     position: relative;
     overflow: hidden;
+  }
+
+  #IgHero-{{ section.id }} .ig-hero__content {
+    padding-left: var(--ig-hero-content-padding-x);
+    padding-right: var(--ig-hero-content-padding-x);
+  }
+
+  #IgHero-{{ section.id }} .ig-hero__inner {
+    max-width: var(--ig-hero-content-max-width);
   }
 
   #IgHero-{{ section.id }} .ig-hero__orb {
@@ -68,15 +83,22 @@
   }
 
   #IgHero-{{ section.id }} .ig-hero__headline {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
+    font-size: {{ section.settings.heading_size }}rem;
+    max-width: none;
   }
 
   #IgHero-{{ section.id }} .ig-hero__sub {
-    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
+    font-size: calc(1rem * {{ text_scale }});
+    max-width: none;
   }
 
   #IgHero-{{ section.id }} .ig-hero__eyebrow {
-    font-size: calc(0.78rem * {{ section.settings.text_size | divided_by: 100.0 }});
+    font-size: calc(0.78rem * {{ text_scale }});
+  }
+
+  #IgHero-{{ section.id }} .ig-hero__proof-label {
+    font-size: calc(0.82rem * {{ text_scale }});
+    max-width: calc(140px * {{ text_scale }});
   }
 {%- endstyle -%}
 
@@ -103,7 +125,7 @@
   {%- endif -%}
   
   <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }}">
-    <div class="ig-hero__inner page-width">
+    <div class="ig-hero__inner">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         
@@ -348,6 +370,28 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 50,
+      "default": 1200,
+      "unit": "px",
+      "label": "Content max width",
+      "info": "Controls how wide the text/button area can grow before wrapping."
+    },
+    {
+      "type": "range",
+      "id": "content_padding_x",
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "default": 3,
+      "unit": "rem",
+      "label": "Horizontal padding",
+      "info": "Space between the content and the section edges."
     },
     {
       "type": "select",
