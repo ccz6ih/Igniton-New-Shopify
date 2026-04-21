@@ -550,6 +550,53 @@
         "padding_bottom": 36
       }
     },
+    "ig_final_cta_Ckrc3c": {
+      "type": "ig-final-cta",
+      "blocks": {
+        "button_ULBjmm": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniCognition",
+            "button_link": "",
+            "button_style": "primary"
+          }
+        },
+        "button_aTfgnB": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniLongevity",
+            "button_link": "",
+            "button_style": "muted"
+          }
+        }
+      },
+      "block_order": [
+        "button_ULBjmm",
+        "button_aTfgnB"
+      ],
+      "name": "Igniton Final CTA",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "default",
+        "section_label": "Ready to start",
+        "section_title": "Most customers feel the difference within two weeks.",
+        "subtitle_text": "<p>Backed by a 30-day guarantee. Subscribe and save 20%.</p>",
+        "padding_block_start_desktop": 120,
+        "padding_block_end_desktop": 120,
+        "padding_block_start_mobile": 64,
+        "padding_block_end_mobile": 64,
+        "label_size": "100",
+        "label_spacing": "0.75",
+        "heading_size": 5,
+        "heading_max_width": "600",
+        "heading_spacing": "1.75",
+        "mobile_heading_scale": "65",
+        "body_size": "1.1",
+        "body_max_width": "640",
+        "enable_gradient": true,
+        "footer_text": "<p>Questions? <a href=\"#\">Read the FAQ</a> or <a href=\"#\">contact us</a>.</p>"
+      }
+    },
     "ig_guarantee_strip_FWmACi": {
       "type": "ig-guarantee-strip",
       "name": "Igniton Guarantee Strip",
@@ -576,6 +623,7 @@
     "ig_results_split_gyih9T",
     "ig_why_different_8Wikxr",
     "featured_blog_JWPYVA",
+    "ig_final_cta_Ckrc3c",
     "ig_guarantee_strip_FWmACi"
   ]
 }
