@@ -265,7 +265,7 @@
         "heading_max_width": "1200",
         "heading_spacing": "2.5",
         "mobile_heading_scale": "65",
-        "body_size": 1,
+        "body_size": 1.3,
         "body_max_width": "640"
       }
     },
