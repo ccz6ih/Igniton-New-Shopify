@@ -1,0 +1,518 @@
+{{ 'component-product-overview.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+{%- liquid
+  assign tab_anchor = section.settings.tab_anchor | default: 'overview' | handleize
+  assign heading_level = section.settings.heading_level | default: '2' | plus: 0
+-%}
+
+<section
+  id="{{ tab_anchor }}"
+  class="pdp-tab-panel product-overview color-{{ section.settings.color_scheme }}"
+  {% if section.settings.is_default_tab %}data-tab-default="true"{% endif %}
+  role="tabpanel"
+  aria-labelledby="{{ tab_anchor }}-tab"
+>
+  <div class="product-overview__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      {%- case heading_level -%}
+        {%- when 2 -%}
+          <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">{{ section.settings.section_heading }}</h2>
+        {%- when 3 -%}
+          <h3 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">{{ section.settings.section_heading }}</h3>
+        {%- when 4 -%}
+          <h4 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">{{ section.settings.section_heading }}</h4>
+        {%- when 5 -%}
+          <h5 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">{{ section.settings.section_heading }}</h5>
+        {%- when 6 -%}
+          <h6 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">{{ section.settings.section_heading }}</h6>
+      {%- endcase -%}
+    {%- endif -%}
+
+    <div
+      class="product-overview__grid product-overview__grid--cols-{% if section.settings.show_benefits_column and section.settings.show_timeline_column %}2{% else %}1{% endif %}"
+    >
+      {%- if section.settings.show_benefits_column -%}
+        <div class="product-overview__benefits">
+          {%- if section.settings.benefits_heading != blank -%}
+            <h3 class="product-overview__col-heading">{{ section.settings.benefits_heading }}</h3>
+          {%- endif -%}
+          <ul class="product-overview__benefit-list" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'benefit' -%}
+                <li class="product-overview__benefit ig-section-body" {{ block.shopify_attributes }}>
+                  <span class="product-overview__benefit-icon" aria-hidden="true">
+                    {{- block.settings.icon | default: '✓' -}}
+                  </span>
+                  <span class="product-overview__benefit-text">{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_timeline_column -%}
+        <div class="product-overview__timeline">
+          {%- if section.settings.timeline_heading != blank -%}
+            <h3 class="product-overview__col-heading">{{ section.settings.timeline_heading }}</h3>
+          {%- endif -%}
+          <ol class="product-overview__timeline-list" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'timeline_step' -%}
+                <li class="product-overview__timeline-step" {{ block.shopify_attributes }}>
+                  <div class="product-overview__timeline-time ig-section-label">
+                    {{- block.settings.time_label -}}
+                  </div>
+                  <h4 class="product-overview__timeline-title">{{ block.settings.title }}</h4>
+                  <p class="product-overview__timeline-desc ig-section-body">{{ block.settings.description }}</p>
+                  {%- if block.settings.progress_pct != blank -%}
+                    {%- assign progress_raw = block.settings.progress_pct | plus: 0 -%}
+                    {%- if progress_raw < 0 -%}
+                      {%- assign progress = 0 -%}
+                    {%- elsif progress_raw > 100 -%}
+                      {%- assign progress = 100 -%}
+                    {%- else -%}
+                      {%- assign progress = progress_raw -%}
+                    {%- endif -%}
+                    <div
+                      class="product-overview__progress"
+                      role="progressbar"
+                      aria-valuenow="{{ progress }}"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-label="{{ progress }}% progress"
+                    >
+                      <div
+                        class="product-overview__progress-fill"
+                        style="width: {{ progress }}%;"
+                        aria-hidden="true"
+                      ></div>
+                    </div>
+                  {%- endif -%}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_usage_callout -%}
+      <aside class="product-overview__usage" aria-label="{{ section.settings.usage_title | default: 'How to take' | escape }}">
+        {%- if section.settings.usage_title != blank -%}
+          <h3 class="product-overview__usage-title">{{ section.settings.usage_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.usage_body != blank -%}
+          <div class="product-overview__usage-body ig-section-body rte">{{ section.settings.usage_body }}</div>
+        {%- endif -%}
+        {%- if section.settings.usage_warnings != blank -%}
+          {%- assign warn_lines = section.settings.usage_warnings | newline_to_br | split: '<br />' -%}
+          <ul class="product-overview__warnings" role="list">
+            {%- for line in warn_lines -%}
+              {%- assign clean = line | strip -%}
+              {%- if clean != blank -%}
+                <li class="product-overview__warning ig-section-body">{{ clean }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </aside>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Overview (Tab)",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_level",
+      "label": "Heading level",
+      "options": [
+        { "value": "2", "label": "H2" },
+        { "value": "3", "label": "H3" },
+        { "value": "4", "label": "H4" },
+        { "value": "5", "label": "H5" },
+        { "value": "6", "label": "H6" }
+      ],
+      "default": "2",
+      "info": "Use H2 if this is the first heading after the product title."
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 14, "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_scale",
+      "min": 40, "max": 100, "step": 5,
+      "unit": "%",
+      "default": 65,
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile (as a % of desktop size)."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "800"
+    },
+    {
+      "type": "header",
+      "content": "Tab integration"
+    },
+    {
+      "type": "text",
+      "id": "tab_anchor",
+      "label": "Tab anchor (unique id)",
+      "default": "overview",
+      "info": "Wrapper element id. Keep unique across PDP tab sections."
+    },
+    {
+      "type": "checkbox",
+      "id": "is_default_tab",
+      "label": "Default active tab",
+      "default": true,
+      "info": "JS controller opens this tab first. Only one PDP tab should be default."
+    },
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Eyebrow label",
+      "default": ""
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Feel it in two weeks. Prove it in thirty."
+    },
+    {
+      "type": "header",
+      "content": "Benefits column"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_benefits_column",
+      "label": "Show benefits column",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Benefits heading",
+      "default": "What you'll feel"
+    },
+    {
+      "type": "header",
+      "content": "Timeline column"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timeline_column",
+      "label": "Show timeline column",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "timeline_heading",
+      "label": "Timeline heading",
+      "default": "Your timeline"
+    },
+    {
+      "type": "header",
+      "content": "Usage callout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_usage_callout",
+      "label": "Show usage callout",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "usage_title",
+      "label": "Usage title",
+      "default": "How to take"
+    },
+    {
+      "type": "richtext",
+      "id": "usage_body",
+      "label": "Usage body",
+      "default": "<p>2 capsules daily, preferably in the morning with food.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "usage_warnings",
+      "label": "Warnings / cautions",
+      "info": "One per line. Rendered as a bullet list."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit text",
+          "default": "Noticeably sharper focus by Week 2"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon character",
+          "default": "✓",
+          "info": "Single character or short emoji, e.g. ✓, ★, •"
+        }
+      ]
+    },
+    {
+      "type": "timeline_step",
+      "name": "Timeline step",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "time_label",
+          "label": "Time label",
+          "default": "Week 1–2"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "First signals"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Noticeable attention improvement; mental clarity."
+        },
+        {
+          "type": "text",
+          "id": "progress_pct",
+          "label": "Progress percent (0–100)",
+          "info": "Optional. Leave blank to hide the progress bar."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product overview — Cognition",
+      "settings": {
+        "section_heading": "Feel it in two weeks. Prove it in thirty.",
+        "benefits_heading": "What you'll feel",
+        "timeline_heading": "When you'll feel the difference",
+        "usage_title": "Suggested use",
+        "usage_body": "<p>2 capsules each morning, with or without food. Do not take in the afternoon or evening. Best results with consistent daily use.</p>",
+        "usage_warnings": "Consult your physician if pregnant or nursing\nAvoid if taking MAOIs or stimulant medication\nStore below 25°C, away from direct light",
+        "tab_anchor": "overview",
+        "is_default_tab": true
+      },
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Sharper memory — names, conversations, details" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Sustained focus without stimulants or jitters" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Faster mental processing and reaction time" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Consistent energy — no afternoon crash" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "No fillers, binders, or excipients" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Stackable with your current routine" } },
+        { "type": "timeline_step", "settings": { "time_label": "Week 1–2", "title": "Clearer mental energy", "description": "Most users notice smoother focus and reduced brain fog as neurotransmitter pathways begin activating.", "progress_pct": "35" } },
+        { "type": "timeline_step", "settings": { "time_label": "Day 30", "title": "Measurable improvement", "description": "The clinical trial showed statistically significant gains in memory and attention. This is when most users clearly feel the change.", "progress_pct": "70" } },
+        { "type": "timeline_step", "settings": { "time_label": "Day 60–90", "title": "Peak cognitive performance", "description": "Peak trial results at 90 days — 100% memory improvement, 83% performance quality, 51% sustained attention.", "progress_pct": "100" } }
+      ]
+    },
+    {
+      "name": "Product overview — Longevity",
+      "settings": {
+        "section_heading": "Feel sharper in weeks. Measure the difference in months.",
+        "benefits_heading": "What you'll notice",
+        "timeline_heading": "Your longevity timeline",
+        "usage_title": "Suggested use",
+        "usage_body": "<p>2 capsules daily with breakfast. Pair with a balanced diet and regular movement for optimal results.</p>",
+        "usage_warnings": "Consult your physician if on blood thinners\nNot recommended during pregnancy\nDiscontinue if any adverse reaction occurs",
+        "tab_anchor": "overview",
+        "is_default_tab": true
+      },
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Improved cellular energy and recovery" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Healthier inflammatory response" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Supports cardiovascular function" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Steady daily vitality — no crashes" } },
+        { "type": "benefit", "settings": { "icon": "✓", "text": "Third-party tested for purity" } },
+        { "type": "timeline_step", "settings": { "time_label": "Week 1–2", "title": "Easier mornings", "description": "Improved energy on waking as mitochondrial support kicks in.", "progress_pct": "25" } },
+        { "type": "timeline_step", "settings": { "time_label": "Day 30", "title": "Steadier endurance", "description": "Noticeably better recovery between workouts and longer sustained energy across the day.", "progress_pct": "55" } },
+        { "type": "timeline_step", "settings": { "time_label": "Day 60", "title": "Measurable biomarkers", "description": "Users often see improvements in sleep quality, resting heart rate, and HRV.", "progress_pct": "80" } },
+        { "type": "timeline_step", "settings": { "time_label": "Day 90", "title": "Peak support", "description": "Full compounding benefits — cellular health and daily resilience at their strongest.", "progress_pct": "100" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

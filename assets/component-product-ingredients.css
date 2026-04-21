@@ -1,0 +1,304 @@
+/* ═══════════════════════════════════════════════════════════
+   Product Ingredients Component
+   ─────────────────────────────
+   PDP tab-panel: intro + card grid of ingredient entries.
+
+   Font-size + color rules for .ig-section-label, .ig-section-title,
+   and .ig-section-body are emitted by snippets/ig-section-controls.liquid
+   (ID-scoped). This file handles structure, card variants
+   (bordered / filled / minimal), and ingredient-specific metadata
+   (dosage pill, mechanism, study count).
+
+   Colors use Dawn scheme tokens only — no raw hex, no font-family.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.product-ingredients {
+  padding-block: var(--ig-pad-start, 80px) var(--ig-pad-end, 80px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .product-ingredients {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.product-ingredients__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .product-ingredients__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Section label (eyebrow) ─── */
+.product-ingredients .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Section title ─── */
+.product-ingredients .ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Intro paragraph ─── */
+.product-ingredients__intro {
+  max-width: var(--ig-body-width, 640px);
+  line-height: 1.65;
+  color: rgb(var(--color-foreground) / 0.85);
+  margin-bottom: 2.5rem;
+}
+
+.product-ingredients__intro > * + * {
+  margin-top: 0.75em;
+}
+
+@media screen and (min-width: 750px) {
+  .product-ingredients__intro {
+    margin-bottom: 3rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GRID
+   Desktop: 2 / 3 / 4 columns per columns_desktop setting.
+   Narrow break (≤ 749px): 1 column.
+   Medium break (750–989px): reduces 4-col to 2-col so cards
+   stay readable.
+   ═══════════════════════════════════════════════════════════ */
+
+.product-ingredients__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media screen and (min-width: 480px) and (max-width: 749px) {
+  /* A comfortable 2-col at phablet widths */
+  .product-ingredients--cols-3 .product-ingredients__grid,
+  .product-ingredients--cols-4 .product-ingredients__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .product-ingredients--cols-2 .product-ingredients__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .product-ingredients--cols-3 .product-ingredients__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .product-ingredients--cols-4 .product-ingredients__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .product-ingredients__grid {
+    gap: 1.5rem;
+  }
+
+  .product-ingredients--cols-4 .product-ingredients__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD
+   Three style variants — all inherit from .ingredient-card base.
+   ═══════════════════════════════════════════════════════════ */
+
+.ingredient-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.75rem 1.5rem;
+  border-radius: 6px;
+  color: rgb(var(--color-foreground));
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+
+@media screen and (min-width: 990px) {
+  .ingredient-card {
+    padding: 2rem 1.75rem;
+  }
+}
+
+/* Bordered — default */
+.product-ingredients--style-bordered .ingredient-card {
+  background-color: transparent;
+  border: 1px solid rgb(var(--color-foreground) / 0.1);
+}
+
+@media (hover: hover) {
+  .product-ingredients--style-bordered .ingredient-card:hover {
+    border-color: rgb(var(--color-foreground) / 0.25);
+  }
+}
+
+/* Filled */
+.product-ingredients--style-filled .ingredient-card {
+  background-color: rgb(var(--color-foreground) / 0.04);
+  border: 1px solid transparent;
+}
+
+@media (hover: hover) {
+  .product-ingredients--style-filled .ingredient-card:hover {
+    background-color: rgb(var(--color-foreground) / 0.07);
+  }
+}
+
+/* Minimal */
+.product-ingredients--style-minimal .ingredient-card {
+  background-color: transparent;
+  border: 0;
+  padding: 1.25rem 0;
+  border-radius: 0;
+}
+
+.product-ingredients--style-minimal .ingredient-card + .ingredient-card {
+  border-top: 1px solid rgb(var(--color-foreground) / 0.1);
+}
+
+/* When grid has more than one column, minimal variant uses a
+   cross-grid separator so adjacent cards stay divided. */
+@media screen and (min-width: 750px) {
+  .product-ingredients--style-minimal .ingredient-card {
+    padding: 1.5rem 1.25rem;
+    border-top: 1px solid rgb(var(--color-foreground) / 0.1);
+  }
+
+  .product-ingredients--style-minimal .ingredient-card + .ingredient-card {
+    border-top: 1px solid rgb(var(--color-foreground) / 0.1);
+  }
+}
+
+/* ─── Card tag (per-block eyebrow) ─── */
+.ingredient-card__tag {
+  /* .ig-section-label handles font-size/color via controls snippet */
+  margin-bottom: 0;
+  opacity: 0.85;
+  color: rgb(var(--color-button));
+}
+
+/* ─── Ingredient name ─── */
+.ingredient-card__name {
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 990px) {
+  .ingredient-card__name {
+    font-size: 1.5rem;
+  }
+}
+
+/* ─── Dosage pill ─── */
+.ingredient-card__dosage {
+  align-self: flex-start;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  background-color: rgb(var(--color-button) / 0.12);
+  color: rgb(var(--color-button));
+  border: 1px solid rgb(var(--color-button) / 0.25);
+}
+
+/* ─── Mechanism tag ─── */
+.ingredient-card__mechanism {
+  font-size: 0.9375rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: rgb(var(--color-foreground) / 0.7);
+  letter-spacing: 0.005em;
+}
+
+/* ─── Description ─── */
+.ingredient-card__desc {
+  margin: 0;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground) / 0.85);
+  /* font-size set by ig-section-controls (scales with body_size) */
+}
+
+/* ─── Study count (metadata) ─── */
+.ingredient-card__studies {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  color: rgb(var(--color-foreground) / 0.6);
+  border-top: 1px solid rgb(var(--color-foreground) / 0.08);
+}
+
+/* Minimal variant: drop the top border on studies row so it reads as plain metadata */
+.product-ingredients--style-minimal .ingredient-card__studies {
+  border-top: 0;
+  padding-top: 0.25rem;
+}
+
+/* ─── Placeholder (no blocks) ─── */
+.product-ingredients__placeholder {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: rgb(var(--color-foreground) / 0.55);
+  background: rgb(var(--color-foreground) / 0.03);
+  border: 1px dashed rgb(var(--color-foreground) / 0.15);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE (≤ 749px)
+   Slightly tighter card padding + smaller mechanism to keep
+   the stack readable on narrow screens.
+   ═══════════════════════════════════════════════════════════ */
+
+@media screen and (max-width: 749px) {
+  .ingredient-card {
+    padding: 1.5rem 1.25rem;
+    gap: 0.55rem;
+  }
+
+  .ingredient-card__name {
+    font-size: 1.1875rem;
+  }
+
+  .ingredient-card__mechanism {
+    font-size: 0.875rem;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ingredient-card {
+    transition: none;
+  }
+}

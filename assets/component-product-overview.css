@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════════════════
+   Product Overview (PDP Tab)
+   ─────────────────────────────
+   Two-column tab panel: benefits checklist + timeline-to-results,
+   with a usage callout below.
+
+   Typography (font-size, margin, color for .ig-section-*) is
+   emitted by snippets/ig-section-controls.liquid (ID-scoped for
+   specificity). This file handles structure, grid, borders,
+   progress bars, tab-panel visibility, and motion.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.product-overview {
+  padding-block: var(--ig-pad-start, 80px) var(--ig-pad-end, 80px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .product-overview {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Tab-panel visibility ─── */
+/* Without JS every panel is visible (stacked scroll). The JS tab
+   controller adds .pdp-tab-panel--hidden to non-active panels. */
+.pdp-tab-panel {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.pdp-tab-panel--hidden {
+  display: none;
+}
+
+.pdp-tab-panel--entering {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdp-tab-panel,
+  .pdp-tab-panel--entering {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ─── Container ─── */
+.product-overview__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .product-overview__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Section label + title (typography scaled by controls snippet) ─── */
+.product-overview .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+}
+
+.product-overview .ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Two-column grid ─── */
+.product-overview__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media screen and (min-width: 750px) {
+  .product-overview__grid--cols-2 {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ─── Column heading ─── */
+.product-overview__col-heading {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  margin: 0 0 1.25rem 0;
+  color: rgb(var(--color-foreground));
+}
+
+/* ─── Benefits column ─── */
+.product-overview__benefit-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgb(var(--color-foreground) / 0.12);
+}
+
+.product-overview__benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.12);
+  line-height: 1.55;
+  min-height: 3rem; /* larger tap target */
+  color: rgb(var(--color-foreground));
+}
+
+.product-overview__benefit-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: rgb(var(--color-button) / 0.12);
+  color: rgb(var(--color-button));
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 0.125rem;
+}
+
+.product-overview__benefit-text {
+  flex: 1 1 auto;
+  color: rgb(var(--color-foreground));
+}
+
+/* ─── Timeline column ─── */
+.product-overview__timeline-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.product-overview__timeline-step {
+  padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+  border: 1px solid rgb(var(--color-foreground) / 0.12);
+  border-radius: 0.5rem;
+  background-color: rgb(var(--color-background));
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.product-overview__timeline-step:hover {
+  border-color: rgb(var(--color-foreground) / 0.25);
+}
+
+.product-overview__timeline-time {
+  margin-bottom: 0.375rem !important;
+  color: rgb(var(--color-button));
+  opacity: 1;
+  font-weight: 600;
+}
+
+.product-overview__timeline-title {
+  margin: 0 0 0.375rem 0;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgb(var(--color-foreground));
+}
+
+.product-overview__timeline-desc {
+  margin: 0;
+  line-height: 1.55;
+  color: rgb(var(--color-foreground) / 0.8);
+}
+
+/* ─── Progress bar (optional per-step) ─── */
+.product-overview__progress {
+  margin-top: 0.875rem;
+  height: 0.375rem;
+  border-radius: 999px;
+  background-color: rgb(var(--color-foreground) / 0.08);
+  overflow: hidden;
+}
+
+.product-overview__progress-fill {
+  height: 100%;
+  background-color: rgb(var(--color-button));
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-overview__progress-fill {
+    transition: none;
+  }
+}
+
+/* ─── Usage callout ─── */
+.product-overview__usage {
+  margin-top: 3rem;
+  padding: 1.75rem;
+  border-radius: 0.75rem;
+  background-color: rgb(var(--color-foreground) / 0.04);
+  border: 1px solid rgb(var(--color-foreground) / 0.08);
+}
+
+@media screen and (min-width: 750px) {
+  .product-overview__usage {
+    padding: 2rem 2.25rem;
+  }
+}
+
+.product-overview__usage-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  color: rgb(var(--color-foreground));
+}
+
+.product-overview__usage-body {
+  color: rgb(var(--color-foreground));
+  line-height: 1.6;
+}
+
+.product-overview__usage-body p {
+  margin: 0 0 0.5rem 0;
+}
+
+.product-overview__usage-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Warnings list ─── */
+.product-overview__warnings {
+  list-style: none;
+  margin: 1rem 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.product-overview__warning {
+  position: relative;
+  padding-left: 1.25rem;
+  color: rgb(var(--color-foreground) / 0.8);
+  line-height: 1.5;
+}
+
+.product-overview__warning::before {
+  content: "•";
+  position: absolute;
+  left: 0.25rem;
+  top: 0;
+  color: rgb(var(--color-button));
+  font-weight: 700;
+  line-height: inherit;
+}

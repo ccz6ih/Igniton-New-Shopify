@@ -435,6 +435,13 @@ This is the checklist for migrating a section currently using inline styles, har
 | `biomarker-grid.liquid` | ✅ new 2026-04-19 | Per-product results: copy column + 2×2 biomarker cells with optional highlighted cell |
 | `review-summary.liquid` | ✅ new 2026-04-19 | Aggregate rating + 5-row distribution bars + verified review card grid |
 | `products-bundle.liquid` | ✅ new 2026-04-19 | Featured bundle with product picker, subscribe/one-time toggle, gradient/bottles/image visual |
+| `product-overview.liquid` | ✅ new 2026-04-21 | PDP Overview tab: benefits + timeline-to-results + usage callout; supports `pdp-tab-panel` mode |
+| `product-ingredients.liquid` | ✅ new 2026-04-21 | PDP Ingredients tab: card grid with dosage, mechanism, study count |
+| `product-clinical-evidence.liquid` | ✅ new 2026-04-21 | PDP Science tab: study cards + enhancement process steps in split layout |
+| `product-cross-sell.liquid` | ✅ new 2026-04-21 | Related-product cards with picker fallback; whole-card anchor |
+| `pdp-tabs.liquid` | ✅ new 2026-04-21 | JS tab navigation (sticky, hash-deeplink, keyboard nav); gracefully degrades without JS |
+| `review-summary.liquid` | ✅ updated 2026-04-21 | Added optional `tab_anchor` / `is_default_tab` for PDP-tab-panel mode (backward-compatible) |
+| `faq.liquid` | ✅ updated 2026-04-21 | Added optional `tab_anchor` / `is_default_tab` for PDP-tab-panel mode (backward-compatible) |
 
 When every `ig-*` section is retrofitted, delete `snippets/ig-section-header-style.liquid` and `docs/section-header-typography-standard.md`.
 

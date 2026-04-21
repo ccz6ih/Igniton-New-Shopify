@@ -1,0 +1,205 @@
+{{ 'component-pdp-tabs.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="PdpTabs-{{ section.id }}"
+  class="pdp-tabs color-{{ section.settings.color_scheme }} pdp-tabs--style-{{ section.settings.tab_style }} pdp-tabs--align-{{ section.settings.alignment }}{% if section.settings.sticky %} pdp-tabs--sticky{% endif %}{% unless section.settings.enable_on_mobile %} pdp-tabs--desktop-only{% endunless %}"
+  data-pdp-tabs
+  data-update-hash="{{ section.settings.update_url_hash }}"
+  role="navigation"
+  aria-label="Product information tabs"
+>
+  <div class="pdp-tabs__container">
+    {%- if section.blocks.size > 0 -%}
+      <div class="pdp-tabs__list" role="tablist" aria-label="Product details">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tab' -%}
+            {%- assign anchor = block.settings.target_anchor | handleize -%}
+            <button
+              type="button"
+              class="pdp-tabs__tab"
+              role="tab"
+              id="{{ anchor }}-tab"
+              aria-controls="{{ anchor }}"
+              aria-selected="false"
+              tabindex="-1"
+              data-tab-target="{{ anchor }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.label | escape }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{{ 'pdp-tabs.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "PDP Tabs",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 24,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 0,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 16,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 0,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Tab behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Stick to top on scroll",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "tab_style",
+      "label": "Tab style",
+      "options": [
+        { "value": "underline", "label": "Underline" },
+        { "value": "pill",      "label": "Pill" },
+        { "value": "button",    "label": "Button" }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "update_url_hash",
+      "label": "Update URL hash on tab change",
+      "default": true,
+      "info": "Lets users bookmark or share a specific tab (e.g. #ingredients)."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_on_mobile",
+      "label": "Enable tabs on mobile",
+      "default": true,
+      "info": "When off, tabs hide on mobile and all panels stack as scroll-linked sections."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tab label",
+          "default": "Overview"
+        },
+        {
+          "type": "text",
+          "id": "target_anchor",
+          "label": "Target section anchor (id)",
+          "default": "overview",
+          "info": "Must match the id of the target tab panel section (e.g. overview, ingredients, science)."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP tabs — 5 tabs",
+      "settings": {
+        "sticky": true,
+        "tab_style": "underline",
+        "alignment": "left",
+        "update_url_hash": true,
+        "enable_on_mobile": true
+      },
+      "blocks": [
+        { "type": "tab", "settings": { "label": "Overview",    "target_anchor": "overview" } },
+        { "type": "tab", "settings": { "label": "Ingredients", "target_anchor": "ingredients" } },
+        { "type": "tab", "settings": { "label": "Science",     "target_anchor": "science" } },
+        { "type": "tab", "settings": { "label": "Reviews",     "target_anchor": "reviews" } },
+        { "type": "tab", "settings": { "label": "FAQ",         "target_anchor": "faq" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

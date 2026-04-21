@@ -1,0 +1,353 @@
+/* ═══════════════════════════════════════════════════════════
+   Product Cross-sell Component
+   ────────────────────────────
+   "Pairs well with" / "Complete the stack" card grid for PDP.
+   Renders as a regular section below the product tabs — NOT a
+   tab itself. Card is the entire click target when a link is
+   resolved (product URL, custom link, or empty → div fallback).
+
+   Font-size + color rules for .ig-section-label and
+   .ig-section-title are emitted by snippets/ig-section-controls
+   (ID-scoped). This file handles structure, card variants
+   (bordered / filled / minimal), price + savings treatment,
+   and the accent glow-line on hover.
+
+   Colors use Dawn scheme tokens only — no raw hex, no
+   font-family declarations.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.cross-sell {
+  padding-block: var(--ig-pad-start, 80px) var(--ig-pad-end, 80px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .cross-sell {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.cross-sell__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cross-sell__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Eyebrow label ─── */
+.cross-sell .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Section title ─── */
+.cross-sell .ig-section-title {
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls */
+}
+
+/* ─── Intro text ─── */
+.cross-sell__intro {
+  max-width: var(--ig-body-width, 640px);
+  margin-bottom: 2.5rem;
+  color: rgb(var(--color-foreground) / 0.8);
+  line-height: 1.6;
+}
+
+.cross-sell__intro > * {
+  margin: 0 0 0.75em;
+}
+
+.cross-sell__intro > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GRID
+   Desktop: 2 or 3 columns per columns_desktop setting.
+   Mobile (≤ 749px): always 1 column.
+   ═══════════════════════════════════════════════════════════ */
+
+.cross-sell__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cross-sell--cols-2 .cross-sell__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cross-sell--cols-3 .cross-sell__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .cross-sell__grid {
+    gap: 1.75rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD
+   Base card — acts as <a> when a link is resolved, <div> when
+   not. We style both identically via the shared class.
+   Three variants: bordered / filled / minimal.
+   The accent "glow bar" on top is a ::before pseudo-element so
+   it renders above the card regardless of variant's background.
+   ═══════════════════════════════════════════════════════════ */
+
+.cross-sell-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1.75rem 1.5rem;
+  border-radius: 8px;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+@media screen and (min-width: 990px) {
+  .cross-sell-card {
+    padding: 2.25rem 2rem;
+    gap: 1rem;
+  }
+}
+
+/* Accent top glow — hidden by default, revealed on hover */
+.cross-sell-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgb(var(--color-button));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) {
+    a.cross-sell-card:hover,
+    a.cross-sell-card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgb(var(--color-foreground) / 0.08);
+    }
+
+    a.cross-sell-card:hover::before,
+    a.cross-sell-card:focus-visible::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* Keyboard focus ring — always visible, regardless of motion pref */
+a.cross-sell-card:focus-visible {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 3px;
+}
+
+/* ─── Bordered (default) ─── */
+.cross-sell--style-bordered .cross-sell-card {
+  background-color: transparent;
+  border: 1px solid rgb(var(--color-foreground) / 0.12);
+}
+
+@media (hover: hover) {
+  .cross-sell--style-bordered a.cross-sell-card:hover {
+    border-color: rgb(var(--color-foreground) / 0.25);
+  }
+}
+
+/* ─── Filled ─── */
+.cross-sell--style-filled .cross-sell-card {
+  background-color: rgb(var(--color-foreground) / 0.04);
+  border: 1px solid transparent;
+}
+
+@media (hover: hover) {
+  .cross-sell--style-filled a.cross-sell-card:hover {
+    background-color: rgb(var(--color-foreground) / 0.07);
+  }
+}
+
+/* ─── Minimal ─── */
+.cross-sell--style-minimal .cross-sell-card {
+  background-color: transparent;
+  border: 0;
+  padding: 1.25rem 0;
+  border-radius: 0;
+}
+
+.cross-sell--style-minimal .cross-sell-card + .cross-sell-card {
+  border-top: 1px solid rgb(var(--color-foreground) / 0.12);
+  padding-top: 1.75rem;
+}
+
+/* Minimal variant keeps the ::before bar hidden — it conflicts
+   with the stacked border-top rhythm. Use underline on link instead. */
+.cross-sell--style-minimal .cross-sell-card::before {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD CONTENT
+   ═══════════════════════════════════════════════════════════ */
+
+.cross-sell-card__tag {
+  margin-bottom: 0;
+  /* .ig-section-label handles font-size/color via controls snippet */
+}
+
+.cross-sell-card__name {
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 990px) {
+  .cross-sell-card__name {
+    font-size: 1.625rem;
+  }
+}
+
+.cross-sell-card__desc {
+  line-height: 1.55;
+  color: rgb(var(--color-foreground) / 0.8);
+  /* font-size scales with body_size via ig-section-body hook */
+}
+
+.cross-sell-card__desc > * {
+  margin: 0 0 0.5em;
+}
+
+.cross-sell-card__desc > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Footer row: price · savings · link ─── */
+.cross-sell-card__foot {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.cross-sell-card__price {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  letter-spacing: 0.005em;
+}
+
+.cross-sell-card__savings {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3125rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  line-height: 1.2;
+}
+
+.cross-sell-card__link {
+  margin-left: auto;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--color-button));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-thickness 0.2s ease, color 0.2s ease;
+}
+
+@media (hover: hover) {
+  a.cross-sell-card:hover .cross-sell-card__link {
+    color: rgb(var(--color-button));
+    text-decoration-thickness: 3px;
+  }
+}
+
+/* ─── Placeholder (no blocks) ─── */
+.cross-sell__placeholder {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: rgb(var(--color-foreground) / 0.55);
+  background: rgb(var(--color-foreground) / 0.03);
+  border: 1px dashed rgb(var(--color-foreground) / 0.15);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE (≤ 749px)
+   ═══════════════════════════════════════════════════════════ */
+
+@media screen and (max-width: 749px) {
+  .cross-sell-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .cross-sell-card__name {
+    font-size: 1.25rem;
+  }
+
+  .cross-sell-card__foot {
+    gap: 0.625rem 0.875rem;
+  }
+
+  .cross-sell-card__link {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .cross-sell-card,
+  .cross-sell-card::before,
+  .cross-sell-card__link {
+    transition: none;
+  }
+
+  .cross-sell-card::before {
+    /* Still show the bar on hover, just without animation */
+    transition: none;
+  }
+}

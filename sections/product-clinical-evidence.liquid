@@ -1,0 +1,684 @@
+{{ 'component-product-clinical-evidence.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="{{ section.settings.tab_anchor | default: 'science' }}"
+  class="pdp-tab-panel product-science color-{{ section.settings.color_scheme }} product-science--split-{{ section.settings.column_split }}"
+  {% if section.settings.is_default_tab %}data-tab-default="true"{% endif %}
+  role="tabpanel"
+  aria-labelledby="{{ section.settings.tab_anchor | default: 'science' }}-tab"
+>
+  <div class="product-science__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="product-science__intro ig-section-body">
+        {{ section.settings.intro_text }}
+      </div>
+    {%- endif -%}
+
+    <div class="product-science__grid">
+      {%- if section.settings.show_studies_column -%}
+        <div class="product-science__studies">
+          {%- if section.settings.studies_heading != blank -%}
+            <h3 class="product-science__col-heading">{{ section.settings.studies_heading }}</h3>
+          {%- endif -%}
+
+          <div class="product-science__study-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'study' -%}
+                {%- liquid
+                  assign resolved_link = ''
+                  if block.settings.link_article != blank
+                    assign resolved_link = block.settings.link_article.url
+                  elsif block.settings.link_url != blank
+                    assign resolved_link = block.settings.link_url
+                  endif
+
+                  assign link_label_text = block.settings.link_label
+                  if link_label_text == blank
+                    assign link_label_text = 'Read study →'
+                  endif
+                -%}
+
+                <article class="study-entry" {{ block.shopify_attributes }}>
+                  {%- if block.settings.tag != blank -%}
+                    <span class="study-entry__tag ig-section-label">{{ block.settings.tag }}</span>
+                  {%- endif -%}
+
+                  {%- if block.settings.title != blank -%}
+                    <h4 class="study-entry__title">{{ block.settings.title }}</h4>
+                  {%- endif -%}
+
+                  {%- if block.settings.authors != blank -%}
+                    <p class="study-entry__authors">{{ block.settings.authors }}</p>
+                  {%- endif -%}
+
+                  {%- if block.settings.design_stat_1_value != blank or block.settings.design_stat_2_value != blank or block.settings.design_stat_3_value != blank -%}
+                    <div class="study-entry__design">
+                      {%- if block.settings.design_stat_1_value != blank -%}
+                        <div class="study-entry__design-cell">
+                          <div class="study-entry__design-value">{{ block.settings.design_stat_1_value }}</div>
+                          {%- if block.settings.design_stat_1_label != blank -%}
+                            <div class="study-entry__design-label">{{ block.settings.design_stat_1_label }}</div>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.design_stat_2_value != blank -%}
+                        <div class="study-entry__design-cell">
+                          <div class="study-entry__design-value">{{ block.settings.design_stat_2_value }}</div>
+                          {%- if block.settings.design_stat_2_label != blank -%}
+                            <div class="study-entry__design-label">{{ block.settings.design_stat_2_label }}</div>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.design_stat_3_value != blank -%}
+                        <div class="study-entry__design-cell">
+                          <div class="study-entry__design-value">{{ block.settings.design_stat_3_value }}</div>
+                          {%- if block.settings.design_stat_3_label != blank -%}
+                            <div class="study-entry__design-label">{{ block.settings.design_stat_3_label }}</div>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.integrity_markers != blank -%}
+                    {%- assign marker_lines = block.settings.integrity_markers | newline_to_br | split: '<br />' -%}
+                    <ul class="study-entry__markers">
+                      {%- for line in marker_lines -%}
+                        {%- assign clean = line | strip -%}
+                        {%- if clean != blank -%}
+                          <li class="study-entry__marker">{{ clean }}</li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+
+                  {%- if resolved_link != blank -%}
+                    <a href="{{ resolved_link }}" class="study-entry__link">{{ link_label_text }}</a>
+                  {%- endif -%}
+                </article>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_process_column -%}
+        <div class="product-science__process">
+          {%- if section.settings.process_heading != blank -%}
+            <h3 class="product-science__col-heading">{{ section.settings.process_heading }}</h3>
+          {%- endif -%}
+
+          <ol class="product-science__process-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'process_step' -%}
+                <li class="process-step" {{ block.shopify_attributes }}>
+                  <div class="process-step__num" aria-hidden="true">
+                    {{ block.settings.step_number | default: '01' }}
+                  </div>
+                  <div class="process-step__body">
+                    {%- if block.settings.step_title != blank -%}
+                      <h4 class="process-step__title">{{ block.settings.step_title }}</h4>
+                    {%- endif -%}
+                    {%- if block.settings.step_description != blank -%}
+                      <p class="process-step__desc ig-section-body">{{ block.settings.step_description }}</p>
+                    {%- endif -%}
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Clinical Evidence (Tab)",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 2,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "1.75"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "800"
+    },
+    {
+      "type": "header",
+      "content": "Skip Image"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section has no image controls."
+    },
+    {
+      "type": "header",
+      "content": "Tab panel"
+    },
+    {
+      "type": "text",
+      "id": "tab_anchor",
+      "label": "Tab anchor ID",
+      "info": "Used as the tab panel's id (must match the tab trigger's aria-controls).",
+      "default": "science"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_default_tab",
+      "label": "Default tab",
+      "info": "Marks this panel as the initially-active tab.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Science & studies"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Proof, not promises."
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro text (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Columns"
+    },
+    {
+      "type": "select",
+      "id": "column_split",
+      "label": "Column split",
+      "options": [
+        { "value": "balanced",      "label": "Balanced (50 / 50)" },
+        { "value": "studies-wide",  "label": "Studies wider (60 / 40)" },
+        { "value": "process-wide",  "label": "Process wider (40 / 60)" }
+      ],
+      "default": "balanced"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_studies_column",
+      "label": "Show studies column",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "studies_heading",
+      "label": "Studies column heading",
+      "default": "Published studies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_process_column",
+      "label": "Show process column",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "process_heading",
+      "label": "Process column heading",
+      "default": "How we enhance"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "study",
+      "name": "Study",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Study tag",
+          "info": "e.g. University study, Clinical trial",
+          "default": "University study"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Study title",
+          "default": "Double-blind trial on cellular energy markers"
+        },
+        {
+          "type": "text",
+          "id": "authors",
+          "label": "Authors / institution",
+          "default": "Hunt, Hertz, Zou, Whitney et al."
+        },
+        {
+          "type": "header",
+          "content": "Design summary"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_1_label",
+          "label": "Stat 1 label",
+          "default": "Participants"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_1_value",
+          "label": "Stat 1 value",
+          "default": "n = 80"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_2_label",
+          "label": "Stat 2 label",
+          "default": "Duration"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_2_value",
+          "label": "Stat 2 value",
+          "default": "90 days"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_3_label",
+          "label": "Stat 3 label",
+          "default": "Design"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_3_value",
+          "label": "Stat 3 value",
+          "default": "Double-blind"
+        },
+        {
+          "type": "header",
+          "content": "Integrity checklist"
+        },
+        {
+          "type": "textarea",
+          "id": "integrity_markers",
+          "label": "Integrity markers",
+          "info": "One per line. Rendered as a ✓ checklist.",
+          "default": "Randomized\nPlacebo-controlled\nPeer-reviewed"
+        },
+        {
+          "type": "header",
+          "content": "Link (optional)"
+        },
+        {
+          "type": "article",
+          "id": "link_article",
+          "label": "Linked article"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "External link",
+          "info": "Used if no article is picked."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Read study →"
+        }
+      ]
+    },
+    {
+      "type": "process_step",
+      "name": "Process step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step number",
+          "info": "e.g., 01, 02, 03",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title",
+          "default": "Gold-standard ingredients"
+        },
+        {
+          "type": "textarea",
+          "id": "step_description",
+          "label": "Step description",
+          "default": "Every compound selected based on clinical evidence — no fillers, no excipients."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clinical evidence — Cognition",
+      "settings": {
+        "tab_anchor": "science",
+        "is_default_tab": true,
+        "section_label": "Science & studies",
+        "section_heading": "Proof, not promises.",
+        "column_split": "balanced",
+        "studies_heading": "Published studies",
+        "process_heading": "How we enhance"
+      },
+      "blocks": [
+        {
+          "type": "study",
+          "settings": {
+            "tag": "University study",
+            "title": "Double-blind trial on cellular energy markers",
+            "authors": "Hunt, Hertz, Zou, Whitney et al.",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 80",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "90 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Double-blind",
+            "integrity_markers": "Randomized\nPlacebo-controlled\nPeer-reviewed",
+            "link_label": "Read study →"
+          }
+        },
+        {
+          "type": "study",
+          "settings": {
+            "tag": "Clinical trial",
+            "title": "Bioavailability assay vs. unenhanced formula",
+            "authors": "Chen, Rowe, Patel et al.",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 48",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "60 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Crossover",
+            "integrity_markers": "Randomized\nBlinded assay\nIRB-approved",
+            "link_label": "Read study →"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Gold-standard ingredients",
+            "step_description": "Every compound selected based on clinical evidence — Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10."
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Enhanced with cold plasma",
+            "step_description": "Ingredients processed through a proprietary cold plasma and laser-photonics system refined over decades of physics research."
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Greater bioavailability",
+            "step_description": "Enhancement increases cellular uptake — more of what you take actually reaches the cells that need it."
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "04",
+            "step_title": "Measurable results",
+            "step_description": "University-led trials showed statistically significant improvements over the same unenhanced formula."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clinical evidence — Longevity",
+      "settings": {
+        "tab_anchor": "science",
+        "is_default_tab": false,
+        "section_label": "Science & studies",
+        "section_heading": "Longevity is built, not promised.",
+        "column_split": "process-wide",
+        "studies_heading": "Published study",
+        "process_heading": "How we enhance"
+      },
+      "blocks": [
+        {
+          "type": "study",
+          "settings": {
+            "tag": "Independent lab",
+            "title": "NAD+ precursor potency and batch verification",
+            "authors": "Eurofins Scientific",
+            "design_stat_1_label": "Batches",
+            "design_stat_1_value": "n = 12",
+            "design_stat_2_label": "Period",
+            "design_stat_2_value": "2024 – 2025",
+            "design_stat_3_label": "Method",
+            "design_stat_3_value": "HPLC / LC-MS",
+            "integrity_markers": "Third-party\nISO 17025 accredited\nBlinded assay",
+            "link_label": "View results →"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Longevity-grade sourcing",
+            "step_description": "NMN, resveratrol, and CoQ10 sourced at pharmaceutical purity and verified by independent assay."
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Cold-plasma enhancement",
+            "step_description": "Each compound is passed through our cold-plasma stage to improve molecular uptake at the cellular level."
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Verified bioavailability",
+            "step_description": "Third-party crossover testing confirms higher plasma levels versus the unenhanced formula."
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "04",
+            "step_title": "Biomarker-backed outcomes",
+            "step_description": "NAD+, inflammation, and energy markers trend in the expected direction across repeated trials."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

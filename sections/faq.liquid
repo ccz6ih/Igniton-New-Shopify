@@ -2,9 +2,12 @@
 
 {% render 'ig-section-controls', section: section %}
 
+{%- assign faq_anchor = section.settings.tab_anchor | default: '' | handleize -%}
 <section
-  id="Faq-{{ section.id }}"
-  class="faq color-{{ section.settings.color_scheme }} faq--dividers-{{ section.settings.divider_style }} faq--icon-{{ section.settings.icon_style }}"
+  id="{% if faq_anchor != blank %}{{ faq_anchor }}{% else %}Faq-{{ section.id }}{% endif %}"
+  class="faq color-{{ section.settings.color_scheme }} faq--dividers-{{ section.settings.divider_style }} faq--icon-{{ section.settings.icon_style }}{% if faq_anchor != blank %} pdp-tab-panel{% endif %}"
+  {% if faq_anchor != blank %}role="tabpanel" aria-labelledby="{{ faq_anchor }}-tab"{% endif %}
+  {% if section.settings.is_default_tab %}data-tab-default="true"{% endif %}
 >
   <div class="faq__container">
     {%- if section.settings.section_label != blank -%}
@@ -231,6 +234,23 @@
         { "value": "1000","label": "Full (1000px)" }
       ],
       "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "PDP tab panel (optional)"
+    },
+    {
+      "type": "text",
+      "id": "tab_anchor",
+      "label": "Tab anchor id",
+      "info": "Leave blank unless used as a PDP tab. When set (e.g. \"faq\"), this section becomes a tab panel the pdp-tabs nav can control."
+    },
+    {
+      "type": "checkbox",
+      "id": "is_default_tab",
+      "label": "Default active tab",
+      "default": false,
+      "info": "Only used when Tab anchor id is set."
     },
     {
       "type": "header",

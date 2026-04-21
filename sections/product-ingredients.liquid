@@ -1,0 +1,533 @@
+{{ 'component-product-ingredients.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+{%- liquid
+  assign tab_anchor = section.settings.tab_anchor | default: 'ingredients'
+-%}
+
+<section
+  id="{{ tab_anchor }}"
+  class="pdp-tab-panel product-ingredients color-{{ section.settings.color_scheme }} product-ingredients--cols-{{ section.settings.columns_desktop }} product-ingredients--style-{{ section.settings.card_style }}"
+  {% if section.settings.is_default_tab %}data-tab-default="true"{% endif %}
+  role="tabpanel"
+  aria-labelledby="{{ tab_anchor }}-tab"
+>
+  <div class="product-ingredients__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="product-ingredients__intro ig-section-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.intro_text }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="product-ingredients__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'ingredient' -%}
+            <article class="ingredient-card" {{ block.shopify_attributes }}>
+              {%- if block.settings.tag != blank -%}
+                <span class="ingredient-card__tag ig-section-label">{{ block.settings.tag }}</span>
+              {%- endif -%}
+
+              {%- if block.settings.name != blank -%}
+                <h3 class="ingredient-card__name">{{ block.settings.name }}</h3>
+              {%- endif -%}
+
+              {%- if section.settings.show_dosages and block.settings.dosage != blank -%}
+                <div class="ingredient-card__dosage">{{ block.settings.dosage }}</div>
+              {%- endif -%}
+
+              {%- if block.settings.mechanism != blank -%}
+                <div class="ingredient-card__mechanism">{{ block.settings.mechanism }}</div>
+              {%- endif -%}
+
+              {%- if block.settings.description != blank -%}
+                <p class="ingredient-card__desc ig-section-body">{{ block.settings.description }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.study_count != blank -%}
+                <div class="ingredient-card__studies">{{ block.settings.study_count }}</div>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="product-ingredients__placeholder">
+        <p>Add ingredient blocks to populate the formula card grid.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Ingredients (Tab)",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60,
+      "max": 180,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 6,
+      "step": 0.5,
+      "unit": "rem",
+      "default": 2,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "1.75"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "80"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Skip Image"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section has no image controls."
+    },
+    {
+      "type": "header",
+      "content": "Tab integration"
+    },
+    {
+      "type": "text",
+      "id": "tab_anchor",
+      "label": "Tab anchor (panel id)",
+      "info": "Used as the section id and referenced by the tab nav.",
+      "default": "ingredients"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_default_tab",
+      "label": "Default tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Inside the formula"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Every ingredient earns its place"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro paragraph",
+      "default": "<p>Every compound was selected for clinical evidence, then enhanced for bioavailability. No fillers, no excipients — only actives with published research behind them.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "filled",   "label": "Filled" },
+        { "value": "minimal",  "label": "Minimal" }
+      ],
+      "default": "bordered"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dosages",
+      "label": "Show dosages",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag",
+          "info": "Optional. Small-caps category, e.g. NOOTROPIC, ADAPTOGEN."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient name",
+          "default": "Citicoline"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Supports acetylcholine synthesis for memory, attention, and learning."
+        },
+        {
+          "type": "text",
+          "id": "dosage",
+          "label": "Dosage",
+          "info": "Optional, e.g. 250mg."
+        },
+        {
+          "type": "text",
+          "id": "mechanism",
+          "label": "Mechanism tag",
+          "info": "Optional secondary tag."
+        },
+        {
+          "type": "text",
+          "id": "study_count",
+          "label": "Study count",
+          "info": "Optional metadata, e.g. 15 clinical studies."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients — 3 columns Cognition",
+      "settings": {
+        "columns_desktop": "3",
+        "card_style": "bordered",
+        "show_dosages": true,
+        "tab_anchor": "ingredients",
+        "section_label": "Inside the formula",
+        "section_heading": "Every ingredient earns its place",
+        "intro_text": "<p>Six clinically supported compounds, each processed through cold plasma and laser-photonics technology to increase bioavailability. No fillers. No excipients.</p>"
+      },
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "NOOTROPIC",
+            "name": "Citicoline",
+            "description": "Boosts acetylcholine — the neurotransmitter for memory, attention, and learning. Supports neuron membrane integrity.",
+            "dosage": "250mg",
+            "mechanism": "Supports acetylcholine synthesis",
+            "study_count": "15 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "NOOTROPIC",
+            "name": "Alpha-GPC",
+            "description": "Highly bioavailable choline that rapidly crosses the blood-brain barrier for mental sharpness and focus.",
+            "dosage": "300mg",
+            "mechanism": "Cholinergic precursor",
+            "study_count": "12 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "AMINO ACID",
+            "name": "L-Theanine",
+            "description": "Promotes calm alertness by increasing alpha brain waves without sedation. Pairs with caffeine for focus.",
+            "dosage": "200mg",
+            "mechanism": "GABAergic modulation",
+            "study_count": "20 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "ADAPTOGEN",
+            "name": "Bacopa Monnieri",
+            "description": "Ayurvedic herb shown to support memory formation and protect neurons against oxidative stress.",
+            "dosage": "300mg",
+            "mechanism": "Enhances synaptic communication",
+            "study_count": "18 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "ADAPTOGEN",
+            "name": "Rhodiola Rosea",
+            "description": "Arctic root used to combat mental fatigue and support cognitive performance under stress.",
+            "dosage": "200mg",
+            "mechanism": "HPA axis modulation",
+            "study_count": "11 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "PHOSPHOLIPID",
+            "name": "Phosphatidylserine",
+            "description": "Key neuronal membrane component that supports cell signaling and memory — especially in adults over 40.",
+            "dosage": "100mg",
+            "mechanism": "Neuronal membrane support",
+            "study_count": "9 clinical studies"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ingredients — 2 columns Longevity",
+      "settings": {
+        "columns_desktop": "2",
+        "card_style": "filled",
+        "show_dosages": true,
+        "tab_anchor": "ingredients",
+        "section_label": "Inside the formula",
+        "section_heading": "Molecules for cellular longevity",
+        "intro_text": "<p>Four compounds selected to restore NAD+, activate sirtuins, and protect mitochondrial function across decades.</p>"
+      },
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "NAD+ PRECURSOR",
+            "name": "NMN",
+            "description": "Nicotinamide mononucleotide rapidly converts to NAD+, fueling sirtuins and mitochondrial repair pathways.",
+            "dosage": "500mg",
+            "mechanism": "NAD+ restoration",
+            "study_count": "14 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "POLYPHENOL",
+            "name": "Resveratrol",
+            "description": "Activates SIRT1 and mimics caloric restriction benefits on cardiovascular and cellular resilience.",
+            "dosage": "150mg",
+            "mechanism": "Sirtuin activator",
+            "study_count": "22 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "ANTIOXIDANT",
+            "name": "CoQ10",
+            "description": "Critical electron carrier in mitochondrial ATP production and a potent lipid-soluble antioxidant.",
+            "dosage": "100mg",
+            "mechanism": "Mitochondrial bioenergetics",
+            "study_count": "25 clinical studies"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "tag": "AUTOPHAGY",
+            "name": "Spermidine",
+            "description": "Polyamine that induces autophagy — the cellular recycling program linked to longevity and heart health.",
+            "dosage": "1mg",
+            "mechanism": "Autophagy inducer",
+            "study_count": "7 clinical studies"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

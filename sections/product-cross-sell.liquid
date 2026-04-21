@@ -1,0 +1,497 @@
+{{ 'component-product-cross-sell.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="ProductCrossSell-{{ section.id }}"
+  class="cross-sell color-{{ section.settings.color_scheme }} cross-sell--cols-{{ section.settings.columns_desktop }} cross-sell--style-{{ section.settings.card_style }}"
+>
+  <div class="cross-sell__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="cross-sell__intro ig-section-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.intro_text }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cross-sell__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'related_product' -%}
+            {%- liquid
+              assign product = block.settings.product
+
+              assign display_name = block.settings.custom_name
+              if display_name == blank and product != blank
+                assign display_name = product.title
+              endif
+
+              assign display_desc = block.settings.custom_description
+              if display_desc == blank and product != blank
+                assign display_desc = product.description | strip_html | truncatewords: 25
+              endif
+
+              assign display_price = block.settings.custom_price
+              if display_price == blank and product != blank
+                assign display_price = product.price | money
+              endif
+
+              assign card_link = block.settings.custom_link
+              if card_link == blank and product != blank
+                assign card_link = product.url
+              endif
+
+              assign link_label_text = block.settings.link_label
+              if link_label_text == blank
+                assign link_label_text = 'View product →'
+              endif
+            -%}
+
+            {%- if card_link != blank -%}
+              <a href="{{ card_link }}" class="cross-sell-card" {{ block.shopify_attributes }}>
+            {%- else -%}
+              <div class="cross-sell-card" {{ block.shopify_attributes }}>
+            {%- endif -%}
+              {%- if section.settings.show_tag and block.settings.tag != blank -%}
+                <span class="cross-sell-card__tag ig-section-label">{{ block.settings.tag }}</span>
+              {%- endif -%}
+
+              {%- if display_name != blank -%}
+                <h3 class="cross-sell-card__name ig-font-display">{{ display_name }}</h3>
+              {%- endif -%}
+
+              {%- if display_desc != blank -%}
+                <div class="cross-sell-card__desc ig-section-body">{{ display_desc }}</div>
+              {%- endif -%}
+
+              <div class="cross-sell-card__foot">
+                {%- if section.settings.show_price and display_price != blank -%}
+                  <div class="cross-sell-card__price">{{ display_price }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.savings_callout != blank -%}
+                  <div class="cross-sell-card__savings">{{ block.settings.savings_callout }}</div>
+                {%- endif -%}
+
+                {%- if card_link != blank -%}
+                  <span class="cross-sell-card__link">{{ link_label_text }}</span>
+                {%- endif -%}
+              </div>
+            {%- if card_link != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="cross-sell__placeholder">
+        <p>Add related-product blocks to pair items on this page.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Cross-sell",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60,
+      "max": 180,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 6,
+      "step": 0.25,
+      "unit": "rem",
+      "default": 2.25,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "1.75"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "80"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Complete the stack"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Pairs well with"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro text (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "filled",   "label": "Filled" },
+        { "value": "minimal",  "label": "Minimal" }
+      ],
+      "default": "bordered"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tag",
+      "label": "Show card tag",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "related_product",
+      "name": "Related product",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Optional. Drives live data (title, description, price, URL) when custom fields below are blank."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag",
+          "info": "e.g. Longevity, Recovery, Cognition",
+          "default": "LONGEVITY"
+        },
+        {
+          "type": "header",
+          "content": "Custom content (optional)"
+        },
+        {
+          "type": "text",
+          "id": "custom_name",
+          "label": "Custom name",
+          "info": "Falls back to product title."
+        },
+        {
+          "type": "richtext",
+          "id": "custom_description",
+          "label": "Custom description",
+          "info": "Falls back to the first 25 words of the product description."
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom price",
+          "info": "Falls back to product price (formatted). e.g. $89 / month"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom link",
+          "info": "Falls back to the product URL. If empty and no product is picked, card renders without link."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "View product →"
+        },
+        {
+          "type": "text",
+          "id": "savings_callout",
+          "label": "Savings callout (optional)",
+          "info": "e.g. Save 20% in the Complete Stack"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cross-sell — pair",
+      "settings": {
+        "columns_desktop": "2",
+        "card_style": "bordered",
+        "section_label": "Complete the stack",
+        "section_heading": "Pairs well with"
+      },
+      "blocks": [
+        {
+          "type": "related_product",
+          "settings": {
+            "tag": "LONGEVITY",
+            "custom_name": "IgniLongevity",
+            "custom_description": "<p>NAD+ precursor + senolytic blend. Daily cellular maintenance for the long arc.</p>",
+            "custom_price": "$89 / month",
+            "link_label": "View IgniLongevity →",
+            "savings_callout": "Save 20% in the Complete Stack"
+          }
+        },
+        {
+          "type": "related_product",
+          "settings": {
+            "tag": "BUNDLE",
+            "custom_name": "Complete Stack",
+            "custom_description": "<p>Every Igniton formula, delivered monthly. One subscription, stacked for synergy.</p>",
+            "custom_price": "$219 / month",
+            "link_label": "Build the stack →",
+            "savings_callout": "Save 20% vs. individual"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cross-sell — 3 options",
+      "settings": {
+        "columns_desktop": "3",
+        "card_style": "filled",
+        "section_label": "Build your protocol",
+        "section_heading": "Three paths forward"
+      },
+      "blocks": [
+        {
+          "type": "related_product",
+          "settings": {
+            "tag": "LONGEVITY",
+            "custom_name": "IgniLongevity",
+            "custom_description": "<p>NAD+ precursor + senolytic blend. Daily cellular maintenance.</p>",
+            "custom_price": "$89 / month",
+            "link_label": "View product →"
+          }
+        },
+        {
+          "type": "related_product",
+          "settings": {
+            "tag": "RECOVERY",
+            "custom_name": "IgniRecover",
+            "custom_description": "<p>Post-training muscle repair + sleep-onset support.</p>",
+            "custom_price": "$69 / month",
+            "link_label": "View product →"
+          }
+        },
+        {
+          "type": "related_product",
+          "settings": {
+            "tag": "COGNITION",
+            "custom_name": "IgniFocus",
+            "custom_description": "<p>Nootropic stack for sustained attention without the crash.</p>",
+            "custom_price": "$79 / month",
+            "link_label": "View product →"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

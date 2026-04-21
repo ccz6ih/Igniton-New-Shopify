@@ -1,0 +1,151 @@
+/* ═══════════════════════════════════════════════════════════
+   PDP Tabs
+   ─────────────────────────────
+   Horizontal tab navigation that controls the visibility of
+   companion PDP tab-panel sections (.pdp-tab-panel).
+
+   Typography custom props (--ig-pad-start, etc.) are emitted
+   by snippets/ig-section-controls.liquid. Visibility toggling
+   is driven by assets/pdp-tabs.js, which adds/removes
+   .pdp-tab-panel--hidden on sibling panels.
+   ═══════════════════════════════════════════════════════════ */
+
+.pdp-tabs {
+  padding-block: var(--ig-pad-start, 24px) var(--ig-pad-end, 0px);
+  background: rgb(var(--color-background));
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+}
+
+@media screen and (max-width: 749px) {
+  .pdp-tabs {
+    padding-block: var(--ig-pad-start-m, 16px) var(--ig-pad-end-m, 0px);
+  }
+}
+
+.pdp-tabs--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgb(var(--color-background));
+}
+
+.pdp-tabs__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .pdp-tabs__container {
+    padding-inline: 5rem;
+  }
+}
+
+.pdp-tabs__list {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pdp-tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.pdp-tabs--align-center .pdp-tabs__list {
+  justify-content: center;
+}
+
+.pdp-tabs__tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  font-family: var(--font-body-family);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: opacity 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  min-height: 44px;
+}
+
+.pdp-tabs__tab:hover {
+  opacity: 1;
+}
+
+.pdp-tabs__tab:focus-visible {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 4px;
+  opacity: 1;
+}
+
+.pdp-tabs__tab[aria-selected="true"] {
+  opacity: 1;
+}
+
+/* ─── Underline style (default) ─── */
+.pdp-tabs--style-underline .pdp-tabs__tab {
+  border-bottom: 2px solid transparent;
+}
+
+.pdp-tabs--style-underline .pdp-tabs__tab[aria-selected="true"] {
+  border-bottom-color: rgb(var(--color-button));
+}
+
+/* ─── Pill style ─── */
+.pdp-tabs--style-pill .pdp-tabs__tab {
+  border-radius: 999px;
+}
+
+.pdp-tabs--style-pill .pdp-tabs__tab[aria-selected="true"] {
+  background: rgb(var(--color-foreground) / 0.06);
+}
+
+/* ─── Button style ─── */
+.pdp-tabs--style-button .pdp-tabs__tab {
+  border: 1px solid rgb(var(--color-foreground) / 0.15);
+  border-radius: 8px;
+}
+
+.pdp-tabs--style-button .pdp-tabs__tab[aria-selected="true"] {
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  border-color: rgb(var(--color-button));
+}
+
+/* ─── Tab-panel visibility (JS toggles .pdp-tab-panel--hidden) ─── */
+.pdp-tab-panel--hidden {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pdp-tab-panel {
+    animation: pdp-tab-fade 240ms ease-out;
+  }
+}
+
+@keyframes pdp-tab-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Mobile disable: hide tabs on mobile and show all panels ─── */
+@media (max-width: 749px) {
+  .pdp-tabs--desktop-only {
+    display: none;
+  }
+  .pdp-tabs--desktop-only ~ .pdp-tab-panel--hidden {
+    display: block !important;
+  }
+}

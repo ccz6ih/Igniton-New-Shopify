@@ -19,9 +19,12 @@
   endif
 -%}
 
+{%- assign rs_anchor = section.settings.tab_anchor | default: '' | handleize -%}
 <section
-  id="ReviewSummary-{{ section.id }}"
-  class="review-summary color-{{ section.settings.color_scheme }} review-summary--cols-{{ section.settings.columns_desktop }} review-summary--style-{{ section.settings.card_style }} review-summary--summary-{{ section.settings.summary_position }}{% if section.settings.show_summary %} review-summary--with-summary{% endif %}"
+  id="{% if rs_anchor != blank %}{{ rs_anchor }}{% else %}ReviewSummary-{{ section.id }}{% endif %}"
+  class="review-summary color-{{ section.settings.color_scheme }} review-summary--cols-{{ section.settings.columns_desktop }} review-summary--style-{{ section.settings.card_style }} review-summary--summary-{{ section.settings.summary_position }}{% if section.settings.show_summary %} review-summary--with-summary{% endif %}{% if rs_anchor != blank %} pdp-tab-panel{% endif %}"
+  {% if rs_anchor != blank %}role="tabpanel" aria-labelledby="{{ rs_anchor }}-tab"{% endif %}
+  {% if section.settings.is_default_tab %}data-tab-default="true"{% endif %}
 >
   <div class="review-summary__container">
     {%- if section.settings.section_label != blank -%}
@@ -315,6 +318,23 @@
         { "value": "1000","label": "Full (1000px)" }
       ],
       "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "PDP tab panel (optional)"
+    },
+    {
+      "type": "text",
+      "id": "tab_anchor",
+      "label": "Tab anchor id",
+      "info": "Leave blank unless used as a PDP tab. When set (e.g. \"reviews\"), this section becomes a tab panel the pdp-tabs nav can control."
+    },
+    {
+      "type": "checkbox",
+      "id": "is_default_tab",
+      "label": "Default active tab",
+      "default": false,
+      "info": "Only used when Tab anchor id is set."
     },
     {
       "type": "header",
