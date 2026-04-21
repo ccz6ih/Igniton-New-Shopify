@@ -118,6 +118,101 @@
         "text_size": 170
       }
     },
+    "ig_products_showcase_Gp4Axm": {
+      "type": "ig-products-showcase",
+      "blocks": {
+        "product_card_WfJh8E": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition",
+            "featured": false,
+            "tag": "Cognition",
+            "custom_name": "IgniCognition™",
+            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash. Your sharpest thinking, sustained throughout the day.",
+            "show_stats": true,
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To measurable results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_link": "",
+            "link_text": "Shop IgniCognition",
+            "button_style_secondary": false
+          }
+        },
+        "product_card_aYxHBz": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-longevity",
+            "featured": false,
+            "tag": "Longevity",
+            "custom_name": "IgniLongevity™",
+            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory. Support your body's natural repair systems — so you don't just live longer, you feel better doing it.",
+            "show_stats": true,
+            "stat_1_num": "hs-CRP",
+            "stat_1_label": "Inflammation marker",
+            "stat_2_num": "NAD⁺",
+            "stat_2_label": "Cellular energy support",
+            "stat_3_num": "60 days",
+            "stat_3_label": "To longevity results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_link": "",
+            "link_text": "Shop IgniLongevity",
+            "button_style_secondary": false
+          }
+        },
+        "product_card_3gaHJq": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition-longevity-pack",
+            "featured": true,
+            "tag": "Best Value",
+            "custom_name": "The Complete Stack — Cognition + Longevity",
+            "custom_description": "Both formulas together for comprehensive brain and body support. The most complete approach to human performance and longevity.",
+            "show_stats": false,
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To measurable results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_link": "",
+            "link_text": "Shop the Bundle",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "product_card_WfJh8E",
+        "product_card_aYxHBz",
+        "product_card_3gaHJq"
+      ],
+      "name": "Products Showcase",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "wide",
+        "eyebrow": "Two products. One breakthrough.",
+        "heading": "Every ingredient enhanced for maximum effect.",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": "100",
+        "label_spacing": "0.75",
+        "heading_size": 3,
+        "heading_max_width": "900",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": "65",
+        "body_size": 1,
+        "body_max_width": "640"
+      }
+    },
     "ig_trust_bar_qywBVA": {
       "type": "ig-trust-bar",
       "blocks": {
@@ -276,6 +371,7 @@
   },
   "order": [
     "ig_hero_f8eHk9",
+    "ig_products_showcase_Gp4Axm",
     "ig_trust_bar_qywBVA",
     "ig_how_it_works_8BeyQe",
     "featured_blog_JWPYVA",
