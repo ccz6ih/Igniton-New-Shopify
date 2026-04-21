@@ -466,6 +466,72 @@
         "section_title": "Numbers from the university study, not our marketing team."
       }
     },
+    "ig_why_different_8Wikxr": {
+      "type": "ig-why-different",
+      "blocks": {
+        "feature_card_AA9awy": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z\"></path></svg>",
+            "title": "No fillers. Ever.",
+            "description": "Every capsule contains only active ingredients — no excipients, no flow agents, no bulking compounds. Pure, dense nutrition."
+          }
+        },
+        "feature_card_pCwPk9": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z\"></path></svg>",
+            "title": "Enhanced, not just formulated",
+            "description": "Ingredients are processed using cold plasma and laser-photonics technology — a process shown to increase bioavailability at the cellular level."
+          }
+        },
+        "feature_card_4Qbxm7": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\"></path></svg>",
+            "title": "University-tested, not just claimed",
+            "description": "Results come from peer-reviewed, randomized controlled trials published in academic journals — not from internal marketing metrics."
+          }
+        },
+        "feature_card_fdGYDq": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 10V3L4 14h7v7l9-11h-7z\"></path></svg>",
+            "title": "No stimulants. No crash.",
+            "description": "Cognitive benefits come from enhanced cellular function, not caffeine or synthetic stimulants. Sustained energy without the inevitable afternoon drop."
+          }
+        }
+      },
+      "block_order": [
+        "feature_card_AA9awy",
+        "feature_card_pCwPk9",
+        "feature_card_4Qbxm7",
+        "feature_card_fdGYDq"
+      ],
+      "name": "Igniton Why Different",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "default",
+        "section_label": "Why Igniton is different",
+        "section_title": "Not just what's in it. What's been done to it.",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": "100",
+        "label_spacing": "0.75",
+        "heading_size": 5,
+        "heading_max_width": "900",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": "65",
+        "body_size": 1.2,
+        "body_max_width": "640"
+      }
+    },
     "featured_blog_JWPYVA": {
       "type": "featured-blog",
       "name": "t:sections.featured-blog.presets.name",
@@ -508,6 +574,7 @@
     "ig_how_it_works_8BeyQe",
     "ig_guarantee_strip_gaPm3M",
     "ig_results_split_gyih9T",
+    "ig_why_different_8Wikxr",
     "featured_blog_JWPYVA",
     "ig_guarantee_strip_FWmACi"
   ]
