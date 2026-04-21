@@ -87,8 +87,8 @@
       "name": "Igniton Hero",
       "settings": {
         "color_scheme": "scheme-1",
-        "container_width": "default",
-        "min_height": 450,
+        "container_width": "wide",
+        "min_height": 400,
         "padding_block_start_desktop": 120,
         "padding_block_end_desktop": 120,
         "padding_block_start_mobile": "64",
@@ -116,6 +116,62 @@
         "text_animation": "slide-left",
         "proof_num_size": 5.8,
         "text_size": 170
+      }
+    },
+    "ig_trust_bar_qywBVA": {
+      "type": "ig-trust-bar",
+      "blocks": {
+        "trust_item_j9dNmz": {
+          "type": "trust_item",
+          "settings": {
+            "text": "University-led clinical trials"
+          }
+        },
+        "trust_item_yYmePb": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Published in peer-reviewed journals"
+          }
+        },
+        "trust_item_HwRjVz": {
+          "type": "trust_item",
+          "settings": {
+            "text": "GRAS-certified ingredients"
+          }
+        },
+        "trust_item_QXLhTM": {
+          "type": "trust_item",
+          "settings": {
+            "text": "30-day satisfaction guarantee"
+          }
+        },
+        "trust_item_wje6aA": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Made in Colorado, USA"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_j9dNmz",
+        "trust_item_yYmePb",
+        "trust_item_HwRjVz",
+        "trust_item_QXLhTM",
+        "trust_item_wje6aA"
+      ],
+      "name": "Igniton Trust Bar",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "container_width": "default",
+        "padding_block_start_desktop": 24,
+        "padding_block_end_desktop": 24,
+        "padding_block_start_mobile": 16,
+        "padding_block_end_mobile": 16,
+        "label_size": "100",
+        "label_spacing": "0",
+        "show_separators": true,
+        "item_gap": "3",
+        "item_alignment": "center"
       }
     },
     "ig_products_showcase_Gp4Axm": {
@@ -213,62 +269,6 @@
         "body_max_width": "640"
       }
     },
-    "ig_trust_bar_qywBVA": {
-      "type": "ig-trust-bar",
-      "blocks": {
-        "trust_item_j9dNmz": {
-          "type": "trust_item",
-          "settings": {
-            "text": "University-led clinical trials"
-          }
-        },
-        "trust_item_yYmePb": {
-          "type": "trust_item",
-          "settings": {
-            "text": "Published in peer-reviewed journals"
-          }
-        },
-        "trust_item_HwRjVz": {
-          "type": "trust_item",
-          "settings": {
-            "text": "GRAS-certified ingredients"
-          }
-        },
-        "trust_item_QXLhTM": {
-          "type": "trust_item",
-          "settings": {
-            "text": "30-day satisfaction guarantee"
-          }
-        },
-        "trust_item_wje6aA": {
-          "type": "trust_item",
-          "settings": {
-            "text": "Made in Colorado, USA"
-          }
-        }
-      },
-      "block_order": [
-        "trust_item_j9dNmz",
-        "trust_item_yYmePb",
-        "trust_item_HwRjVz",
-        "trust_item_QXLhTM",
-        "trust_item_wje6aA"
-      ],
-      "name": "Igniton Trust Bar",
-      "settings": {
-        "color_scheme": "scheme-2",
-        "container_width": "default",
-        "padding_block_start_desktop": 24,
-        "padding_block_end_desktop": 24,
-        "padding_block_start_mobile": 16,
-        "padding_block_end_mobile": 16,
-        "label_size": "100",
-        "label_spacing": "0",
-        "show_separators": true,
-        "item_gap": "3",
-        "item_alignment": "center"
-      }
-    },
     "ig_how_it_works_8BeyQe": {
       "type": "ig-how-it-works",
       "blocks": {
@@ -334,6 +334,138 @@
         "footer_link_url": ""
       }
     },
+    "ig_guarantee_strip_gaPm3M": {
+      "type": "ig-guarantee-strip",
+      "name": "Igniton Guarantee Strip",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "full",
+        "padding_block_start_desktop": 24,
+        "padding_block_end_desktop": 24,
+        "padding_block_start_mobile": 20,
+        "padding_block_end_mobile": 20,
+        "body_size": "1.2",
+        "body_max_width": "1000",
+        "icon": "🛡",
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+      }
+    },
+    "ig_results_split_gyih9T": {
+      "type": "ig-results-split",
+      "blocks": {
+        "big_stat_UfGffH": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "100%",
+            "stat_label": "Short-term & operational memory improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80",
+            "linked_product": ""
+          }
+        },
+        "big_stat_Uwx6MT": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "83%",
+            "stat_label": "Quality of performance improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80",
+            "linked_product": ""
+          }
+        },
+        "big_stat_iX6VBC": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "51%",
+            "stat_label": "Sustained attention improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80",
+            "linked_product": ""
+          }
+        },
+        "big_stat_L6VAnP": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "30d",
+            "stat_label": "When most users first notice the difference",
+            "stat_source": "Based on participant-reported outcomes",
+            "linked_product": ""
+          }
+        },
+        "testimonial_UwyNFE": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "My brain is sharper than it's been in a long time. And my shoulder finally seems to be getting better. This stuff works.",
+            "portrait": "shopify://shop_images/portrait-of-senior-couple-walking-along-shoreline-2026-03-10-03-20-58-utc_1.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        },
+        "testimonial_gDFigP": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I'm 71 years old. I can't believe the difference — my mind is very sharp and I feel amazing. You are changing my life one day at a time.",
+            "portrait": "shopify://shop_images/focusfor_addults.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        },
+        "testimonial_YLCbQ9": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I feel so much sharper and my mind feels so clear after taking this for over two weeks.",
+            "portrait": "shopify://shop_images/an-adult-thoughtful-man-in-formal-attire-sits-on-t-2026-01-05-01-03-04-utc.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        },
+        "testimonial_HVdnmq": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I have seen huge improvements physically and mentally..",
+            "portrait": "shopify://shop_images/portrait-of-a-beautiful-funny-young-girl-on-the-wh-2026-03-26-05-33-32-utc.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "big_stat_UfGffH",
+        "big_stat_Uwx6MT",
+        "big_stat_iX6VBC",
+        "big_stat_L6VAnP",
+        "testimonial_UwyNFE",
+        "testimonial_gDFigP",
+        "testimonial_YLCbQ9",
+        "testimonial_HVdnmq"
+      ],
+      "name": "Igniton Results Split",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "default",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": 125,
+        "label_spacing": "0.75",
+        "heading_size": 5,
+        "heading_max_width": "900",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": "65",
+        "body_size": 1.4,
+        "body_max_width": "640",
+        "image_ratio": "circle",
+        "stat_number_size": "lg",
+        "disclaimer_text": "<p>** These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
+        "testimonials_label": "What customers say",
+        "reviews_link_text": "Read all reviews →",
+        "reviews_link_url": "",
+        "section_label": "Clinical results",
+        "section_title": "Numbers from the university study, not our marketing team."
+      }
+    },
     "featured_blog_JWPYVA": {
       "type": "featured-blog",
       "name": "t:sections.featured-blog.presets.name",
@@ -371,9 +503,11 @@
   },
   "order": [
     "ig_hero_f8eHk9",
-    "ig_products_showcase_Gp4Axm",
     "ig_trust_bar_qywBVA",
+    "ig_products_showcase_Gp4Axm",
     "ig_how_it_works_8BeyQe",
+    "ig_guarantee_strip_gaPm3M",
+    "ig_results_split_gyih9T",
     "featured_blog_JWPYVA",
     "ig_guarantee_strip_FWmACi"
   ]
