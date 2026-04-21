@@ -457,7 +457,7 @@
         "body_size": 1.4,
         "body_max_width": "640",
         "image_ratio": "circle",
-        "stat_number_size": "lg",
+        "stat_number_size": "xl",
         "disclaimer_text": "<p>** These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
         "testimonials_label": "What customers say",
         "reviews_link_text": "Read all reviews →",
