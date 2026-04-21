@@ -449,7 +449,7 @@
         "padding_block_start_mobile": 48,
         "padding_block_end_mobile": 48,
         "label_size": 150,
-        "label_spacing": "0.75",
+        "label_spacing": "0.25",
         "heading_size": 5,
         "heading_max_width": "900",
         "heading_spacing": "2.5",
