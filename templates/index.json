@@ -252,7 +252,7 @@
       "name": "Products Showcase",
       "settings": {
         "color_scheme": "",
-        "container_width": "wide",
+        "container_width": "default",
         "eyebrow": "Two products. One breakthrough.",
         "heading": "Every ingredient enhanced for maximum effect.",
         "padding_block_start_desktop": 96,
