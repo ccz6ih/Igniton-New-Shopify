@@ -1,0 +1,315 @@
+/* ═══════════════════════════════════════════════════════════
+   Biomarker Grid Component
+   ────────────────────────
+   Per-product results section for the Results page.
+   Two-column desktop: copy on one side, 2×2 (or N×N) biomarker
+   grid on the other. Mobile: stacks to single column.
+
+   Typography colors + eyebrow/title sizing come from
+   snippets/ig-section-controls.liquid (ID-scoped rules).
+   This file handles structure, cell treatment, highlighted
+   variant, badge styles, and column-split ratios.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.biomarker {
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .biomarker {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.biomarker__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .biomarker__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OUTER TWO-COLUMN LAYOUT
+   column_split: balanced (1:1), copy-narrow (2:3), copy-wide (3:2)
+   Mobile: single column, copy first.
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem 4rem;
+  align-items: start;
+}
+
+@media screen and (min-width: 990px) {
+  .biomarker--split-balanced .biomarker__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .biomarker--split-copy-narrow .biomarker__grid {
+    grid-template-columns: 2fr 3fr;
+  }
+
+  .biomarker--split-copy-wide .biomarker__grid {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COPY COLUMN
+   Eyebrow / heading / body copy / badge / CTA.
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.biomarker .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+.biomarker .ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
+}
+
+.biomarker__body {
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+  line-height: 1.6;
+  max-width: var(--ig-body-width, 480px);
+  margin-bottom: 1.5rem;
+}
+
+.biomarker__body > * + * {
+  margin-top: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STUDY BADGE
+   Two styles: pill (compact inline) or strip (full-width).
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__badge {
+  margin-top: 0.5rem;
+  color: rgb(var(--color-foreground));
+}
+
+/* Pill — compact inline-block with accent bg */
+.biomarker--badge-pill .biomarker__badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 999px;
+  line-height: 1.2;
+}
+
+/* Strip — full-width separator with borders */
+.biomarker--badge-strip .biomarker__badge {
+  align-self: stretch;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-top: 1px solid rgba(var(--color-foreground), 0.15);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.15);
+  background-color: transparent;
+}
+
+/* ─── CTA ─── */
+.biomarker__cta {
+  margin-top: 1.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BIOMARKER CELLS GRID
+   grid-columns-d-{2|3|4} and grid-columns-m-{1|2} modifiers.
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__cells {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 750px) {
+  .biomarker__cells {
+    gap: 1.25rem;
+  }
+
+  .biomarker--cols-d-2 .biomarker__cells { grid-template-columns: repeat(2, 1fr); }
+  .biomarker--cols-d-3 .biomarker__cells { grid-template-columns: repeat(3, 1fr); }
+  .biomarker--cols-d-4 .biomarker__cells { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media screen and (max-width: 749px) {
+  .biomarker--cols-m-1 .biomarker__cells { grid-template-columns: 1fr; }
+  .biomarker--cols-m-2 .biomarker__cells { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CELL
+   Padded, subtle border, rounded corners. Highlighted variant
+   uses the scheme's button color as an accent background.
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: 8px;
+  background-color: transparent;
+  color: inherit;
+  min-height: 44px;
+}
+
+@media screen and (min-width: 750px) {
+  .biomarker__cell {
+    padding: 2rem;
+  }
+}
+
+/* Highlighted — headline metric, accent bg + contrasting text + soft shadow */
+.biomarker__cell--highlighted {
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  border-color: transparent;
+  box-shadow: 0 6px 24px rgba(var(--color-foreground), 0.12);
+}
+
+.biomarker__cell--highlighted .biomarker__number,
+.biomarker__cell--highlighted .biomarker__label {
+  color: rgb(var(--color-button-text));
+}
+
+.biomarker__cell--highlighted .biomarker__source {
+  color: rgb(var(--color-button-text));
+  opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NUMBER + UNIT
+   Uses Dawn's --font-heading-family.
+   Clamp means one rule handles desktop → mobile scaling.
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__number {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  color: rgb(var(--color-foreground));
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+}
+
+.biomarker__num {
+  font-size: clamp(2.25rem, 4vw + 1rem, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.biomarker__unit {
+  font-size: 0.6em;
+  line-height: 1;
+  opacity: 0.75;
+  letter-spacing: -0.01em;
+  transform: translateY(-0.2em);
+  display: inline-block;
+}
+
+/* ─── Label (under the number) ─── */
+.biomarker__label {
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: rgb(var(--color-foreground));
+  opacity: 0.9;
+  /* font-size set by ig-section-controls snippet (tied to body_size slider) */
+}
+
+/* ─── Source / footnote (metadata exception — 0.75rem allowed) ─── */
+.biomarker__source {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  color: rgb(var(--color-foreground));
+  opacity: 0.6;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PLACEHOLDER (no blocks)
+   ═══════════════════════════════════════════════════════════ */
+
+.biomarker__placeholder {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: rgba(var(--color-foreground), 0.55);
+  background: rgba(var(--color-foreground), 0.03);
+  border: 1px dashed rgba(var(--color-foreground), 0.15);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAGGERED FADE-IN ON SCROLL
+   Gated on prefers-reduced-motion: no-preference.
+   Cells animate in sequence using the inline --biomarker-stagger
+   index assigned in the Liquid template.
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .biomarker__cell {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: biomarker-cell-in 0.6s ease-out forwards;
+    animation-delay: calc(var(--biomarker-stagger, 0) * 90ms + 120ms);
+  }
+
+  @keyframes biomarker-cell-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .biomarker__cell {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

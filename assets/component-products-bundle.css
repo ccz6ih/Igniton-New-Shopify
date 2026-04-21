@@ -1,0 +1,383 @@
+/* ═══════════════════════════════════════════════════════════
+   Products Bundle Component
+   ─────────────────────────
+   Featured bundle offer — two-column (visual + info card) with
+   subscribe/one-time pricing toggle.
+
+   Typography font-size + color rules for .ig-section-label,
+   .ig-section-title, .ig-section-body are emitted by
+   snippets/ig-section-controls.liquid (ID-scoped for specificity).
+   This file handles structure, the visual panel variants, the
+   savings pill, the pricing toggle, and the inclusions list.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.bundle {
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .bundle {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.bundle__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .bundle__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Grid ─── */
+.bundle__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgb(var(--color-background));
+  box-shadow: 0 4px 32px rgba(var(--color-foreground), 0.06);
+}
+
+@media screen and (min-width: 750px) {
+  .bundle__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+}
+
+/* Visual-right swaps column order on desktop; mobile always shows visual first */
+@media screen and (min-width: 750px) {
+  .bundle--direction-visual-right .bundle__visual {
+    order: 2;
+  }
+
+  .bundle--direction-visual-right .bundle__info {
+    order: 1;
+  }
+}
+
+/* ─── Visual panel ─── */
+.bundle__visual {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 750px) {
+  .bundle__visual {
+    min-height: 480px;
+  }
+}
+
+/* Gradient variant — radial ember wash over the scheme background */
+.bundle__gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      color-mix(in srgb, var(--ig-ember) 45%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      color-mix(in srgb, var(--ig-ember) 25%, transparent) 0%,
+      transparent 55%
+    );
+  pointer-events: none;
+}
+
+/* Bottles variant — three CSS-drawn silhouettes */
+.bundle__bottles {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  pointer-events: none;
+}
+
+.bundle__bottle {
+  position: relative;
+  width: clamp(48px, 8vw, 84px);
+  height: clamp(160px, 22vw, 240px);
+  border-radius: 14px 14px 20px 20px;
+  background-color: rgba(var(--color-foreground), 0.2);
+  box-shadow: inset 0 0 0 1px rgba(var(--color-foreground), 0.08);
+}
+
+.bundle__bottle::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  height: 22px;
+  border-radius: 6px 6px 2px 2px;
+  background-color: rgba(var(--color-foreground), 0.28);
+}
+
+.bundle__bottle::after {
+  content: "";
+  position: absolute;
+  top: 24%;
+  left: 14%;
+  right: 14%;
+  height: 26%;
+  border-radius: 4px;
+  background-color: rgba(var(--color-foreground), 0.12);
+}
+
+.bundle__bottle--1 { transform: translateY(6px) rotate(-3deg); }
+.bundle__bottle--2 { transform: translateY(-8px); }
+.bundle__bottle--3 { transform: translateY(4px) rotate(3deg); }
+
+/* Custom image variant */
+.bundle__visual-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── Savings pill ─── */
+.bundle__savings {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 2;
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(var(--color-foreground), 0.15);
+}
+
+/* ─── Info card ─── */
+.bundle__info {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 750px) {
+  .bundle__info {
+    padding: 3rem;
+  }
+}
+
+.bundle__eyebrow {
+  display: block;
+}
+
+.bundle__name {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.bundle__desc {
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+  max-width: var(--ig-body-width, 640px);
+}
+
+.bundle__desc > * + * {
+  margin-top: 0.75rem;
+}
+
+/* ─── Inclusions list ─── */
+.bundle__inclusions {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+}
+
+@media screen and (min-width: 750px) {
+  .bundle__inclusions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+}
+
+.bundle__inclusion {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  line-height: 1.4;
+}
+
+.bundle__inclusion-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: rgba(var(--color-button), 0.15);
+  color: rgb(var(--color-button));
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.bundle__inclusion-text {
+  opacity: 0.9;
+}
+
+/* ─── Pricing block ─── */
+.bundle__pricing {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bundle__price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+/* ─── Toggle (subscribe / one-time) ─── */
+.bundle__toggle {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+}
+
+@media screen and (min-width: 750px) {
+  .bundle__toggle {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bundle__toggle-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1.5px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 8px;
+  background-color: rgb(var(--color-background));
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.bundle__toggle-option:hover {
+  border-color: rgba(var(--color-foreground), 0.35);
+}
+
+.bundle__toggle-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.bundle__toggle-option::before {
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 50%;
+  border: 1.5px solid rgba(var(--color-foreground), 0.35);
+  background-color: rgb(var(--color-background));
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.bundle__toggle-option:has(input[type="radio"]:checked) {
+  border-color: rgb(var(--color-button));
+  background-color: rgba(var(--color-button), 0.08);
+}
+
+.bundle__toggle-option:has(input[type="radio"]:checked)::before {
+  border-color: rgb(var(--color-button));
+  background-color: rgb(var(--color-button));
+  box-shadow: inset 0 0 0 3px rgb(var(--color-background));
+}
+
+.bundle__toggle-option:has(input[type="radio"]:focus-visible) {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 2px;
+}
+
+.bundle__toggle-body {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.bundle__toggle-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+}
+
+.bundle__toggle-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  white-space: nowrap;
+}
+
+/* ─── CTA ─── */
+.bundle__cta {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ─── Placeholder (no product selected) ─── */
+.bundle__placeholder {
+  margin-top: auto;
+  padding: 1rem 1.25rem;
+  border: 1px dashed rgba(var(--color-foreground), 0.25);
+  border-radius: 8px;
+  background-color: rgba(var(--color-foreground), 0.03);
+  color: rgb(var(--color-foreground));
+}
+
+.bundle__placeholder p {
+  margin: 0;
+  opacity: 0.8;
+}

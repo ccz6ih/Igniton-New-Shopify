@@ -1,0 +1,508 @@
+{{ 'component-biomarker-grid.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+{%- liquid
+  assign final_cta_link = section.settings.cta_link
+  if final_cta_link == blank and section.settings.linked_product != blank
+    assign final_cta_link = section.settings.linked_product.url
+  endif
+-%}
+
+<section
+  id="BiomarkerGrid-{{ section.id }}"
+  class="biomarker color-{{ section.settings.color_scheme }} biomarker--split-{{ section.settings.column_split }} biomarker--badge-{{ section.settings.study_badge_style }}"
+>
+  <div class="biomarker__container">
+    <div class="biomarker__grid">
+      <div class="biomarker__copy">
+        {%- if section.settings.section_label != blank -%}
+          <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.section_label }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.section_heading != blank -%}
+          <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.section_heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.body_copy != blank -%}
+          <div class="biomarker__body ig-section-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.body_copy }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.study_badge_text != blank -%}
+          <div class="biomarker__badge{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.study_badge_text }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank and final_cta_link != blank -%}
+          <a
+            href="{{ final_cta_link }}"
+            class="biomarker__cta button button--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+          >
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div
+          class="biomarker__cells biomarker--cols-d-{{ section.settings.grid_columns_desktop }} biomarker--cols-m-{{ section.settings.grid_columns_mobile }}"
+        >
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'biomarker' -%}
+              <div
+                class="biomarker__cell{% if block.settings.highlighted %} biomarker__cell--highlighted{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+                style="--biomarker-stagger: {{ forloop.index0 }};"
+                {{ block.shopify_attributes }}
+              >
+                <div class="biomarker__number">
+                  <span class="biomarker__num">{{ block.settings.number }}</span>
+                  {%- if block.settings.unit != blank -%}
+                    <span class="biomarker__unit">{{ block.settings.unit }}</span>
+                  {%- endif -%}
+                </div>
+                <div class="biomarker__label ig-section-body">{{ block.settings.label }}</div>
+                {%- if block.settings.source != blank -%}
+                  <div class="biomarker__source">{{ block.settings.source }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="biomarker__placeholder">
+          <p>Add biomarker blocks to populate the grid.</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Biomarker Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 2.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "1.75"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "480"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "product",
+      "id": "linked_product",
+      "label": "Linked product (optional)",
+      "info": "If set, the CTA falls back to the product URL when no CTA link is provided."
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Eyebrow label",
+      "default": "Clinical results"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Heading",
+      "default": "IgniCognition™ — measurable cognitive improvement"
+    },
+    {
+      "type": "richtext",
+      "id": "body_copy",
+      "label": "Body copy",
+      "info": "Optional paragraphs introducing the product's results."
+    },
+    {
+      "type": "header",
+      "content": "Study badge"
+    },
+    {
+      "type": "text",
+      "id": "study_badge_text",
+      "label": "Study badge text",
+      "default": "University trial · n=80 · 90 days"
+    },
+    {
+      "type": "select",
+      "id": "study_badge_style",
+      "label": "Study badge style",
+      "options": [
+        { "value": "pill",  "label": "Pill (inline compact)" },
+        { "value": "strip", "label": "Strip (full-width separator)" }
+      ],
+      "default": "pill"
+    },
+    {
+      "type": "header",
+      "content": "Grid layout"
+    },
+    {
+      "type": "select",
+      "id": "column_split",
+      "label": "Column split",
+      "info": "Balance between copy column and grid column on desktop.",
+      "options": [
+        { "value": "balanced",    "label": "Balanced (1:1)" },
+        { "value": "copy-narrow", "label": "Copy narrow (2:3)" },
+        { "value": "copy-wide",   "label": "Copy wide (3:2)" }
+      ],
+      "default": "balanced"
+    },
+    {
+      "type": "select",
+      "id": "grid_columns_desktop",
+      "label": "Grid columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "grid_columns_mobile",
+      "label": "Grid columns (mobile)",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "info": "e.g. \"Shop IgniCognition →\"."
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "info": "Leave blank to fall back to the linked product's URL."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "biomarker",
+      "name": "Biomarker",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number / metric",
+          "default": "83%",
+          "info": "e.g. \"83%\" or a biomarker name like \"hs-CRP\"."
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "label": "Unit (optional)",
+          "info": "Only shown when the number is purely numeric (e.g. %, mg/dL)."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Memory improvement"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source / footnote",
+          "info": "Optional small caption (e.g. \"n=80 · p<.001\")."
+        },
+        {
+          "type": "checkbox",
+          "id": "highlighted",
+          "label": "Highlight this cell",
+          "default": false,
+          "info": "Accent background for the headline metric."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Biomarker grid — Cognition",
+      "settings": {
+        "section_label": "Clinical results",
+        "section_heading": "IgniCognition™ — measurable cognitive improvement",
+        "study_badge_text": "Johns Hopkins · n=80",
+        "study_badge_style": "pill",
+        "grid_columns_desktop": "2",
+        "grid_columns_mobile": "2"
+      },
+      "blocks": [
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "100",
+            "unit": "%",
+            "label": "Memory improvement",
+            "source": "n=80 · 90 days",
+            "highlighted": true
+          }
+        },
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "83",
+            "unit": "%",
+            "label": "Performance quality",
+            "source": "n=80 · 90 days"
+          }
+        },
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "51",
+            "unit": "%",
+            "label": "Sustained attention",
+            "source": "n=80 · 90 days"
+          }
+        },
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "30",
+            "unit": "d",
+            "label": "Time to first results",
+            "source": "Participant-reported"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Biomarker grid — Longevity",
+      "settings": {
+        "section_label": "Clinical results",
+        "section_heading": "IgniLongevity — biomarkers that move",
+        "study_badge_text": "Colorado trial · 12 weeks",
+        "study_badge_style": "pill",
+        "grid_columns_desktop": "2",
+        "grid_columns_mobile": "2"
+      },
+      "blocks": [
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "hs-CRP",
+            "label": "Inflammation marker reduced",
+            "source": "12-week trial",
+            "highlighted": true
+          }
+        },
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "NAD+",
+            "label": "Cellular energy restored",
+            "source": "Serum assay"
+          }
+        },
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "IL-6",
+            "label": "Inflammatory cytokines down",
+            "source": "12-week trial"
+          }
+        },
+        {
+          "type": "biomarker",
+          "settings": {
+            "number": "60",
+            "unit": "d",
+            "label": "Time to measurable change",
+            "source": "Participant-reported"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

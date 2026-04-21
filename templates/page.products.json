@@ -1,0 +1,332 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "content_alignment": "left",
+        "show_breadcrumb": true,
+        "breadcrumb_text": "Home / Products",
+        "eyebrow": "All Products",
+        "heading": "Two products. <em>One breakthrough.</em>",
+        "subheading": "<p>Enhanced at the molecular level. Proven in university-led clinical trials. No fillers. No stimulants. Measurable results in 30 days.</p>",
+        "show_orb": false,
+        "heading_max_width": "1200",
+        "body_max_width": "800"
+      }
+    },
+    "bundle": {
+      "type": "products-bundle",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "bundle_product": "shopify://products/igni-cognition-longevity-pack",
+        "eyebrow": "★ Best Value · Save $29",
+        "custom_name": "The Complete Stack — Cognition + Longevity",
+        "custom_description": "<p>Both formulas together for comprehensive brain and body support. Think sharper, age slower — the most complete approach to human performance.</p>",
+        "savings_callout": "Save $29",
+        "show_price_toggle": true,
+        "subscribe_label": "Subscribe & save 20%",
+        "onetime_label": "One-time purchase — $159",
+        "subscribe_discount_pct": "20",
+        "cta_label": "Add Bundle to Cart",
+        "cta_style": "primary",
+        "visual_style": "bottles",
+        "visual_scheme": "scheme-2",
+        "layout_direction": "visual-left"
+      },
+      "blocks": {
+        "inc-1": {
+          "type": "inclusion",
+          "settings": {
+            "text": "1× IgniCognition™ (60 caps)",
+            "icon": "•"
+          }
+        },
+        "inc-2": {
+          "type": "inclusion",
+          "settings": {
+            "text": "1× IgniLongevity™ (60 caps)",
+            "icon": "•"
+          }
+        },
+        "inc-3": {
+          "type": "inclusion",
+          "settings": {
+            "text": "30-day supply each · Cancel anytime",
+            "icon": "•"
+          }
+        }
+      },
+      "block_order": ["inc-1", "inc-2", "inc-3"]
+    },
+    "individual_products": {
+      "type": "ig-products-grid",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Individual Formulas",
+        "section_title": "Target what matters most to you.",
+        "product_heading_size": 1.8,
+        "text_size": 100
+      },
+      "blocks": {
+        "card-cognition": {
+          "type": "product_card",
+          "settings": {
+            "tag": "Cognition · University Studied",
+            "custom_name": "Igni<em>Cognition</em>™",
+            "custom_description": "Sharper memory, stronger focus, faster thinking — measurable in 30 days. No stimulants. No crash.",
+            "show_stats": true,
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement*",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality*",
+            "stat_3_num": "30d",
+            "stat_3_label": "To results",
+            "show_price": true,
+            "custom_price": "$71/mo",
+            "price_note": "Subscribe & save · or $89 one-time",
+            "link_text": "View Product →",
+            "full_width": false
+          }
+        },
+        "card-longevity": {
+          "type": "product_card",
+          "settings": {
+            "tag": "Longevity · University Studied",
+            "custom_name": "Igni<em>Longevity</em>™",
+            "custom_description": "Reduces the inflammatory and aging biomarkers that predict your long-term health trajectory. Measurable in 60 days.",
+            "show_stats": true,
+            "stat_1_num": "~50%",
+            "stat_1_label": "IL-6 reduction*",
+            "stat_2_num": "~40%",
+            "stat_2_label": "CRP reduction*",
+            "stat_3_num": "60d",
+            "stat_3_label": "To results",
+            "show_price": true,
+            "custom_price": "$79/mo",
+            "price_note": "Subscribe & save · or $99 one-time",
+            "link_text": "View Product →",
+            "full_width": false
+          }
+        }
+      },
+      "block_order": ["card-cognition", "card-longevity"]
+    },
+    "why_enhanced": {
+      "type": "ig-trust-bar",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_separators": true,
+        "item_gap": "3",
+        "item_alignment": "between"
+      },
+      "blocks": {
+        "trust-1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Every ingredient enhanced at the molecular level"
+          }
+        },
+        "trust-2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "No fillers. 100% active ingredients."
+          }
+        },
+        "trust-3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "University tested · Peer-reviewed"
+          }
+        },
+        "trust-4": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Measurable in 30 days"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"]
+    },
+    "guarantee": {
+      "type": "ig-guarantee-strip",
+      "settings": {
+        "icon": "🛡",
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> Don't feel a measurable difference? Full refund. No questions asked. Free US shipping over $75 · Subscribe & cancel anytime · Vegan · Non-GMO · Gluten-free · Made in Colorado.</p>"
+      }
+    },
+    "comparison_products": {
+      "type": "comparison-table",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Which product is right for you?",
+        "section_heading": "IgniCognition™ vs. IgniLongevity™ vs. The Bundle",
+        "column_count": "3",
+        "highlight_style": "accent-border",
+        "col_1_header": "IgniCognition",
+        "col_1_highlighted": false,
+        "col_2_header": "IgniLongevity",
+        "col_2_highlighted": false,
+        "col_3_header": "Complete Stack",
+        "col_3_highlighted": true
+      },
+      "blocks": {
+        "p-row-1": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Best for",
+            "col_1_value": "Focus, memory & cognitive performance",
+            "col_2_value": "Reducing inflammation & slowing aging",
+            "col_3_value": "Complete brain + body support"
+          }
+        },
+        "p-row-2": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Key outcome",
+            "col_1_value": "100% memory, 83% performance",
+            "col_2_value": "~50% IL-6, ~40% CRP",
+            "col_3_value": "Both cognitive + longevity results"
+          }
+        },
+        "p-row-3": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Time to results",
+            "col_1_value": "30 days",
+            "col_2_value": "60 days",
+            "col_3_value": "30–60 days"
+          }
+        },
+        "p-row-4": {
+          "type": "row",
+          "settings": {
+            "feature_label": "When to take",
+            "col_1_value": "Morning only",
+            "col_2_value": "Afternoon",
+            "col_3_value": "Morning + afternoon"
+          }
+        },
+        "p-row-5": {
+          "type": "row",
+          "settings": {
+            "feature_label": "University trial",
+            "col_1_value": "Published",
+            "col_2_value": "Published",
+            "col_3_value": "Both trials"
+          }
+        },
+        "p-row-6": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Stimulant-free · No fillers",
+            "col_1_value": "✓",
+            "col_2_value": "✓",
+            "col_3_value": "✓"
+          }
+        },
+        "p-row-7": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Price (one-time)",
+            "col_1_value": "$89",
+            "col_2_value": "$99",
+            "col_3_value": "$159 · Save $29"
+          }
+        },
+        "p-row-8": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Subscribe & save",
+            "col_1_value": "$71/mo",
+            "col_2_value": "$79/mo",
+            "col_3_value": "$127/mo"
+          }
+        }
+      },
+      "block_order": ["p-row-1", "p-row-2", "p-row-3", "p-row-4", "p-row-5", "p-row-6", "p-row-7", "p-row-8"]
+    },
+    "comparison_competitive": {
+      "type": "comparison-table",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_label": "How Igniton compares",
+        "section_heading": "Why is Igniton different from <em>other premium nootropics?</em>",
+        "column_count": "2",
+        "highlight_style": "accent-bg",
+        "col_1_header": "Other premium supplements",
+        "col_1_highlighted": false,
+        "col_2_header": "Igniton™",
+        "col_2_highlighted": true
+      },
+      "blocks": {
+        "c-row-1": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Clinical trial design",
+            "col_1_value": "Ingredient-level studies — research on individual compounds, not the finished product.",
+            "col_2_value": "Whole-formula trials. Enhanced formula tested against placebo and the non-enhanced formula in two university studies."
+          }
+        },
+        "c-row-2": {
+          "type": "row",
+          "settings": {
+            "feature_label": "What gets tested",
+            "col_1_value": "Individual ingredients in isolation. Most have never tested the finished product.",
+            "col_2_value": "Enhanced vs. unenhanced vs. placebo. Three-arm trials prove the enhancement adds measurable value."
+          }
+        },
+        "c-row-3": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Published research",
+            "col_1_value": "Internal studies, self-reported surveys, or third-party ingredient citations.",
+            "col_2_value": "Peer-reviewed journals. Independent academic review — not brand-funded."
+          }
+        },
+        "c-row-4": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Ingredient enhancement",
+            "col_1_value": "Standard blending and encapsulation. Bioavailability depends on the body's natural absorption.",
+            "col_2_value": "Cold plasma + laser-photonics processing. Excited molecular state increases cellular uptake — 80–90% lower effective doses."
+          }
+        },
+        "c-row-5": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Fillers & excipients",
+            "col_1_value": "Flow agents, magnesium stearate, silicon dioxide, or bulking compounds are common.",
+            "col_2_value": "Zero fillers. Zero excipients. Every capsule is 100% active ingredients."
+          }
+        },
+        "c-row-6": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Stimulants",
+            "col_1_value": "Many premium nootropics include caffeine — with the crash, sleep disruption, and tolerance.",
+            "col_2_value": "Zero stimulants. Benefits come from enhanced cellular function — no crash, no tolerance."
+          }
+        },
+        "c-row-7": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Satisfaction guarantee",
+            "col_1_value": "Varies. Some require unopened bottles, restocking fees, or limited windows.",
+            "col_2_value": "30-day full refund. Opened or unopened. No questions asked."
+          }
+        }
+      },
+      "block_order": ["c-row-1", "c-row-2", "c-row-3", "c-row-4", "c-row-5", "c-row-6", "c-row-7"]
+    }
+  },
+  "order": [
+    "hero",
+    "bundle",
+    "individual_products",
+    "why_enhanced",
+    "guarantee",
+    "comparison_products",
+    "comparison_competitive"
+  ]
+}

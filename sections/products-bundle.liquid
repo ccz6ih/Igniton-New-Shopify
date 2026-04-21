@@ -1,0 +1,528 @@
+{{ 'component-products-bundle.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+{%- liquid
+  assign product = section.settings.bundle_product
+
+  assign display_name = section.settings.custom_name
+  if display_name == blank and product != blank
+    assign display_name = product.title
+  endif
+
+  assign display_desc = section.settings.custom_description
+  if display_desc == blank and product != blank
+    assign display_desc = product.description | strip_html | truncatewords: 50
+  endif
+
+  assign pct_raw = section.settings.subscribe_discount_pct | default: '0'
+  assign pct_num = pct_raw | plus: 0
+  assign has_discount = false
+  if pct_num > 0 and pct_num < 100
+    assign has_discount = true
+  endif
+
+  assign subscribe_price = 0
+  if product != blank
+    if has_discount
+      assign discount_amount = product.price | times: pct_num | divided_by: 100
+      assign subscribe_price = product.price | minus: discount_amount
+    else
+      assign subscribe_price = product.price
+    endif
+  endif
+-%}
+
+<section
+  id="ProductsBundle-{{ section.id }}"
+  class="bundle color-{{ section.settings.color_scheme }} bundle--visual-{{ section.settings.visual_style }} bundle--direction-{{ section.settings.layout_direction }}{% if section.settings.show_price_toggle %} bundle--with-toggle{% endif %}"
+>
+  <div class="bundle__container">
+    <div class="bundle__grid">
+      <aside
+        class="bundle__visual {{ section.settings.visual_scheme }} color-{{ section.settings.visual_scheme }}"
+        aria-hidden="{%- if section.settings.visual_style == 'scheme-image' and section.settings.visual_image != blank -%}false{%- else -%}true{%- endif -%}"
+      >
+        {%- if section.settings.visual_style == 'scheme-image' and section.settings.visual_image != blank -%}
+          {{ section.settings.visual_image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              class: 'bundle__visual-image',
+              widths: '450,675,900,1200',
+              alt: display_name
+          }}
+        {%- elsif section.settings.visual_style == 'bottles' -%}
+          <div class="bundle__gradient" aria-hidden="true"></div>
+          <div class="bundle__bottles" aria-hidden="true">
+            <span class="bundle__bottle bundle__bottle--1"></span>
+            <span class="bundle__bottle bundle__bottle--2"></span>
+            <span class="bundle__bottle bundle__bottle--3"></span>
+          </div>
+        {%- else -%}
+          <div class="bundle__gradient" aria-hidden="true"></div>
+        {%- endif -%}
+
+        {%- if section.settings.savings_callout != blank -%}
+          <span class="bundle__savings">{{ section.settings.savings_callout }}</span>
+        {%- endif -%}
+      </aside>
+
+      <div class="bundle__info">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ig-section-label bundle__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- if display_name != blank -%}
+          <h2 class="ig-section-title bundle__name">{{ display_name }}</h2>
+        {%- endif -%}
+
+        {%- if display_desc != blank -%}
+          <div class="bundle__desc ig-section-body">{{ display_desc }}</div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="bundle__inclusions" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'inclusion' -%}
+                <li class="bundle__inclusion" {{ block.shopify_attributes }}>
+                  <span class="bundle__inclusion-icon" aria-hidden="true">{{ block.settings.icon | default: '✓' }}</span>
+                  <span class="bundle__inclusion-text ig-section-body">{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if product != blank -%}
+          <div class="bundle__pricing">
+            {%- if section.settings.show_price_toggle -%}
+              <div class="bundle__toggle" role="radiogroup" aria-label="Purchase option">
+                <label class="bundle__toggle-option bundle__toggle-option--subscribe">
+                  <input
+                    type="radio"
+                    name="bundle-plan-{{ section.id }}"
+                    value="subscribe"
+                    checked
+                  >
+                  <span class="bundle__toggle-body">
+                    <span class="bundle__toggle-label">{{ section.settings.subscribe_label }}</span>
+                    <span class="bundle__toggle-price">{{ subscribe_price | money }}</span>
+                  </span>
+                </label>
+                <label class="bundle__toggle-option bundle__toggle-option--onetime">
+                  <input
+                    type="radio"
+                    name="bundle-plan-{{ section.id }}"
+                    value="onetime"
+                  >
+                  <span class="bundle__toggle-body">
+                    <span class="bundle__toggle-label">{{ section.settings.onetime_label }}</span>
+                    <span class="bundle__toggle-price">{{ product.price | money }}</span>
+                  </span>
+                </label>
+              </div>
+            {%- else -%}
+              <div class="bundle__price">{{ product.price | money }}</div>
+            {%- endif -%}
+
+            <a
+              href="{{ product.url }}"
+              class="bundle__cta button button--{{ section.settings.cta_style }}"
+            >
+              {{ section.settings.cta_label | default: 'Add to cart' }}
+            </a>
+          </div>
+        {%- else -%}
+          <div class="bundle__placeholder">
+            <p class="ig-section-body">Select a bundle product to enable pricing and checkout.</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Products Bundle",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "select",
+      "id": "label_size",
+      "label": "Label size",
+      "options": [
+        { "value": "60",  "label": "XS (60%)" },
+        { "value": "80",  "label": "S (80%)" },
+        { "value": "100", "label": "Default (100%)" },
+        { "value": "120", "label": "L (120%)" },
+        { "value": "150", "label": "XL (150%)" },
+        { "value": "180", "label": "XXL (180%)" }
+      ],
+      "default": "100",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.25,
+      "unit": "rem",
+      "default": 2.75,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "1.75"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Bundle product"
+    },
+    {
+      "type": "product",
+      "id": "bundle_product",
+      "label": "Bundle product",
+      "info": "Required for pricing and CTA. Section shows placeholder if blank."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Best value"
+    },
+    {
+      "type": "text",
+      "id": "custom_name",
+      "label": "Custom name",
+      "info": "Leave blank to use product title."
+    },
+    {
+      "type": "richtext",
+      "id": "custom_description",
+      "label": "Custom description",
+      "info": "Leave blank to use product description."
+    },
+    {
+      "type": "text",
+      "id": "savings_callout",
+      "label": "Savings callout",
+      "default": "Save 20%",
+      "info": "Rendered as a pill on the visual panel."
+    },
+    {
+      "type": "header",
+      "content": "Pricing"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_toggle",
+      "label": "Show subscribe / one-time toggle",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subscribe_label",
+      "label": "Subscribe option label",
+      "default": "Subscribe & save 20%"
+    },
+    {
+      "type": "text",
+      "id": "onetime_label",
+      "label": "One-time option label",
+      "default": "One-time purchase"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_discount_pct",
+      "label": "Subscribe discount (%)",
+      "default": "20",
+      "info": "Numeric percent. Applied to the displayed subscribe price only; real subscription logic is handled by Shopify Subscriptions / your app."
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "select",
+      "id": "cta_style",
+      "label": "CTA style",
+      "options": [
+        { "value": "primary",   "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Visual panel"
+    },
+    {
+      "type": "select",
+      "id": "visual_style",
+      "label": "Visual style",
+      "options": [
+        { "value": "gradient",     "label": "Gradient" },
+        { "value": "bottles",      "label": "Bottle silhouettes" },
+        { "value": "scheme-image", "label": "Custom image" }
+      ],
+      "default": "gradient"
+    },
+    {
+      "type": "select",
+      "id": "visual_scheme",
+      "label": "Visual panel color scheme",
+      "info": "Themes the left panel independently from the section.",
+      "options": [
+        { "value": "scheme-2", "label": "Scheme 2" },
+        { "value": "scheme-3", "label": "Scheme 3" },
+        { "value": "scheme-4", "label": "Scheme 4" }
+      ],
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "layout_direction",
+      "label": "Layout direction",
+      "options": [
+        { "value": "visual-left",  "label": "Visual left / info right" },
+        { "value": "visual-right", "label": "Visual right / info left" }
+      ],
+      "default": "visual-left"
+    },
+    {
+      "type": "image_picker",
+      "id": "visual_image",
+      "label": "Visual image",
+      "info": "Used when Visual style is \"Custom image\"."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "inclusion",
+      "name": "Inclusion",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "30 days of IgniCognition"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "✓",
+          "info": "Emoji or short symbol."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products bundle — cognition + longevity",
+      "settings": {
+        "eyebrow": "Best value",
+        "custom_name": "The Complete Stack",
+        "custom_description": "<p>IgniCognition and IgniLongevity together — the complete daily system for focus, memory, and long-term cellular health.</p>",
+        "savings_callout": "Save 20%",
+        "subscribe_label": "Subscribe & save 20%",
+        "onetime_label": "One-time purchase",
+        "subscribe_discount_pct": "20",
+        "show_price_toggle": true,
+        "cta_label": "Add to cart",
+        "cta_style": "primary",
+        "visual_style": "gradient",
+        "visual_scheme": "scheme-2",
+        "layout_direction": "visual-left"
+      },
+      "blocks": [
+        { "type": "inclusion", "settings": { "text": "30 days IgniCognition", "icon": "✓" } },
+        { "type": "inclusion", "settings": { "text": "30 days IgniLongevity", "icon": "✓" } },
+        { "type": "inclusion", "settings": { "text": "Free shipping + Subscribe discount", "icon": "✓" } }
+      ]
+    },
+    {
+      "name": "Products bundle — starter",
+      "settings": {
+        "eyebrow": "Starter",
+        "custom_name": "Starter Bundle",
+        "custom_description": "<p>A simple starting point — everything you need to try Igniton for 30 days.</p>",
+        "savings_callout": "Save 10%",
+        "subscribe_label": "Subscribe & save 10%",
+        "onetime_label": "One-time purchase",
+        "subscribe_discount_pct": "10",
+        "show_price_toggle": true,
+        "cta_label": "Add to cart",
+        "cta_style": "primary",
+        "visual_style": "bottles",
+        "visual_scheme": "scheme-4",
+        "layout_direction": "visual-right"
+      },
+      "blocks": [
+        { "type": "inclusion", "settings": { "text": "30-day supply", "icon": "✓" } },
+        { "type": "inclusion", "settings": { "text": "Free shipping", "icon": "✓" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

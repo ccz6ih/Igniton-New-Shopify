@@ -1,0 +1,632 @@
+{{ 'component-review-summary.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+{%- liquid
+  assign agg_rating_raw = section.settings.aggregate_rating | default: '0'
+  assign agg_max_raw = section.settings.aggregate_rating_out_of | default: '5'
+  assign agg_rating = agg_rating_raw | times: 1.0
+  assign agg_max = agg_max_raw | times: 1.0
+  assign agg_pct = 0
+  if agg_max > 0
+    assign agg_pct = agg_rating | times: 100.0 | divided_by: agg_max | round
+  endif
+  if agg_pct > 100
+    assign agg_pct = 100
+  endif
+  if agg_pct < 0
+    assign agg_pct = 0
+  endif
+-%}
+
+<section
+  id="ReviewSummary-{{ section.id }}"
+  class="review-summary color-{{ section.settings.color_scheme }} review-summary--cols-{{ section.settings.columns_desktop }} review-summary--style-{{ section.settings.card_style }} review-summary--summary-{{ section.settings.summary_position }}{% if section.settings.show_summary %} review-summary--with-summary{% endif %}"
+>
+  <div class="review-summary__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label">{{ section.settings.section_label }}</p>
+    {%- endif -%}
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title">{{ section.settings.section_heading }}</h2>
+    {%- endif -%}
+
+    <div class="review-summary__layout">
+      {%- if section.settings.show_summary -%}
+        <aside class="review-summary__aggregate" aria-label="Rating summary">
+          <div class="review-summary__rating-big">
+            <span class="review-summary__rating-num">{{ section.settings.aggregate_rating }}</span>
+            <span class="review-summary__rating-outof">/ {{ section.settings.aggregate_rating_out_of }}</span>
+          </div>
+
+          <div
+            class="review-summary__star-bar"
+            role="img"
+            aria-label="{{ section.settings.aggregate_rating }} out of {{ section.settings.aggregate_rating_out_of }} stars"
+          >
+            <div class="review-summary__star-bar-empty" aria-hidden="true">★★★★★</div>
+            <div class="review-summary__star-bar-filled" style="width: {{ agg_pct }}%;" aria-hidden="true">
+              <span>★★★★★</span>
+            </div>
+          </div>
+
+          {%- if section.settings.total_reviews != blank -%}
+            <div class="review-summary__count ig-section-body">{{ section.settings.total_reviews }}</div>
+          {%- endif -%}
+
+          <dl class="review-summary__dist">
+            {%- for star in (1..5) reversed -%}
+              {%- assign pct_key = 'dist_' | append: star | append: '_star_pct' -%}
+              {%- assign pct_raw = section.settings[pct_key] | default: '0' -%}
+              {%- assign pct_val = pct_raw | times: 1 -%}
+              {%- if pct_val > 100 -%}{%- assign pct_val = 100 -%}{%- endif -%}
+              {%- if pct_val < 0 -%}{%- assign pct_val = 0 -%}{%- endif -%}
+              <div class="review-summary__dist-row">
+                <dt class="review-summary__dist-label">
+                  {{ star }}<span class="review-summary__dist-star" aria-hidden="true">★</span>
+                </dt>
+                <dd class="review-summary__dist-bar-wrap">
+                  <div class="review-summary__dist-bar-track" aria-hidden="true">
+                    <div class="review-summary__dist-bar-fill" style="width: {{ pct_val }}%;"></div>
+                  </div>
+                  <span class="review-summary__dist-pct">{{ pct_val }}%</span>
+                </dd>
+              </div>
+            {%- endfor -%}
+          </dl>
+        </aside>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="review-summary__grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'review' -%}
+              <figure class="review-card" {{ block.shopify_attributes }}>
+                <div
+                  class="review-card__stars"
+                  role="img"
+                  aria-label="{{ block.settings.star_rating }} out of 5 stars"
+                >
+                  {%- for i in (1..5) -%}
+                    <span
+                      class="review-card__star{% if i <= block.settings.star_rating %} review-card__star--filled{% endif %}"
+                      aria-hidden="true"
+                    >★</span>
+                  {%- endfor -%}
+                </div>
+
+                <blockquote class="review-card__quote ig-section-body">
+                  {{ block.settings.quote }}
+                </blockquote>
+
+                <figcaption class="review-card__cite">
+                  {%- if block.settings.reviewer_name != blank -%}
+                    <div class="review-card__name">{{ block.settings.reviewer_name }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.reviewer_meta != blank -%}
+                    <div class="review-card__meta">{{ block.settings.reviewer_meta }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.show_verified or block.settings.product_tag != blank -%}
+                    <div class="review-card__badges">
+                      {%- if block.settings.show_verified -%}
+                        <span class="review-card__verified">
+                          <span class="review-card__verified-check" aria-hidden="true">✓</span>
+                          Verified customer
+                        </span>
+                      {%- endif -%}
+                      {%- if block.settings.product_tag != blank -%}
+                        {%- if block.settings.linked_product != blank -%}
+                          <a
+                            href="{{ block.settings.linked_product.url }}"
+                            class="review-card__product-tag review-card__product-tag--link"
+                          >
+                            {{ block.settings.product_tag }}
+                          </a>
+                        {%- else -%}
+                          <span class="review-card__product-tag">{{ block.settings.product_tag }}</span>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </figcaption>
+              </figure>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Review Summary",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 2.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Customer reviews"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Verified experiences"
+    },
+    {
+      "type": "header",
+      "content": "Aggregate rating"
+    },
+    {
+      "type": "text",
+      "id": "aggregate_rating",
+      "label": "Aggregate rating",
+      "default": "4.8",
+      "info": "Rounded average (e.g. 4.8)."
+    },
+    {
+      "type": "text",
+      "id": "aggregate_rating_out_of",
+      "label": "Out of",
+      "default": "5"
+    },
+    {
+      "type": "text",
+      "id": "total_reviews",
+      "label": "Total reviews text",
+      "default": "2,847 verified reviews"
+    },
+    {
+      "type": "header",
+      "content": "Distribution (percent 0–100)"
+    },
+    {
+      "type": "text",
+      "id": "dist_5_star_pct",
+      "label": "5-star %",
+      "default": "78"
+    },
+    {
+      "type": "text",
+      "id": "dist_4_star_pct",
+      "label": "4-star %",
+      "default": "14"
+    },
+    {
+      "type": "text",
+      "id": "dist_3_star_pct",
+      "label": "3-star %",
+      "default": "5"
+    },
+    {
+      "type": "text",
+      "id": "dist_2_star_pct",
+      "label": "2-star %",
+      "default": "2"
+    },
+    {
+      "type": "text",
+      "id": "dist_1_star_pct",
+      "label": "1-star %",
+      "default": "1"
+    },
+    {
+      "type": "header",
+      "content": "Layout options"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Review columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_summary",
+      "label": "Show rating summary",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "summary_position",
+      "label": "Summary position",
+      "info": "Left: summary beside cards. Top: summary spans above the grid.",
+      "options": [
+        { "value": "left", "label": "Left column" },
+        { "value": "top",  "label": "Top (full width)" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Review card style",
+      "options": [
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "filled",   "label": "Filled" },
+        { "value": "minimal",  "label": "Minimal" }
+      ],
+      "default": "bordered"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "range",
+          "id": "star_rating",
+          "min": 1, "max": 5, "step": 1,
+          "default": 5,
+          "label": "Star rating"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Review quote",
+          "default": "<p>Sharper focus within a week. Brain fog gone by week three. This is the real deal.</p>"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_meta",
+          "label": "Reviewer meta",
+          "info": "e.g. \"Day 45 · San Francisco\""
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show \"Verified customer\" badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "product_tag",
+          "label": "Product tag (optional)",
+          "info": "Small pill shown next to the verified badge."
+        },
+        {
+          "type": "product",
+          "id": "linked_product",
+          "label": "Linked product (optional)",
+          "info": "If set, the product tag becomes a link."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews — 3 columns with summary",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "columns_desktop": "3",
+        "show_summary": true,
+        "summary_position": "left",
+        "card_style": "bordered",
+        "section_label": "Customer reviews",
+        "section_heading": "Verified experiences",
+        "aggregate_rating": "4.8",
+        "aggregate_rating_out_of": "5",
+        "total_reviews": "2,847 verified reviews",
+        "dist_5_star_pct": "78",
+        "dist_4_star_pct": "14",
+        "dist_3_star_pct": "5",
+        "dist_2_star_pct": "2",
+        "dist_1_star_pct": "1"
+      },
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>Sharper focus within a week. Brain fog gone by week three. This is the real deal.</p>",
+            "reviewer_name": "Sarah M.",
+            "reviewer_meta": "Day 45 · San Francisco",
+            "show_verified": true,
+            "product_tag": "IgniCognition"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>I've tried every nootropic on the market. Nothing comes close to how clean this feels.</p>",
+            "reviewer_name": "Daniel R.",
+            "reviewer_meta": "Day 72 · Austin",
+            "show_verified": true,
+            "product_tag": "IgniCognition"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>My afternoon slump is gone. I actually finish my to-do list now.</p>",
+            "reviewer_name": "Priya K.",
+            "reviewer_meta": "Day 30 · New York",
+            "show_verified": true,
+            "product_tag": "IgniCognition"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 4,
+            "quote": "<p>Took about two weeks to notice. Now I don't want to skip a day.</p>",
+            "reviewer_name": "Marcus T.",
+            "reviewer_meta": "Day 60 · Chicago",
+            "show_verified": true,
+            "product_tag": "IgniCognition"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>71 years old. Feeling sharper than I have in a decade. My wife noticed first.</p>",
+            "reviewer_name": "Robert H.",
+            "reviewer_meta": "Day 90 · Scottsdale",
+            "show_verified": true,
+            "product_tag": "IgniCognition"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>Clinical trial quality in a consumer product. That's why I trust it.</p>",
+            "reviewer_name": "Dr. Anna L.",
+            "reviewer_meta": "Day 45 · Boston",
+            "show_verified": true,
+            "product_tag": "IgniCognition"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews — 2 columns minimal",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "columns_desktop": "2",
+        "show_summary": false,
+        "summary_position": "left",
+        "card_style": "minimal",
+        "section_label": "Customer reviews",
+        "section_heading": "What people are saying"
+      },
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>Sharper focus within a week. Brain fog gone by week three.</p>",
+            "reviewer_name": "Sarah M.",
+            "reviewer_meta": "Day 45",
+            "show_verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>I've tried every nootropic on the market. Nothing comes close.</p>",
+            "reviewer_name": "Daniel R.",
+            "reviewer_meta": "Day 72",
+            "show_verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 4,
+            "quote": "<p>Took about two weeks to notice. Now I don't skip a day.</p>",
+            "reviewer_name": "Marcus T.",
+            "reviewer_meta": "Day 60",
+            "show_verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "star_rating": 5,
+            "quote": "<p>Clinical trial quality in a consumer product.</p>",
+            "reviewer_name": "Dr. Anna L.",
+            "reviewer_meta": "Day 45",
+            "show_verified": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

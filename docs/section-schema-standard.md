@@ -432,6 +432,9 @@ This is the checklist for migrating a section currently using inline styles, har
 | `advisor-grid.liquid` | ✅ new 2026-04-19 | Advisor board cards (2/3/4 cols); circle or rounded-square portraits |
 | `mission-pillars.liquid` | ✅ new 2026-04-19 | Left blockquote + right numbered pillars; 3 statement styles + 3 number styles |
 | `molecular-comparison.liquid` | ✅ new 2026-04-19 | Dark measurement box + feature cells; auto-calculated delta-percent |
+| `biomarker-grid.liquid` | ✅ new 2026-04-19 | Per-product results: copy column + 2×2 biomarker cells with optional highlighted cell |
+| `review-summary.liquid` | ✅ new 2026-04-19 | Aggregate rating + 5-row distribution bars + verified review card grid |
+| `products-bundle.liquid` | ✅ new 2026-04-19 | Featured bundle with product picker, subscribe/one-time toggle, gradient/bottles/image visual |
 
 When every `ig-*` section is retrofitted, delete `snippets/ig-section-header-style.liquid` and `docs/section-header-typography-standard.md`.
 
