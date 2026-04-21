@@ -1,0 +1,479 @@
+{{ 'component-molecular-comparison.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+{%- liquid
+  assign before_num = section.settings.measurement_before | times: 1.0
+  assign after_num  = section.settings.measurement_after  | times: 1.0
+  assign delta_raw  = after_num | minus: before_num
+  assign delta_pct  = 0
+  if before_num > 0
+    assign delta_pct = delta_raw | times: 100.0 | divided_by: before_num | round: 1
+  endif
+-%}
+
+<section
+  id="MolecularComparison-{{ section.id }}"
+  class="molecular color-{{ section.settings.color_scheme }} molecular--feat-{{ section.settings.feature_cells_layout }}{% if section.settings.show_decorative_overlay %} molecular--overlay{% endif %}"
+>
+  <div class="molecular__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label">{{ section.settings.section_label }}</p>
+    {%- endif -%}
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title">{{ section.settings.section_heading }}</h2>
+    {%- endif -%}
+
+    <div class="molecular__grid">
+      <aside class="molecular__measurement color-scheme-2" aria-label="Molecular measurement comparison">
+        {%- if section.settings.show_decorative_overlay -%}
+          <div class="molecular__overlay" aria-hidden="true"></div>
+        {%- endif -%}
+
+        {%- if section.settings.measurement_delta_highlight and delta_pct != 0 -%}
+          <div class="molecular__delta" aria-label="Improvement percentage">
+            {%- if delta_pct > 0 -%}+{%- endif -%}{{ delta_pct }}%
+          </div>
+        {%- endif -%}
+
+        <div class="molecular__measurement-inner">
+          <div class="molecular__readout">
+            <div class="molecular__readout-before">
+              <span class="molecular__readout-value">{{ section.settings.measurement_before }}</span>
+              {%- if section.settings.measurement_before_label != blank -%}
+                <span class="molecular__readout-label">{{ section.settings.measurement_before_label }}</span>
+              {%- endif -%}
+            </div>
+            <div class="molecular__readout-arrow" aria-hidden="true">&rarr;</div>
+            <div class="molecular__readout-after">
+              <span class="molecular__readout-value">{{ section.settings.measurement_after }}</span>
+              {%- if section.settings.measurement_after_label != blank -%}
+                <span class="molecular__readout-label">{{ section.settings.measurement_after_label }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- if section.settings.measurement_unit != blank -%}
+            <div class="molecular__unit">{{ section.settings.measurement_unit }}</div>
+          {%- endif -%}
+
+          {%- if section.settings.measurement_caption != blank -%}
+            <div class="molecular__caption">{{ section.settings.measurement_caption }}</div>
+          {%- endif -%}
+        </div>
+      </aside>
+
+      <div class="molecular__features">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'feature' -%}
+            <div class="molecular__feature" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <div class="molecular__feature-icon" aria-hidden="true">{{ block.settings.icon }}</div>
+              {%- endif -%}
+              <div class="molecular__feature-body">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="molecular__feature-title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="molecular__feature-desc ig-section-body">{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Molecular Comparison",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.25,
+      "unit": "rem",
+      "default": 2.75,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Why molecular matters"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "The difference you can measure"
+    },
+    {
+      "type": "header",
+      "content": "Measurement readout"
+    },
+    {
+      "type": "text",
+      "id": "measurement_before",
+      "label": "Before value",
+      "default": "8.4"
+    },
+    {
+      "type": "text",
+      "id": "measurement_before_label",
+      "label": "Before label",
+      "default": "Standard"
+    },
+    {
+      "type": "text",
+      "id": "measurement_after",
+      "label": "After value",
+      "default": "9.7"
+    },
+    {
+      "type": "text",
+      "id": "measurement_after_label",
+      "label": "After label",
+      "default": "Enhanced"
+    },
+    {
+      "type": "text",
+      "id": "measurement_unit",
+      "label": "Unit",
+      "default": "GDV index"
+    },
+    {
+      "type": "text",
+      "id": "measurement_caption",
+      "label": "Caption",
+      "default": "n = 80 subjects · 90-day trial",
+      "info": "Metadata below the readout (sample size, study note, etc.)."
+    },
+    {
+      "type": "checkbox",
+      "id": "measurement_delta_highlight",
+      "label": "Show delta percentage pill",
+      "default": true,
+      "info": "Auto-calculated from before/after values. Ignored if values aren't numeric."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decorative_overlay",
+      "label": "Show decorative overlay",
+      "default": true,
+      "info": "Adds a subtle scientific-grid and radial glow to the dark measurement box."
+    },
+    {
+      "type": "header",
+      "content": "Feature cells"
+    },
+    {
+      "type": "select",
+      "id": "feature_cells_layout",
+      "label": "Mobile feature layout",
+      "info": "Desktop always stacks vertically in the right column.",
+      "options": [
+        { "value": "stacked",  "label": "Stacked (vertical)" },
+        { "value": "grid-2x2", "label": "2 × 2 grid (needs 4 features)" }
+      ],
+      "default": "stacked"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "⚛",
+          "info": "Emoji or short symbol."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Bioavailability"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "More of what you take actually reaches the cells that need it."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Molecular comparison — GDV",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Why molecular matters",
+        "section_heading": "The difference you can measure",
+        "measurement_before": "8.4",
+        "measurement_before_label": "Standard",
+        "measurement_after": "9.7",
+        "measurement_after_label": "Enhanced",
+        "measurement_unit": "GDV index",
+        "measurement_caption": "n = 80 subjects · 90-day trial",
+        "measurement_delta_highlight": true,
+        "show_decorative_overlay": true,
+        "feature_cells_layout": "stacked"
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "⚛",
+            "title": "Bioavailability",
+            "description": "More of what you take actually reaches the cells that need it — measured at the molecular level."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "◈",
+            "title": "Stability",
+            "description": "Enhanced molecular structure resists oxidation, so compounds stay active from bottle to bloodstream."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "◉",
+            "title": "Cellular uptake",
+            "description": "Ingredients cross cell membranes more efficiently — faster onset, longer duration."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Molecular comparison — warm",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_label": "The Igniton difference",
+        "section_heading": "Four shifts you can measure",
+        "measurement_before": "8.4",
+        "measurement_before_label": "Standard",
+        "measurement_after": "9.7",
+        "measurement_after_label": "Enhanced",
+        "measurement_unit": "GDV index",
+        "measurement_caption": "n = 80 subjects · 90-day trial",
+        "measurement_delta_highlight": true,
+        "show_decorative_overlay": true,
+        "feature_cells_layout": "grid-2x2"
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "⚛",
+            "title": "Bioavailability",
+            "description": "More of what you take reaches the cells that need it."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "◈",
+            "title": "Stability",
+            "description": "Enhanced molecular structure resists oxidation."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "◉",
+            "title": "Cellular uptake",
+            "description": "Crosses membranes more efficiently for faster onset."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "title": "Longevity signal",
+            "description": "Trials show sustained improvement across 90-day windows."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

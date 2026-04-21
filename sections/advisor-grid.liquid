@@ -1,0 +1,447 @@
+{{ 'component-advisor-grid.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="AdvisorGrid-{{ section.id }}"
+  class="advisor-grid color-{{ section.settings.color_scheme }} advisor-grid--cols-{{ section.settings.columns_desktop }} advisor-grid--style-{{ section.settings.card_style }} advisor-grid--portrait-{{ section.settings.portrait_shape }}"
+>
+  <div class="advisor-grid__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label">{{ section.settings.section_label }}</p>
+    {%- endif -%}
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title">{{ section.settings.section_heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.intro_text != blank -%}
+      <div class="advisor-grid__intro ig-section-body">{{ section.settings.intro_text }}</div>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="advisor-grid__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'advisor' -%}
+            <article class="advisor-card" {{ block.shopify_attributes }}>
+              {%- if section.settings.show_portraits and block.settings.portrait != blank -%}
+                <div class="advisor-card__portrait advisor-card__portrait--{{ section.settings.image_ratio }}">
+                  {{
+                    block.settings.portrait
+                    | image_url: width: 240
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '120,180,240,360',
+                      sizes: '180px',
+                      alt: block.settings.portrait.alt | default: block.settings.name
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.tag != blank -%}
+                <span class="advisor-card__tag ig-section-label">{{ block.settings.tag }}</span>
+              {%- endif -%}
+              <h3 class="advisor-card__name">{{ block.settings.name }}</h3>
+              {%- if block.settings.title != blank -%}
+                <p class="advisor-card__title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.bio_quote != blank -%}
+                <div class="advisor-card__quote ig-section-body">{{ block.settings.bio_quote }}</div>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Advisor Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 2.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Portrait aspect ratio",
+      "info": "Circle cropping is controlled by the portrait shape option below.",
+      "options": [
+        { "value": "square",   "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "natural",  "label": "Natural" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Advisory board"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Guided by experts"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro text (optional)"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_portraits",
+      "label": "Show portraits",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "portrait_shape",
+      "label": "Portrait shape",
+      "options": [
+        { "value": "circle",         "label": "Circle" },
+        { "value": "rounded-square", "label": "Rounded square" }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        { "value": "minimal",  "label": "Minimal (no border, no background)" },
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "filled",   "label": "Filled" }
+      ],
+      "default": "minimal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "advisor",
+      "name": "Advisor",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Category tag (optional)",
+          "info": "Short all-caps label, e.g. NEUROSCIENCE."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Dr. Sarah Chen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title / affiliation (optional)",
+          "default": "Professor of Neurology, Stanford"
+        },
+        {
+          "type": "richtext",
+          "id": "bio_quote",
+          "label": "Short bio or pull-quote (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "portrait",
+          "label": "Portrait (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Advisors — 3 columns with portraits",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "columns_desktop": "3",
+        "show_portraits": true,
+        "portrait_shape": "circle",
+        "card_style": "minimal",
+        "image_ratio": "square",
+        "section_label": "Advisory board",
+        "section_heading": "Guided by experts"
+      },
+      "blocks": [
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "NEUROSCIENCE",
+            "name": "Dr. Sarah Chen",
+            "title": "Professor of Neurology, Stanford",
+            "bio_quote": "<p>Focused on the neurobiology of aging and cognitive resilience.</p>"
+          }
+        },
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "LONGEVITY",
+            "name": "Dr. Michael Reyes",
+            "title": "Director, Longevity Institute",
+            "bio_quote": "<p>Translational research on healthspan and metabolic aging.</p>"
+          }
+        },
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "CARDIOLOGY",
+            "name": "Dr. Priya Nair",
+            "title": "Professor at Johns Hopkins",
+            "bio_quote": "<p>Preventive cardiology and cardiovascular epidemiology.</p>"
+          }
+        },
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "CLINICAL TRIALS",
+            "name": "Dr. James Whitfield",
+            "title": "Principal Investigator, Mayo Clinic",
+            "bio_quote": "<p>Designs rigorous double-blind trials for nutraceuticals.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Advisors — 4 columns compact",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "columns_desktop": "4",
+        "show_portraits": false,
+        "portrait_shape": "circle",
+        "card_style": "minimal",
+        "image_ratio": "square",
+        "section_label": "Advisory board",
+        "section_heading": "Guided by experts"
+      },
+      "blocks": [
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "NEUROSCIENCE",
+            "name": "Dr. Sarah Chen",
+            "title": "Professor of Neurology, Stanford"
+          }
+        },
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "LONGEVITY",
+            "name": "Dr. Michael Reyes",
+            "title": "Director, Longevity Institute"
+          }
+        },
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "CARDIOLOGY",
+            "name": "Dr. Priya Nair",
+            "title": "Professor at Johns Hopkins"
+          }
+        },
+        {
+          "type": "advisor",
+          "settings": {
+            "tag": "CLINICAL TRIALS",
+            "name": "Dr. James Whitfield",
+            "title": "Principal Investigator, Mayo Clinic"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,424 @@
+{{ 'component-mission-pillars.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="MissionPillars-{{ section.id }}"
+  class="mission color-{{ section.settings.color_scheme }} mission--split-{{ section.settings.column_split }} mission--stmt-{{ section.settings.statement_style }} mission--num-{{ section.settings.number_style }}{% if section.settings.accent_bar %} mission--accent-bar{% endif %}"
+>
+  <div class="mission__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    <div class="mission__grid">
+      <div class="mission__statement-col{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- if section.settings.statement != blank -%}
+          <blockquote class="mission__statement ig-section-body">
+            {{ section.settings.statement }}
+          </blockquote>
+        {%- endif -%}
+      </div>
+
+      <div class="mission__pillars-col">
+        {%- if section.blocks.size > 0 -%}
+          <ol class="mission__pillars">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'pillar' -%}
+                <li
+                  class="mission__pillar{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="mission__pillar-num" aria-hidden="true">
+                    {{ block.settings.number }}
+                  </div>
+                  <div class="mission__pillar-body">
+                    <h3 class="mission__pillar-title ig-section-body">
+                      {{ block.settings.title }}
+                    </h3>
+                    <p class="mission__pillar-desc ig-section-body">
+                      {{ block.settings.description }}
+                    </p>
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mission Pillars",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.25,
+      "unit": "rem",
+      "default": 2.75,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Our mission"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Built on three principles"
+    },
+    {
+      "type": "richtext",
+      "id": "statement",
+      "label": "Mission statement",
+      "info": "The left-column quote/manifesto. Supports <em> for emphasis.",
+      "default": "<p>We don't chase trends. We invest years in <em>ingredients that are proven to work</em> — and then we make them work harder.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout — columns & styling"
+    },
+    {
+      "type": "select",
+      "id": "statement_style",
+      "label": "Statement style",
+      "options": [
+        { "value": "italic-serif", "label": "Italic serif (editorial)" },
+        { "value": "serif",        "label": "Serif" },
+        { "value": "sans",         "label": "Sans" }
+      ],
+      "default": "italic-serif"
+    },
+    {
+      "type": "checkbox",
+      "id": "accent_bar",
+      "label": "Show vertical accent bar",
+      "default": true,
+      "info": "A thin colored bar along the left edge of the statement column."
+    },
+    {
+      "type": "select",
+      "id": "column_split",
+      "label": "Column split",
+      "options": [
+        { "value": "balanced",       "label": "Balanced (1:1)" },
+        { "value": "statement-wide", "label": "Statement wider (3:2)" },
+        { "value": "pillars-wide",   "label": "Pillars wider (2:3)" }
+      ],
+      "default": "balanced"
+    },
+    {
+      "type": "select",
+      "id": "number_style",
+      "label": "Pillar number style",
+      "options": [
+        { "value": "large-serif", "label": "Large serif numeral" },
+        { "value": "small-sans",  "label": "Small tracked caps" },
+        { "value": "with-circle", "label": "Circled numeral" }
+      ],
+      "default": "large-serif"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01",
+          "info": "e.g., 01, 02, 03"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Science over marketing"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Every claim is backed by peer-reviewed research. We publish our studies in full, including what didn't work."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mission — balanced warm",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "statement_style": "italic-serif",
+        "accent_bar": true,
+        "column_split": "balanced",
+        "number_style": "large-serif",
+        "section_label": "Our mission",
+        "section_heading": "Built on three principles",
+        "statement": "<p>We don't chase trends. We invest years in <em>ingredients that are proven to work</em> — and then we make them work harder.</p>"
+      },
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "01",
+            "title": "Science over marketing",
+            "description": "Every claim is backed by peer-reviewed research. We publish our studies in full, including what didn't work."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "02",
+            "title": "Process as the differentiator",
+            "description": "Gold-standard ingredients aren't enough. Our cold-plasma enhancement is what makes the same compound work harder."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "03",
+            "title": "Results you can feel",
+            "description": "If a customer can't feel the difference inside 30 days, they shouldn't be paying us. Full refund, no questions."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mission — statement-wide",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "statement_style": "serif",
+        "accent_bar": true,
+        "column_split": "statement-wide",
+        "number_style": "with-circle",
+        "section_label": "Our mission",
+        "section_heading": "Four pillars of how we work",
+        "statement": "<p>Great supplements aren't about stuffing more into a capsule. They're about <em>choosing less, and making it count more</em>. That's the whole job.</p>"
+      },
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "01",
+            "title": "Fewer, better ingredients",
+            "description": "We refuse to hide behind proprietary blends. Every compound is disclosed at its clinically-studied dose."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "02",
+            "title": "Enhanced bioavailability",
+            "description": "Our cold-plasma process increases cellular uptake so more of what you take actually reaches the cells that need it."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "03",
+            "title": "Independent verification",
+            "description": "Third-party labs confirm every batch. Certificates are published the day the lot ships."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "04",
+            "title": "Long-term stewardship",
+            "description": "We reformulate as the science evolves, not as the market demands. Your stack should keep improving."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

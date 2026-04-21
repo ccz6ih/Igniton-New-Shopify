@@ -428,6 +428,10 @@ This is the checklist for migrating a section currently using inline styles, har
 | `study-cards.liquid` | ✅ new 2026-04-19 | Clinical study card grid; article-picker with URL fallback |
 | `testimonial-quotes.liquid` | ✅ new 2026-04-19 | Quote cards with optional portraits + star ratings + verified badge |
 | `faq.liquid` | ✅ new 2026-04-19 | Native `<details>/<summary>`; 3 icon styles (plus-minus, chevron, none) |
+| `founder-letter.liquid` | ✅ new 2026-04-19 | Sticky portrait + biography; credentials `<dl>` subgrid |
+| `advisor-grid.liquid` | ✅ new 2026-04-19 | Advisor board cards (2/3/4 cols); circle or rounded-square portraits |
+| `mission-pillars.liquid` | ✅ new 2026-04-19 | Left blockquote + right numbered pillars; 3 statement styles + 3 number styles |
+| `molecular-comparison.liquid` | ✅ new 2026-04-19 | Dark measurement box + feature cells; auto-calculated delta-percent |
 
 When every `ig-*` section is retrofitted, delete `snippets/ig-section-header-style.liquid` and `docs/section-header-typography-standard.md`.
 

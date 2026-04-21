@@ -1,0 +1,465 @@
+{{ 'component-founder-letter.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="FounderLetter-{{ section.id }}"
+  class="founder-letter color-{{ section.settings.color_scheme }} founder-letter--portrait-{{ section.settings.portrait_position }}{% if section.settings.sticky_portrait %} founder-letter--sticky{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  data-body-max-width="{{ section.settings.body_max_width }}"
+>
+  <div class="founder-letter__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label founder-letter__label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title ig-font-display founder-letter__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    <div class="founder-letter__grid">
+      <aside class="founder-letter__portrait-col">
+        <figure class="founder-letter__portrait-wrap">
+          <div class="founder-letter__portrait founder-letter__portrait--{{ section.settings.image_ratio }}">
+            {%- if section.settings.portrait != blank -%}
+              {{
+                section.settings.portrait
+                | image_url: width: 720
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '360,540,720,900',
+                  sizes: '(min-width: 750px) 40vw, 300px',
+                  alt: section.settings.portrait_caption,
+                  class: 'founder-letter__portrait-img'
+              }}
+            {%- else -%}
+              <div class="founder-letter__portrait-placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.portrait_caption != blank -%}
+            <figcaption class="founder-letter__caption ig-section-label">
+              {{ section.settings.portrait_caption }}
+            </figcaption>
+          {%- endif -%}
+        </figure>
+      </aside>
+
+      <div class="founder-letter__body-col">
+        {%- if section.settings.letter_body != blank -%}
+          <div class="founder-letter__letter ig-section-body ig-font-body">
+            {{ section.settings.letter_body }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.signature != blank
+            or section.settings.signature_name != blank
+            or section.settings.signature_title != blank
+        -%}
+          <div class="founder-letter__sign">
+            {%- if section.settings.signature != blank -%}
+              {{
+                section.settings.signature
+                | image_url: width: 240
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '160,240,320',
+                  sizes: '180px',
+                  alt: section.settings.signature_name,
+                  class: 'founder-letter__sig-img'
+              }}
+            {%- endif -%}
+            {%- if section.settings.signature_name != blank -%}
+              <div class="founder-letter__sig-name ig-font-display">
+                {{ section.settings.signature_name }}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.signature_title != blank -%}
+              <div class="founder-letter__sig-title ig-section-label">
+                {{ section.settings.signature_title }}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_credentials and section.blocks.size > 0 -%}
+          <dl class="founder-letter__credentials">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'credential' -%}
+                <div class="founder-letter__credential" {{ block.shopify_attributes }}>
+                  <dt class="founder-letter__credential-label ig-section-label">
+                    {{ block.settings.label }}
+                  </dt>
+                  <dd class="founder-letter__credential-value ig-font-display">
+                    {{ block.settings.value }}
+                  </dd>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </dl>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founder Letter",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 120,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 120,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 64,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 64,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.25,
+      "unit": "rem",
+      "default": 2.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1.0625,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "800"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Portrait aspect ratio",
+      "options": [
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "square",   "label": "Square (1:1)" },
+        { "value": "natural",  "label": "Natural" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Founder letter"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "From our founder"
+    },
+    {
+      "type": "image_picker",
+      "id": "portrait",
+      "label": "Portrait"
+    },
+    {
+      "type": "text",
+      "id": "portrait_caption",
+      "label": "Portrait caption",
+      "default": "Dr. [Name], Founder"
+    },
+    {
+      "type": "richtext",
+      "id": "letter_body",
+      "label": "Letter body",
+      "default": "<p>When I started this work thirty years ago, the question was simple: why do some molecules reach the cell and others don't? The answer took decades.</p><p>We built this formula because the science finally caught up with the ambition. Every ingredient earned its place through evidence, not marketing.</p><p>What you're holding is the result of that obsession. Thank you for trusting us with your mornings.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "signature",
+      "label": "Signature image (optional)"
+    },
+    {
+      "type": "text",
+      "id": "signature_name",
+      "label": "Signature name",
+      "default": "Dr. [Name]"
+    },
+    {
+      "type": "text",
+      "id": "signature_title",
+      "label": "Signature title",
+      "default": "Founder & Chief Science Officer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_credentials",
+      "label": "Show credentials grid",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout options"
+    },
+    {
+      "type": "select",
+      "id": "portrait_position",
+      "label": "Portrait position (desktop)",
+      "options": [
+        { "value": "left",  "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_portrait",
+      "label": "Sticky portrait on desktop",
+      "info": "Pins the portrait in place while the letter text scrolls.",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "credential",
+      "name": "Credential",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Years of research"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "30+"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder letter — warm",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "container_width": "default",
+        "section_label": "Founder letter",
+        "section_heading": "From our founder",
+        "portrait_caption": "Dr. [Name], Founder",
+        "signature_name": "Dr. [Name]",
+        "signature_title": "Founder & Chief Science Officer",
+        "show_credentials": true,
+        "portrait_position": "left",
+        "sticky_portrait": true,
+        "image_ratio": "portrait"
+      },
+      "blocks": [
+        {
+          "type": "credential",
+          "settings": {
+            "label": "Years of research",
+            "value": "30+"
+          }
+        },
+        {
+          "type": "credential",
+          "settings": {
+            "label": "University trials",
+            "value": "2"
+          }
+        },
+        {
+          "type": "credential",
+          "settings": {
+            "label": "Published papers",
+            "value": "8"
+          }
+        },
+        {
+          "type": "credential",
+          "settings": {
+            "label": "Stimulants",
+            "value": "0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Founder letter — light",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "container_width": "default",
+        "section_label": "Founder letter",
+        "section_heading": "From our founder",
+        "portrait_caption": "Dr. [Name], Founder",
+        "signature_name": "Dr. [Name]",
+        "signature_title": "Founder & Chief Science Officer",
+        "show_credentials": false,
+        "portrait_position": "left",
+        "sticky_portrait": true,
+        "image_ratio": "portrait"
+      }
+    }
+  ]
+}
+{% endschema %}

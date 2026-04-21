@@ -1,0 +1,320 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "content_alignment": "left",
+        "show_breadcrumb": true,
+        "breadcrumb_text": "Home / About",
+        "eyebrow": "About Igniton",
+        "heading": "Good ingredients aren't enough.<br>They have to <em>work.</em>",
+        "subheading": "<p>We started with one conviction: that the best supplement ingredients in the world could work even harder. Three decades of physics research later, we proved it.</p>",
+        "show_orb": true,
+        "orb_position": "top-right",
+        "orb_color": "gold",
+        "orb_opacity": "20"
+      }
+    },
+    "mission_pillars": {
+      "type": "mission-pillars",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_label": "Our mission",
+        "section_heading": "Built on three principles",
+        "statement": "<p>To enhance human performance and longevity by making every ingredient work at its <em>full biological potential.</em></p>",
+        "statement_style": "italic-serif",
+        "accent_bar": true,
+        "column_split": "balanced",
+        "number_style": "large-serif"
+      },
+      "blocks": {
+        "pillar_1": {
+          "type": "pillar",
+          "settings": {
+            "number": "1",
+            "title": "Outcomes before technology",
+            "description": "We measure success by what you feel and what the tests show — not by how impressive the science sounds."
+          }
+        },
+        "pillar_2": {
+          "type": "pillar",
+          "settings": {
+            "number": "2",
+            "title": "Proof over promise",
+            "description": "Every claim is backed by university-led, randomized, placebo-controlled trials published in peer-reviewed journals."
+          }
+        },
+        "pillar_3": {
+          "type": "pillar",
+          "settings": {
+            "number": "3",
+            "title": "Nothing that doesn't help you",
+            "description": "No fillers, no excipients, no binders. If an ingredient doesn't benefit the body, it has no place in the capsule."
+          }
+        }
+      },
+      "block_order": ["pillar_1", "pillar_2", "pillar_3"]
+    },
+    "founder": {
+      "type": "founder-letter",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_label": "Founder story",
+        "section_heading": "From billion-dollar businesses to <em>the science of human potential.</em>",
+        "portrait_caption": "Jirka Rysavy — Founder & CEO, Igniton",
+        "letter_body": "<p>Jirka Rysavy built some of Colorado's most consequential companies. Corporate Express grew to $4.7 billion in revenue before being acquired by Staples. Crystal Market became Wild Oats — the organic food retailer later acquired by Whole Foods. He then founded Gaia Inc. (NASDAQ: GAIA), a global streaming platform for conscious media and personal growth.</p><p>Each company shared the same thread: a belief that how we consume — food, information, energy — profoundly shapes human performance. Igniton is the culmination of that belief, applied at the molecular level.</p><p>After decades of interest in advanced physics research on subatomic quasi-particles, Jirka saw the opportunity to apply that science to human nutrition. The result wasn't a new ingredient — it was a new way of making existing, proven ingredients work harder inside the body.</p>",
+        "signature_name": "Jirka Rysavy",
+        "signature_title": "Founder & CEO, Igniton",
+        "show_credentials": true,
+        "image_ratio": "portrait",
+        "portrait_position": "left",
+        "sticky_portrait": true
+      },
+      "blocks": {
+        "credential_1": {
+          "type": "credential",
+          "settings": {
+            "label": "Previous company",
+            "value": "Corporate Express — $4.7B revenue"
+          }
+        },
+        "credential_2": {
+          "type": "credential",
+          "settings": {
+            "label": "Previous company",
+            "value": "Wild Oats Markets → Whole Foods"
+          }
+        },
+        "credential_3": {
+          "type": "credential",
+          "settings": {
+            "label": "Current parent company",
+            "value": "Gaia Inc. (NASDAQ: GAIA)"
+          }
+        },
+        "credential_4": {
+          "type": "credential",
+          "settings": {
+            "label": "Based in",
+            "value": "Louisville, Colorado"
+          }
+        }
+      },
+      "block_order": ["credential_1", "credential_2", "credential_3", "credential_4"]
+    },
+    "stats_credibility": {
+      "type": "stats-bar",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "columns_desktop": "4",
+        "columns_mobile": "2",
+        "stat_number_size": "lg",
+        "stat_alignment": "center",
+        "show_dividers": false
+      },
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "30",
+            "unit": "+",
+            "label": "Years of physics research behind the enhancement process"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "2",
+            "label": "University-led, peer-reviewed, placebo-controlled trials completed"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "0",
+            "label": "Fillers, excipients, or binders in any Igniton formula"
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "number": "100",
+            "unit": "%",
+            "label": "Memory improvement measured in the IgniCognition clinical trial"
+          }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3", "stat_4"]
+    },
+    "why_different": {
+      "type": "ig-why-different",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Why it works differently",
+        "section_title": "Not just what's in it.<br>What's been done to it."
+      },
+      "blocks": {
+        "card_1": {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z\"/></svg>",
+            "title": "Enhanced, not just formulated",
+            "description": "Every ingredient is processed through cold plasma and laser-photonics technology to increase cellular bioavailability — shown to outperform the same ingredients in unenhanced form."
+          }
+        },
+        "card_2": {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\"/></svg>",
+            "title": "University tested, not self-reported",
+            "description": "Results come from randomized, placebo-controlled trials published in peer-reviewed academic journals — not from internal surveys or anecdotal claims."
+          }
+        },
+        "card_3": {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 10V3L4 14h7v7l9-11h-7z\"/></svg>",
+            "title": "No stimulants. No fillers. Ever.",
+            "description": "Zero caffeine, zero synthetic stimulants. Zero fillers, binders, or excipients. Every capsule contains only active ingredients that benefit the body directly."
+          }
+        },
+        "card_4": {
+          "type": "feature_card",
+          "settings": {
+            "icon_svg": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z\"/></svg>",
+            "title": "Physics lab precision",
+            "description": "The enhancement process uses high-vacuum cold plasma chambers and coherent photonic streams — equipment developed from technology originally used at CERN. This is not supplement manufacturing. It is materials science."
+          }
+        }
+      },
+      "block_order": ["card_1", "card_2", "card_3", "card_4"]
+    },
+    "physician_quotes": {
+      "type": "testimonial-quotes",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "section_label": "What physicians say",
+        "section_heading": "Recommended by clinicians who understand the science.",
+        "columns_desktop": "2",
+        "show_portraits": false,
+        "show_stars": false,
+        "quote_style": "serif-large",
+        "image_ratio": "square"
+      },
+      "blocks": {
+        "quote_1": {
+          "type": "quote",
+          "settings": {
+            "quote_text": "<p>Aging isn't just about hormones or metabolism — it's about the subtle decline in cellular communication, mitochondrial efficiency, and energetic coherence. Igniton products stand out because they support all three.</p>",
+            "name": "Dr. Kenneth Ro, M.D.",
+            "credentials": "Emergency Medicine · 35+ years clinical experience",
+            "star_rating": 5,
+            "show_verified": false
+          }
+        },
+        "quote_2": {
+          "type": "quote",
+          "settings": {
+            "quote_text": "<p>In my practice, I've seen how inflammation, stress, and cellular dysfunction silently sabotage the aging process. Igniton products offer breakthrough support — combining high-integrity ingredients with enhancement designed to restore cellular function.</p>",
+            "name": "Dr. Gail King, M.D.",
+            "credentials": "Functional Medicine Specialist",
+            "star_rating": 5,
+            "show_verified": false
+          }
+        }
+      },
+      "block_order": ["quote_1", "quote_2"]
+    },
+    "advisors": {
+      "type": "advisor-grid",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Advisory board",
+        "section_heading": "Guided by the people<br>redefining human performance.",
+        "intro_text": "<p>Our advisors include thought leaders in biohacking, longevity medicine, neuroscience, and advanced physics — providing scientific oversight and strategic direction.</p>",
+        "columns_desktop": "4",
+        "show_portraits": true,
+        "portrait_shape": "circle",
+        "card_style": "minimal",
+        "image_ratio": "square"
+      },
+      "blocks": {
+        "advisor_1": {
+          "type": "advisor",
+          "settings": {
+            "tag": "Biohacking · Performance",
+            "name": "Dave Asprey",
+            "title": "Founder, Bulletproof Coffee & Danger Coffee · 4× NYT Bestselling Author",
+            "bio_quote": "<p>This is the most important new breakthrough supplement for longevity.</p>"
+          }
+        },
+        "advisor_2": {
+          "type": "advisor",
+          "settings": {
+            "tag": "Emergency Medicine · Men's Health",
+            "name": "Dr. Kenneth Ro, M.D.",
+            "title": "Founder, Back in the Game Men · 35+ years Emergency & Internal Medicine",
+            "bio_quote": "<p>Igniton merges high-fidelity ingredients with cutting-edge energetic enhancement designed to optimize the way cells signal, repair, and adapt.</p>"
+          }
+        },
+        "advisor_3": {
+          "type": "advisor",
+          "settings": {
+            "tag": "Functional Medicine",
+            "name": "Dr. Gail King, M.D.",
+            "title": "Functional Medicine Specialist",
+            "bio_quote": "<p>Igniton products offer breakthrough support — combining high-integrity ingredients with quantum enhancement to restore energetic harmony at the subatomic level.</p>"
+          }
+        },
+        "advisor_4": {
+          "type": "advisor",
+          "settings": {
+            "tag": "Bioenergetics · Physics",
+            "name": "Prof. Konstantin Korotkov",
+            "title": "Inventor of GDV Technology · Saint-Petersburg Research Institute for Physical Culture",
+            "bio_quote": "<p>Internationally acclaimed scientist whose GDV instrumentation was used in the Igniton clinical trials to measure bioenergetic outcomes.</p>"
+          }
+        }
+      },
+      "block_order": ["advisor_1", "advisor_2", "advisor_3", "advisor_4"]
+    },
+    "final_cta": {
+      "type": "ig-final-cta",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Ready to feel the difference",
+        "section_title": "The proof is in the results.",
+        "subtitle_text": "<p>University-studied. 30-day satisfaction guarantee. Subscribe and save 20%.</p>",
+        "enable_gradient": true
+      },
+      "blocks": {
+        "btn_shop": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniCognition",
+            "button_style": "primary"
+          }
+        },
+        "btn_studies": {
+          "type": "button",
+          "settings": {
+            "button_label": "See the clinical studies",
+            "button_style": "muted"
+          }
+        }
+      },
+      "block_order": ["btn_shop", "btn_studies"]
+    }
+  },
+  "order": [
+    "hero",
+    "mission_pillars",
+    "founder",
+    "stats_credibility",
+    "why_different",
+    "physician_quotes",
+    "advisors",
+    "final_cta"
+  ]
+}

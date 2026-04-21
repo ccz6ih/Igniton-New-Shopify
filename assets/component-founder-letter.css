@@ -1,0 +1,295 @@
+/* ==========================================================================
+   Founder Letter
+   Sticky portrait + multi-paragraph richtext letter for About page.
+   Reads ig-section-controls CSS vars and Dawn scheme/color/font variables.
+   No raw hex, no hardcoded font-family declarations.
+   ========================================================================== */
+
+/* ── Section wrapper ──────────────────────────────────────────────────── */
+.founder-letter {
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .founder-letter {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
+}
+
+/* ── Container ────────────────────────────────────────────────────────── */
+.founder-letter__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .founder-letter__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ── Section header (label + heading) ─────────────────────────────────── */
+.founder-letter__label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  opacity: 0.75;
+}
+
+.founder-letter__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  max-width: var(--ig-heading-width);
+  line-height: 1.1;
+  color: rgb(var(--color-foreground));
+}
+
+/* ── Grid (desktop: 2fr portrait / 3fr body) ──────────────────────────── */
+.founder-letter__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media screen and (min-width: 750px) {
+  .founder-letter__grid {
+    grid-template-columns: 2fr 3fr;
+    gap: 4rem;
+  }
+}
+
+/* Portrait-right modifier reverses the two columns on desktop */
+@media screen and (min-width: 750px) {
+  .founder-letter--portrait-right .founder-letter__portrait-col {
+    order: 2;
+  }
+  .founder-letter--portrait-right .founder-letter__body-col {
+    order: 1;
+  }
+}
+
+/* ── Portrait column ──────────────────────────────────────────────────── */
+.founder-letter__portrait-col {
+  width: 100%;
+}
+
+/* Mobile: center & cap portrait width so it doesn't dominate */
+@media screen and (max-width: 749px) {
+  .founder-letter__portrait-col {
+    margin-inline: auto;
+    max-width: 300px;
+  }
+}
+
+/* Sticky behavior — desktop only, and only when toggle is on */
+@media screen and (min-width: 750px) {
+  .founder-letter--sticky .founder-letter__portrait-col {
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+}
+
+.founder-letter__portrait-wrap {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Portrait frame */
+.founder-letter__portrait {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: rgba(var(--color-foreground), 0.04);
+  box-shadow: 0 12px 32px -12px rgba(var(--color-foreground), 0.25);
+}
+
+.founder-letter__portrait--portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.founder-letter__portrait--square {
+  aspect-ratio: 1 / 1;
+}
+
+.founder-letter__portrait--natural {
+  aspect-ratio: auto;
+}
+
+.founder-letter__portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.founder-letter__portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--color-foreground), 0.08),
+    rgba(var(--color-foreground), 0.02)
+  );
+}
+
+/* Caption beneath portrait */
+.founder-letter__caption {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
+  text-align: center;
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .founder-letter__caption {
+    text-align: left;
+  }
+}
+
+/* ── Body column ──────────────────────────────────────────────────────── */
+.founder-letter__body-col {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Letter prose */
+.founder-letter__letter {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  line-height: 1.65;
+  color: rgb(var(--color-foreground));
+  opacity: 0.9;
+  max-width: 800px;
+}
+
+.founder-letter__letter > p {
+  margin: 0 0 1.25rem;
+}
+
+.founder-letter__letter > p:last-child {
+  margin-bottom: 0;
+}
+
+.founder-letter__letter > p + p {
+  margin-top: 0;
+}
+
+/* ── Signature block ──────────────────────────────────────────────────── */
+.founder-letter__sign {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.founder-letter__sig-img {
+  max-width: 180px;
+  height: auto;
+  width: auto;
+  margin-bottom: 0.5rem;
+  /* Monochrome-ify onto any scheme foreground */
+  opacity: 0.9;
+}
+
+.founder-letter__sig-name {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: 1.125rem;
+  line-height: 1.2;
+  color: rgb(var(--color-foreground));
+}
+
+.founder-letter__sig-title {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
+  margin-top: 0.25rem;
+}
+
+/* ── Credentials <dl> ─────────────────────────────────────────────────── */
+.founder-letter__credentials {
+  margin: 3rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.15);
+}
+
+@media screen and (min-width: 750px) {
+  .founder-letter__credentials {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.founder-letter__credential {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.founder-letter__credential-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
+  margin: 0;
+}
+
+.founder-letter__credential-value {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: 2.25rem;
+  line-height: 1;
+  color: rgb(var(--color-foreground));
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .founder-letter__credential-value {
+    font-size: 2.5rem;
+  }
+}
+
+/* ── Fade-in on scroll (respects reduced-motion) ──────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .founder-letter.scroll-trigger {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 600ms ease, transform 600ms ease;
+  }
+  .founder-letter.scroll-trigger.animate--fade-in {
+    /* Dawn toggles this class when the element enters the viewport */
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-letter,
+  .founder-letter * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

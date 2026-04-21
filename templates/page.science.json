@@ -1,0 +1,392 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "content_alignment": "left",
+        "show_breadcrumb": true,
+        "breadcrumb_text": "Home / Learn / Science & Technology",
+        "eyebrow": "Science & Technology",
+        "heading": "Not just what's in it.<br>What's been <em>done</em> to it.",
+        "subheading": "<p>The same ingredients that are in hundreds of other supplements. Processed through a technology developed over 30 years of advanced physics research. The difference is measurable. We have the studies to prove it.</p>",
+        "show_orb": true,
+        "orb_position": "both",
+        "orb_color": "gold",
+        "orb_opacity": "20"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "core_question": {
+      "type": "testimonial-quotes",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "The core question",
+        "section_heading": "",
+        "columns_desktop": "1",
+        "show_portraits": false,
+        "show_stars": false,
+        "quote_style": "serif-large"
+      },
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "quote_text": "<p>Why do two supplements with <em>identical ingredients</em> produce different results? Standard supplements deliver ingredients passively — the body absorbs what it can, and the rest is lost. Bioavailability, the percentage of an ingredient that actually reaches your cells, is rarely better than 30–40% for most oral supplements. Igniton's enhancement process changes the molecular state of each ingredient before it ever enters the body — making it more compatible with cellular uptake mechanisms and reducing the effective dose required to produce the same biological outcome. This isn't a claim. It's been measured in two randomized, placebo-controlled university trials, published in peer-reviewed journals, comparing the enhanced formula against the same unenhanced ingredients side by side.</p>",
+            "name": "",
+            "credentials": "",
+            "star_rating": 5,
+            "show_verified": false
+          }
+        }
+      },
+      "block_order": ["q1"]
+    },
+    "what_changes": {
+      "type": "stats-bar",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "What the enhancement changes",
+        "section_heading": "Three measurable differences between standard and enhanced.",
+        "columns_desktop": "3",
+        "columns_mobile": "1",
+        "stat_number_size": "lg",
+        "stat_alignment": "center",
+        "show_dividers": true
+      },
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "80–90",
+            "unit": "%",
+            "label": "Cellular bioavailability — lower effective dose required vs. standard form. The cold plasma process puts ingredients into an \"excited\" molecular state for greater cellular uptake.",
+            "source": "Measured via GDV testing"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "3",
+            "unit": "×",
+            "label": "Bioenergetic coherence — higher bioenergetic light emission measured on igniton-charged ingredients, indicating greater molecular order.",
+            "source": "Gas Discharge Visualization"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "100",
+            "unit": "%",
+            "label": "Clinical outcomes — short-term memory improvement vs. placebo in the 90-day university trial.",
+            "source": "n=80, 90 days"
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3"]
+    },
+    "process": {
+      "type": "ig-how-it-works",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "The enhancement process",
+        "section_title": "Four steps from raw ingredient to enhanced formula.",
+        "alternate_steps": false,
+        "footer_link_text": "",
+        "footer_link_url": ""
+      },
+      "blocks": {
+        "step1": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Source — gold-standard ingredients",
+            "step_description": "GRAS-certified, ODI-grade active compounds only. Citicoline, Alpha-GPC, NMN, Resveratrol, CoQ10, NADH, and more. Zero fillers, binders, or excipients — every capsule is pure active ingredient. Same compounds found in leading clinical studies and university research."
+          }
+        },
+        "step2": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Isolate — high-vacuum chamber",
+            "step_description": "Ingredients enter a precisely controlled high-vacuum environment. Pressure control and contamination isolation protect molecular integrity before the enhancement process begins. Equipment developed from technology originally used at CERN's physics laboratories in Switzerland."
+          }
+        },
+        "step3": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Enhance — cold plasma + laser photonics",
+            "step_description": "Igniton quasi-particles are embedded into the supplement molecules using a coherent photonic stream through Si-wafer quantum well nano-layers. This creates a fundamentally different molecular state. Hot plasma replaced by cold plasma — enabling compact, precise, energy-efficient production."
+          }
+        },
+        "step4": {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "step_title": "Verify — university-tested output",
+            "step_description": "Every production batch is tied to the same enhancement protocol used in the clinical trials. The enhanced formula is tested against placebo and the identical non-enhanced formula. Published in peer-reviewed journals — compared head-to-head against unenhanced controls."
+          }
+        }
+      },
+      "block_order": ["step1", "step2", "step3", "step4"]
+    },
+    "comparison": {
+      "type": "comparison-table",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Side by side",
+        "section_heading": "Standard supplements vs. <em>Igniton-enhanced</em> formulas.",
+        "column_count": "2",
+        "highlight_style": "accent-border",
+        "col_1_header": "Standard",
+        "col_1_highlighted": false,
+        "col_2_header": "Enhanced",
+        "col_2_highlighted": true
+      },
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Delivery method",
+            "col_1_value": "Passive — standard molecular state",
+            "col_2_value": "Enhanced molecular \"excited\" state"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Bioavailability",
+            "col_1_value": "30–40% typical cellular uptake",
+            "col_2_value": "80–90% lower effective dose required"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Fillers & excipients",
+            "col_1_value": "Flow agents, binders, bulking compounds",
+            "col_2_value": "Zero fillers, zero excipients"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Efficacy evidence",
+            "col_1_value": "Claims based on single-ingredient studies",
+            "col_2_value": "Whole-formula, placebo-controlled trials"
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "feature_label": "Cold-plasma processed",
+            "col_1_value": "✗",
+            "col_2_value": "✓"
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "feature_label": "University tested vs. unenhanced",
+            "col_1_value": "✗",
+            "col_2_value": "✓"
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6"]
+    },
+    "history": {
+      "type": "timeline",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "section_label": "30 years of research",
+        "section_heading": "From particle physics to your daily supplement.",
+        "orientation": "horizontal",
+        "show_connecting_line": true,
+        "number_style": "numbered",
+        "accent_color_source": "scheme-button"
+      },
+      "blocks": {
+        "t1": {
+          "type": "step",
+          "settings": {
+            "step_marker": "1990s",
+            "time_label": "Origins",
+            "step_title": "Discovery & characterization",
+            "step_description": "Advanced physics research on eNPQ quasi-particles — now called ignitons — begins. Technology developed using hot plasma systems in private lab facilities."
+          }
+        },
+        "t2": {
+          "type": "step",
+          "settings": {
+            "step_marker": "1995",
+            "time_label": "Switzerland",
+            "step_title": "Swiss laboratory established",
+            "step_description": "A dedicated lab is set up in Switzerland, with key hardware for verifying and measuring igniton quasi-particles sourced from CERN. Research into industrial applications begins."
+          }
+        },
+        "t3": {
+          "type": "step",
+          "settings": {
+            "step_marker": "2023",
+            "time_label": "Colorado",
+            "step_title": "Colorado operation",
+            "step_description": "Swiss lab operations conclude after sufficient data is collected. A new, compact cold plasma system — more energy-efficient and precise — is designed, built, and established in Louisville, Colorado."
+          }
+        },
+        "t4": {
+          "type": "step",
+          "settings": {
+            "step_marker": "2024",
+            "time_label": "Today",
+            "step_title": "Clinical validation",
+            "step_description": "Two university-led, peer-reviewed trials published. Enhanced formula consistently outperforms identical unenhanced formula across cognitive and stress biomarker outcomes."
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "studies": {
+      "type": "study-cards",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "The clinical evidence",
+        "section_heading": "Two published trials. Independent results.",
+        "columns_desktop": "2",
+        "card_style": "bordered"
+      },
+      "blocks": {
+        "study1": {
+          "type": "study",
+          "settings": {
+            "tag": "Cognitive Trial · Peer-Reviewed Journal",
+            "title": "Effect of Enhanced Amino Acid Compositions on Human Cognitive Functioning",
+            "authors": "Valverde R. et al · Concordia University, Montreal · Northwestern Medical University, St. Petersburg · Institute of Human Brain, Russian Academy of Science",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 80",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "90 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Open, randomized, placebo-controlled",
+            "integrity_markers": "100% short-term memory improvement vs. placebo\n83% quality of performance gain\n51% sustained attention improvement\nAges 35–65\nPeer-reviewed publication",
+            "link_url": "",
+            "link_label": "Download full study →"
+          }
+        },
+        "study2": {
+          "type": "study",
+          "settings": {
+            "tag": "Stress Biomarker Trial · Peer-Reviewed Journal",
+            "title": "Cold Plasma-Enhanced Amino Acids and Human Stress Response",
+            "authors": "Saint-Petersburg Scientific-Research Institute for Physical Culture",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 70",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "30 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Randomized, placebo-controlled",
+            "integrity_markers": "Reduced stress biomarkers vs. unenhanced formula\nImproved GDV biofeedback coherence scores\nMeasurable stress reduction within 30 days\nAges 35–65\nPeer-reviewed publication",
+            "link_url": "",
+            "link_label": "Download full study →"
+          }
+        }
+      },
+      "block_order": ["study1", "study2"]
+    },
+    "molecular": {
+      "type": "molecular-comparison",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "Why molecular state matters",
+        "section_heading": "Your body is 70% water. Molecular coherence is the mechanism.",
+        "measurement_before": "5.56",
+        "measurement_before_label": "Standard",
+        "measurement_after": "14.04",
+        "measurement_after_label": "Igniton-Enhanced",
+        "measurement_unit": "Energy · 10⁻² Joules (GDV)",
+        "measurement_caption": "GDV energy measurement on water molecules. Inner noise drops from 3,033 (standard) to 1 (enhanced) — an indicator of near-perfect molecular symmetry.",
+        "measurement_delta_highlight": true,
+        "show_decorative_overlay": true,
+        "feature_cells_layout": "stacked"
+      },
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "⚡",
+            "title": "Higher energy state",
+            "description": "Enhanced ingredients carry 3× the bioenergetic output of standard equivalents, measured before they enter the body."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "◈",
+            "title": "Lower molecular noise",
+            "description": "Inner noise drops from 3,033 to 1 — an indicator of near-perfect molecular symmetry and reduced energy loss in cellular interactions."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "✓",
+            "title": "Verified in human trials",
+            "description": "The in-vitro measurements directly correlate with the cognitive and stress outcomes measured in two published trials."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "◉",
+            "title": "Water-based interaction",
+            "description": "Higher-energy, ordered molecules interact more effectively with hydrogen bonds in cellular water — the primary medium of nutrient transport."
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"]
+    },
+    "final_cta": {
+      "type": "ig-final-cta",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_label": "The proof is in the results",
+        "section_title": "30 years of research.<br>Measurable in 30 days.",
+        "subtitle_text": "<p>University-studied. Peer-reviewed. Backed by a 30-day satisfaction guarantee.</p>",
+        "enable_gradient": true,
+        "footer_text": "<p>** These statements have not been evaluated by the FDA. These products are not intended to diagnose, treat, cure, or prevent any disease.</p>"
+      },
+      "blocks": {
+        "btn1": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniCognition™",
+            "button_link": "/products/ignicognition",
+            "button_style": "primary"
+          }
+        },
+        "btn2": {
+          "type": "button",
+          "settings": {
+            "button_label": "Read the clinical studies →",
+            "button_link": "#studies",
+            "button_style": "muted"
+          }
+        }
+      },
+      "block_order": ["btn1", "btn2"]
+    }
+  },
+  "order": [
+    "hero",
+    "core_question",
+    "what_changes",
+    "process",
+    "comparison",
+    "history",
+    "studies",
+    "molecular",
+    "final_cta"
+  ]
+}

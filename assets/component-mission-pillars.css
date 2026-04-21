@@ -1,0 +1,288 @@
+/* ─────────────────────────────────────────────────────────
+   Mission Pillars
+   Two-column layout: statement (left) + numbered pillars (right).
+   Reads only var(--ig-*) and var(--color-*) — no raw hex,
+   no hardcoded font-family. Fonts come from Dawn's
+   --font-heading-family / --font-body-family.
+   ───────────────────────────────────────────────────────── */
+
+/* Wrapper */
+.mission {
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+}
+
+@media screen and (max-width: 749px) {
+  .mission {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
+}
+
+/* Container */
+.mission__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mission__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Grid ─── */
+.mission__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mission__grid {
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .mission--split-balanced .mission__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mission--split-statement-wide .mission__grid {
+    grid-template-columns: 3fr 2fr;
+  }
+
+  .mission--split-pillars-wide .mission__grid {
+    grid-template-columns: 2fr 3fr;
+  }
+}
+
+/* ─── Statement column ─── */
+.mission__statement-col {
+  /* anchor the statement so it reads like pulled-left copy */
+}
+
+.mission__statement {
+  /* Strip default <blockquote> indent; Dawn doesn't normalize this */
+  margin: 0;
+  padding: 0;
+  color: rgb(var(--color-foreground));
+  max-width: 38ch;
+}
+
+.mission__statement > * {
+  margin: 0;
+}
+
+.mission__statement > * + * {
+  margin-top: 0.75em;
+}
+
+/* Italic serif — editorial default */
+.mission--stmt-italic-serif .mission__statement {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+@media screen and (min-width: 750px) {
+  .mission--stmt-italic-serif .mission__statement {
+    font-size: 2rem;
+    line-height: 1.35;
+  }
+}
+
+/* Serif (non-italic) */
+.mission--stmt-serif .mission__statement {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+
+@media screen and (min-width: 750px) {
+  .mission--stmt-serif .mission__statement {
+    font-size: 1.5rem;
+  }
+}
+
+/* Sans (body family, medium weight) */
+.mission--stmt-sans .mission__statement {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+
+/* Accent bar — 3px left border in scheme-button color */
+.mission--accent-bar .mission__statement-col {
+  padding-left: 1.25rem;
+  border-left: 3px solid rgb(var(--color-button));
+}
+
+@media screen and (min-width: 750px) {
+  .mission--accent-bar .mission__statement-col {
+    padding-left: 1.5rem;
+  }
+}
+
+/* ─── Pillars column ─── */
+.mission__pillars-col {
+  min-width: 0; /* prevent grid item overflow on long words */
+}
+
+.mission__pillars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mission__pillars {
+    gap: 2.5rem;
+  }
+}
+
+/* Pillar row */
+.mission__pillar {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mission__pillar {
+    gap: 1.5rem;
+  }
+}
+
+/* Number block — shared */
+.mission__pillar-num {
+  flex-shrink: 0;
+  color: rgb(var(--color-button));
+  line-height: 1;
+}
+
+/* Body */
+.mission__pillar-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mission__pillar-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-heading-family);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 750px) {
+  .mission__pillar-title {
+    font-size: 1.25rem;
+  }
+}
+
+.mission__pillar-desc {
+  margin: 0;
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+  line-height: 1.55;
+}
+
+/* ─── Number style: large-serif ─── */
+.mission--num-large-serif .mission__pillar-num {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2.5rem;
+  min-width: 2.75rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mission--num-large-serif .mission__pillar-num {
+    font-size: 3rem;
+    min-width: 3.5rem;
+  }
+}
+
+/* ─── Number style: small-sans ─── */
+.mission--num-small-sans .mission__pillar-num {
+  font-family: var(--font-body-family);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  min-width: 2.5rem;
+  padding-top: 0.15rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mission--num-small-sans .mission__pillar-num {
+    font-size: 1.125rem;
+    min-width: 3rem;
+  }
+}
+
+/* ─── Number style: with-circle ─── */
+.mission--num-with-circle .mission__pillar {
+  align-items: flex-start;
+}
+
+.mission--num-with-circle .mission__pillar-num {
+  font-family: var(--font-heading-family);
+  font-weight: 500;
+  font-size: 1.125rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--color-button));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding-top: 0; /* override baseline alignment adjustments */
+}
+
+@media screen and (min-width: 750px) {
+  .mission--num-with-circle .mission__pillar-num {
+    font-size: 1.25rem;
+    width: 3rem;
+    height: 3rem;
+    min-width: 3rem;
+  }
+}
+
+/* ─── Mobile adjustments ─── */
+@media screen and (max-width: 749px) {
+  .mission__pillar {
+    /* number inline at top of body on mobile */
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  /* Slightly smaller large-serif numbers on mobile */
+  .mission--num-large-serif .mission__pillar-num {
+    font-size: 2rem;
+    min-width: 2.25rem;
+  }
+
+  .mission--num-with-circle .mission__pillar-num {
+    width: 2.25rem;
+    height: 2.25rem;
+    min-width: 2.25rem;
+    font-size: 1rem;
+  }
+}

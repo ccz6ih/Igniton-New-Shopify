@@ -1,0 +1,237 @@
+/* ==========================================================================
+   Advisor Grid
+   Scientific advisor / board member card grid (2/3/4 columns).
+   Reads ig-section-controls CSS vars and Dawn scheme/color/font variables.
+   No raw hex, no hardcoded families.
+   ========================================================================== */
+
+/* ── Section wrapper ──────────────────────────────────────────────────── */
+.advisor-grid {
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .advisor-grid {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
+}
+
+/* ── Container ────────────────────────────────────────────────────────── */
+.advisor-grid__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .advisor-grid__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ── Section header (label + heading + intro) ─────────────────────────── */
+.advisor-grid .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+}
+
+.advisor-grid .ig-section-title {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  max-width: var(--ig-heading-width);
+  margin-inline: auto;
+  text-align: center;
+  color: rgb(var(--color-foreground));
+}
+
+.advisor-grid__container > .ig-section-label,
+.advisor-grid__container > .ig-section-title {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.advisor-grid__intro {
+  max-width: var(--ig-body-width);
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+  font-family: var(--font-body-family);
+  line-height: 1.55;
+}
+
+.advisor-grid__intro > * {
+  margin: 0;
+}
+
+.advisor-grid__intro > * + * {
+  margin-top: 0.75rem;
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────── */
+.advisor-grid__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Mobile special-case: 4 desktop columns collapses to 2 on mobile */
+@media screen and (max-width: 749px) {
+  .advisor-grid--cols-4 .advisor-grid__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .advisor-grid__grid {
+    gap: 2rem;
+  }
+
+  .advisor-grid--cols-2 .advisor-grid__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .advisor-grid--cols-3 .advisor-grid__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .advisor-grid--cols-4 .advisor-grid__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.advisor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  margin: 0;
+  border-radius: 1rem;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: transform 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+
+@media screen and (min-width: 750px) {
+  .advisor-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Card style variants */
+.advisor-grid--style-bordered .advisor-card {
+  border-color: rgb(var(--color-foreground) / 0.1);
+}
+
+.advisor-grid--style-filled .advisor-card {
+  background-color: rgb(var(--color-foreground) / 0.04);
+}
+
+/* .advisor-grid--style-minimal — no border, no background (defaults) */
+
+/* ── Portrait ─────────────────────────────────────────────────────────── */
+.advisor-card__portrait {
+  overflow: hidden;
+  width: 5rem;
+  height: 5rem;
+  flex: 0 0 auto;
+  background-color: rgb(var(--color-foreground) / 0.06);
+}
+
+.advisor-card__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Aspect-ratio variants (square/portrait/natural) */
+.advisor-card__portrait--square {
+  aspect-ratio: 1 / 1;
+  width: 5rem;
+  height: 5rem;
+}
+
+.advisor-card__portrait--portrait {
+  aspect-ratio: 4 / 5;
+  width: 5rem;
+  height: auto;
+}
+
+.advisor-card__portrait--natural {
+  width: 5rem;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+/* Portrait shape (overrides border-radius for any ratio) */
+.advisor-grid--portrait-circle .advisor-card__portrait {
+  border-radius: 50%;
+}
+
+.advisor-grid--portrait-rounded-square .advisor-card__portrait {
+  border-radius: 12px;
+}
+
+/* ── Tag ──────────────────────────────────────────────────────────────── */
+.advisor-card__tag {
+  margin-bottom: 0;
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+}
+
+/* ── Name ─────────────────────────────────────────────────────────────── */
+.advisor-card__name {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.25rem, 1vw + 1rem, 1.5rem);
+  line-height: 1.25;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+}
+
+/* ── Title / affiliation ──────────────────────────────────────────────── */
+.advisor-card__title {
+  font-family: var(--font-body-family);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+  opacity: 0.75;
+}
+
+/* ── Bio / pull-quote ─────────────────────────────────────────────────── */
+.advisor-card__quote {
+  margin: 0.25rem 0 0;
+  color: rgb(var(--color-foreground));
+  max-width: 28rem;
+  font-family: var(--font-body-family);
+  line-height: 1.55;
+  opacity: 0.9;
+}
+
+.advisor-card__quote > * {
+  margin: 0;
+}
+
+.advisor-card__quote > * + * {
+  margin-top: 0.6rem;
+}
+
+/* Filled/bordered styles pair nicely with regular text; minimal gets italic emphasis */
+.advisor-grid--style-minimal .advisor-card__quote {
+  font-style: italic;
+}
