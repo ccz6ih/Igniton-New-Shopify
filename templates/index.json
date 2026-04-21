@@ -324,7 +324,7 @@
         "label_size": 100,
         "label_spacing": "0.75",
         "heading_size": 5,
-        "heading_max_width": "900",
+        "heading_max_width": "1200",
         "heading_spacing": "2.5",
         "mobile_heading_scale": 65,
         "body_size": 1,
