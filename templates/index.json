@@ -539,7 +539,7 @@
         "blog": "cognitive-health",
         "post_limit": 4,
         "heading": "Blog posts",
-        "heading_size": "h1",
+        "heading_size": "h0",
         "columns_desktop": 4,
         "show_view_all": true,
         "show_image": true,
