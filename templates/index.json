@@ -87,7 +87,7 @@
       "name": "Igniton Hero",
       "settings": {
         "color_scheme": "scheme-1",
-        "container_width": "wide",
+        "container_width": "narrow",
         "min_height": 400,
         "padding_block_start_desktop": 120,
         "padding_block_end_desktop": 120,
@@ -95,7 +95,7 @@
         "padding_block_end_mobile": "64",
         "label_size": 100,
         "label_spacing": "1.25",
-        "heading_size": 7.5,
+        "heading_size": 5,
         "heading_max_width": "1200",
         "heading_spacing": "2.5",
         "mobile_heading_scale": 55,
