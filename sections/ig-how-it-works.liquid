@@ -20,7 +20,7 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <div class="ig-how-it-works__steps{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      <div class="ig-how-it-works__steps{% if section.settings.alternate_steps %} ig-how-it-works__steps--alternating{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'step' -%}
@@ -28,10 +28,10 @@
                 <div class="ig-how-it-works__step-num ig-font-display">
                   {{ block.settings.step_number }}
                 </div>
-                <div class="ig-how-it-works__step-title ig-font-body">
+                <div class="ig-how-it-works__step-title ig-section-body ig-font-body">
                   {{ block.settings.step_title }}
                 </div>
-                <div class="ig-how-it-works__step-desc ig-font-body">
+                <div class="ig-how-it-works__step-desc ig-section-body ig-font-body">
                   {{ block.settings.step_description }}
                 </div>
               </div>
@@ -43,7 +43,7 @@
         <div class="ig-how-it-works__footer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
           <a
             href="{{ section.settings.footer_link_url }}"
-            class="ig-how-it-works__link"
+            class="ig-how-it-works__link ig-section-body"
           >
             {{ section.settings.footer_link_text }}
           </a>
@@ -182,7 +182,7 @@
     {
       "type": "range",
       "id": "heading_size",
-      "min": 2, "max": 8, "step": 0.25,
+      "min": 2, "max": 14, "step": 0.5,
       "unit": "rem",
       "default": 3,
       "label": "Heading size (desktop)"
@@ -213,18 +213,13 @@
       "default": "2.5"
     },
     {
-      "type": "select",
+      "type": "range",
       "id": "mobile_heading_scale",
+      "min": 40, "max": 100, "step": 5,
+      "unit": "%",
+      "default": 65,
       "label": "Mobile heading scale",
-      "info": "How aggressively the heading shrinks on mobile.",
-      "options": [
-        { "value": "40",  "label": "Aggressive (40%)" },
-        { "value": "55",  "label": "Balanced (55%)" },
-        { "value": "65",  "label": "Default (65%)" },
-        { "value": "80",  "label": "Gentle (80%)" },
-        { "value": "100", "label": "Same as desktop" }
-      ],
-      "default": "65"
+      "info": "How aggressively the heading shrinks on mobile (as a % of desktop size)."
     },
     {
       "type": "header",
@@ -233,7 +228,7 @@
     {
       "type": "range",
       "id": "body_size",
-      "min": 1, "max": 1.5, "step": 0.0625,
+      "min": 1, "max": 1.5, "step": 0.1,
       "unit": "rem",
       "default": 1,
       "label": "Body text size",
@@ -250,6 +245,17 @@
         { "value": "1000","label": "Full (1000px)" }
       ],
       "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Steps — styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "alternate_steps",
+      "label": "Alternate step colors",
+      "default": false,
+      "info": "Inverts colors on every other step for a rhythmic reading cadence. Works on all color schemes."
     },
     {
       "type": "header",

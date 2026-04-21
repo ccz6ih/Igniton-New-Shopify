@@ -1,135 +1,83 @@
 {{ 'component-ig-hero.css' | asset_url | stylesheet_tag }}
 
+{% render 'ig-section-controls', section: section %}
+
+{%- comment -%}
+  Hero-specific inline style block — holds values that the
+  ig-section-controls snippet can't emit yet:
+    • min_height (hero-only control)
+    • orb positioning math (position/offset/size are bespoke)
+    • text_size (percent of body, outside body_size's 1–1.5rem range)
+    • proof_num_size (rem, rendered on the stat number)
+  Everything else (padding, container, label/heading/body scale)
+  is driven by the snippet.
+{%- endcomment -%}
 {%- liquid
-  case section.settings.orb_style
-    when 'cream'
-      assign orb_c1 = '#faf1df'
-      assign orb_c2 = '#f0e0bf'
-      assign orb_c3 = '#e0c896'
-    when 'gold'
-      assign orb_c1 = '#e8cf9b'
-      assign orb_c2 = '#d4b882'
-      assign orb_c3 = '#b49153'
-    when 'amber'
-      assign orb_c1 = '#f5d9a8'
-      assign orb_c2 = '#e3ba75'
-      assign orb_c3 = '#c99a4f'
-    else
-      assign orb_c1 = '#f2e4cc'
-      assign orb_c2 = '#e8d4b0'
-      assign orb_c3 = '#d4b882'
-  endcase
+  assign text_size_pct   = section.settings.text_size     | default: 100
+  assign text_size_scale = text_size_pct                  | divided_by: 100.0
+  assign orb_image_scale = section.settings.orb_image_scale | default: 100 | divided_by: 100.0
+  assign orb_opacity_d   = section.settings.orb_opacity   | default: 35 | divided_by: 100.0
+  assign mobile_scale    = section.settings.mobile_heading_scale | default: 65 | divided_by: 100.0
 -%}
 
 {%- liquid
-  assign text_scale = section.settings.text_size | divided_by: 100.0
+  assign heading_size_rem   = section.settings.heading_size | default: 3.5
+  assign heading_size_m_rem = heading_size_rem | times: mobile_scale
+  assign body_size_rem      = section.settings.body_size    | default: 1
+  assign label_size_pct     = section.settings.label_size   | default: 100
+  assign label_scale        = label_size_pct | divided_by: 100.0
 -%}
 
 {%- style -%}
   #IgHero-{{ section.id }} {
-    --ig-hero-min-height: {{ section.settings.min_height }}px;
-    --ig-proof-num-size: {{ section.settings.proof_num_size }}rem;
-    --ig-hero-content-max-width: {{ section.settings.content_max_width }}px;
-    --ig-hero-content-padding-x: {{ section.settings.content_padding_x }}rem;
-    min-height: {{ section.settings.min_height }}px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #IgHero-{{ section.id }} .ig-hero__content {
-    padding-left: var(--ig-hero-content-padding-x);
-    padding-right: var(--ig-hero-content-padding-x);
-  }
-
-  #IgHero-{{ section.id }} .ig-hero__inner {
-    max-width: var(--ig-hero-content-max-width);
-  }
-
-  #IgHero-{{ section.id }} .ig-hero__orb {
-    position: absolute;
-    top: 50%;
-    {% if section.settings.orb_position == 'left' %}
-      right: auto;
-      left: {{ section.settings.orb_offset_x }}vw;
-      transform: translateY(-50%);
-    {% elsif section.settings.orb_position == 'center' %}
-      right: auto;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    {% else %}
-      left: auto;
-      right: {{ section.settings.orb_offset_x }}vw;
-      transform: translateY(-50%);
-    {% endif %}
-    width: {{ section.settings.orb_size }}px;
-    height: {{ section.settings.orb_size }}px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: {{ orb_c2 }};
-    background-image: radial-gradient(circle at 40% 40%, {{ orb_c1 }} 0%, {{ orb_c2 }} 55%, {{ orb_c3 }} 100%);
-    opacity: {{ section.settings.orb_opacity | divided_by: 100.0 }};
-    pointer-events: none;
-    z-index: 1;
+    --ig-hero-text-scale: {{ text_size_scale }};
+    --ig-hero-proof-num-size: {{ section.settings.proof_num_size | default: 3 }}rem;
+    --ig-hero-min-height: {{ section.settings.min_height | default: 700 }}px;
+    --ig-hero-orb-size: {{ section.settings.orb_size | default: 750 }}px;
+    --ig-hero-orb-opacity: {{ orb_opacity_d }};
+    --ig-hero-orb-offset-x: {{ section.settings.orb_offset_x | default: -8 }}vw;
+    --ig-hero-orb-image-scale: {{ orb_image_scale }};
+    --ig-hero-mobile-scale: {{ mobile_scale }};
   }
 
   #IgHero-{{ section.id }} .ig-hero__orb-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: {{ section.settings.orb_image_position }};
-    display: block;
-    transform: scale({{ section.settings.orb_image_scale | divided_by: 100.0 }});
-    transform-origin: center center;
+    object-position: {{ section.settings.orb_image_position | default: 'center center' }};
   }
 
-  #IgHero-{{ section.id }} .ig-hero__headline {
-    font-size: {{ section.settings.heading_size }}rem;
-    max-width: none;
-    word-break: normal;
-    overflow-wrap: normal;
-    hyphens: none;
-    -webkit-hyphens: none;
+  {%- comment -%}
+    Override ig-section-controls' ID-scoped font-sizes with hero's
+    text_size_scale multiplier. Same ID specificity (0,1,1,0) + later
+    source order → these win.
+  {%- endcomment -%}
+  #shopify-section-{{ section.id }} .ig-section-title.ig-hero__headline {
+    font-size: {{ heading_size_m_rem | times: text_size_scale }}rem;
+  }
+  #shopify-section-{{ section.id }} .ig-section-body.ig-hero__sub,
+  #shopify-section-{{ section.id }} .ig-section-body.ig-hero__link {
+    font-size: {{ body_size_rem | times: text_size_scale }}rem;
+  }
+  #shopify-section-{{ section.id }} .ig-section-label.ig-hero__eyebrow,
+  #shopify-section-{{ section.id }} .ig-section-label.ig-hero__proof-label {
+    font-size: calc(0.8125rem * {{ label_scale | times: text_size_scale }});
   }
 
-  #IgHero-{{ section.id }} .ig-hero__sub {
-    font-size: calc(1rem * {{ text_scale }});
-    max-width: none;
-  }
-
-  #IgHero-{{ section.id }} .ig-hero__eyebrow {
-    font-size: calc(0.78rem * {{ text_scale }});
-  }
-
-  #IgHero-{{ section.id }} .ig-hero__proof-num {
-    font-size: {{ section.settings.proof_num_size }}rem;
-  }
-
-  #IgHero-{{ section.id }} .ig-hero__proof-label {
-    font-size: calc(0.82rem * {{ text_scale }});
-    max-width: calc(140px * {{ text_scale }});
-  }
-
-  @media screen and (max-width: 749px) {
-    #IgHero-{{ section.id }} .ig-hero__headline {
-      font-size: calc({{ section.settings.heading_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
-    }
-
-    #IgHero-{{ section.id }} .ig-hero__proof-num {
-      font-size: calc({{ section.settings.proof_num_size }}rem * {{ section.settings.mobile_heading_scale | divided_by: 100.0 }});
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .ig-section-title.ig-hero__headline {
+      font-size: {{ heading_size_rem | times: text_size_scale }}rem;
     }
   }
 {%- endstyle -%}
 
-<section 
-  id="IgHero-{{ section.id }}" 
-  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} ig-hero--content-align-{{ section.settings.desktop_content_alignment }} ig-hero--content-align-mobile-{{ section.settings.mobile_content_alignment }} color-{{ section.settings.color_scheme }}"
+<section
+  id="IgHero-{{ section.id }}"
+  class="ig-hero ig-hero--anim-{{ section.settings.text_animation }} ig-hero--content-align-{{ section.settings.desktop_content_alignment }} ig-hero--content-align-mobile-{{ section.settings.mobile_content_alignment }} ig-hero--orb-{{ section.settings.orb_position }} ig-hero--orb-style-{{ section.settings.orb_style }} color-{{ section.settings.color_scheme }}"
 >
   {%- if section.settings.background_image != blank -%}
     <div class="ig-hero__bg-image">
       {{ section.settings.background_image | image_url: width: 1920 | image_tag: loading: 'lazy', class: 'ig-hero__bg-img', alt: section.settings.background_image.alt }}
     </div>
   {%- endif -%}
-  
+
   {%- if section.settings.show_orb -%}
     <div class="ig-hero__orb ig-hero__orb--{{ section.settings.orb_style }}" aria-hidden="true">
       {%- if section.settings.orb_image != blank -%}
@@ -141,103 +89,88 @@
       {%- endif -%}
     </div>
   {%- endif -%}
-  
+
   <div class="ig-hero__content ig-hero__content--{{ section.settings.desktop_content_position }}">
     <div class="ig-hero__inner">
-    {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        
-        {%- when 'eyebrow' -%}
-          {%- if block.settings.text != blank -%}
-            <p class="ig-hero__eyebrow" {{ block.shopify_attributes }}>
-              {{ block.settings.text }}
-            </p>
-          {%- endif -%}
-        
-        {%- when 'headline' -%}
-          {%- if block.settings.heading != blank -%}
-            <h1 class="ig-hero__headline ig-font-display" {{ block.shopify_attributes }}>
-              {{ block.settings.heading | newline_to_br }}
-            </h1>
-          {%- endif -%}
-        
-        {%- when 'subheadline' -%}
-          {%- if block.settings.text != blank -%}
-            <div class="ig-hero__sub ig-font-body" {{ block.shopify_attributes }}>
-              {{ block.settings.text | newline_to_br }}
-            </div>
-          {%- endif -%}
-        
-        {%- when 'buttons' -%}
-          <div class="ig-hero__actions" {{ block.shopify_attributes }}>
-            {%- if block.settings.button_label_1 != blank -%}
-              <a
-                {% if block.settings.button_link_1 == blank %}
-                  role="link" aria-disabled="true"
-                {% else %}
-                  href="{{ block.settings.button_link_1 }}"
-                {% endif %}
-                class="button{% if block.settings.button_style_1 == 'secondary' %} button--secondary{% else %} button--primary{% endif %}"
-              >
-                {{ block.settings.button_label_1 | escape }}
-              </a>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'eyebrow' -%}
+            {%- if block.settings.text != blank -%}
+              <p class="ig-section-label ig-hero__eyebrow" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </p>
             {%- endif -%}
 
-            {%- if block.settings.button_label_2 != blank -%}
-              <a
-                {% if block.settings.button_link_2 == blank %}
-                  role="link" aria-disabled="true"
-                {% else %}
-                  href="{{ block.settings.button_link_2 }}"
-                {% endif %}
-                class="{% if block.settings.button_style_2 == 'link' %}ig-hero__link{% else %}button{% if block.settings.button_style_2 == 'primary' %} button--primary{% else %} button--secondary{% endif %}{% endif %}"
-              >
-                {{ block.settings.button_label_2 | escape }}
-              </a>
+          {%- when 'headline' -%}
+            {%- if block.settings.heading != blank -%}
+              <h1 class="ig-section-title ig-hero__headline ig-font-display" {{ block.shopify_attributes }}>
+                {{ block.settings.heading | newline_to_br }}
+              </h1>
             {%- endif -%}
-          </div>
-        
-        {%- when 'proof_stats' -%}
-          <div class="ig-hero__proof" {{ block.shopify_attributes }}>
-            {%- for subblock in block.settings -%}
-              {%- comment -%} Proof stats will be rendered from nested blocks {%- endcomment -%}
-            {%- endfor -%}
-          </div>
-        
-      {%- endcase -%}
-    {%- endfor -%}
-    
-    {%- comment -%} Render proof stats if any exist {%- endcomment -%}
-    {%- assign has_stats = false -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'stat' -%}
-        {%- assign has_stats = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-    
-    {%- if has_stats -%}
-      <div class="ig-hero__proof{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-        {%- assign stat_count = 0 -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'stat' -%}
-            {%- if stat_count > 0 -%}
-              <div class="ig-hero__proof-divider"></div>
+
+          {%- when 'subheadline' -%}
+            {%- if block.settings.text != blank -%}
+              <div class="ig-section-body ig-hero__sub ig-font-body" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
             {%- endif -%}
-            <div class="ig-hero__proof-item" {{ block.shopify_attributes }}>
-              <span class="ig-hero__proof-num ig-font-display">
-                {{ block.settings.number }}
-                {%- if block.settings.unit != blank -%}
-                  <span class="ig-hero__proof-unit">{{ block.settings.unit }}</span>
-                {%- endif -%}
-              </span>
-              <span class="ig-hero__proof-label ig-font-body">{{ block.settings.label }}</span>
+
+          {%- when 'buttons' -%}
+            <div class="ig-hero__actions" {{ block.shopify_attributes }}>
+              {%- if block.settings.button_label_1 != blank -%}
+                <a
+                  {% if block.settings.button_link_1 == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link_1 }}"{% endif %}
+                  class="button{% if block.settings.button_style_1 == 'secondary' %} button--secondary{% else %} button--primary{% endif %}"
+                >
+                  {{ block.settings.button_label_1 | escape }}
+                </a>
+              {%- endif -%}
+
+              {%- if block.settings.button_label_2 != blank -%}
+                <a
+                  {% if block.settings.button_link_2 == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link_2 }}"{% endif %}
+                  class="{% if block.settings.button_style_2 == 'link' %}ig-hero__link ig-section-body{% else %}button{% if block.settings.button_style_2 == 'primary' %} button--primary{% else %} button--secondary{% endif %}{% endif %}"
+                >
+                  {{ block.settings.button_label_2 | escape }}
+                </a>
+              {%- endif -%}
             </div>
-            {%- assign stat_count = stat_count | plus: 1 -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- comment -%} Render proof stats if any exist {%- endcomment -%}
+      {%- assign has_stats = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'stat' -%}
+          {%- assign has_stats = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_stats -%}
+        <div class="ig-hero__proof{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {%- assign stat_count = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              {%- if stat_count > 0 -%}
+                <div class="ig-hero__proof-divider"></div>
+              {%- endif -%}
+              <div class="ig-hero__proof-item" {{ block.shopify_attributes }}>
+                <span class="ig-hero__proof-num ig-font-display">
+                  {{ block.settings.number }}
+                  {%- if block.settings.unit != blank -%}
+                    <span class="ig-hero__proof-unit">{{ block.settings.unit }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="ig-section-label ig-hero__proof-label ig-font-body">{{ block.settings.label }}</span>
+              </div>
+              {%- assign stat_count = stat_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -249,20 +182,188 @@
   "class": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "Color"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
     },
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
       "type": "range",
       "id": "min_height",
-      "min": 400,
-      "max": 1000,
-      "step": 50,
-      "default": 700,
+      "min": 400, "max": 1000, "step": 50,
       "unit": "px",
+      "default": 700,
       "label": "Minimum height"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 120,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 120,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "select",
+      "id": "padding_block_start_mobile",
+      "label": "Top padding (mobile)",
+      "options": [
+        { "value": "0",   "label": "None" },
+        { "value": "24",  "label": "Tight (24px)" },
+        { "value": "48",  "label": "Compact (48px)" },
+        { "value": "64",  "label": "Normal (64px)" },
+        { "value": "96",  "label": "Loose (96px)" },
+        { "value": "128", "label": "Spacious (128px)" }
+      ],
+      "default": "64"
+    },
+    {
+      "type": "select",
+      "id": "padding_block_end_mobile",
+      "label": "Bottom padding (mobile)",
+      "options": [
+        { "value": "0",   "label": "None" },
+        { "value": "24",  "label": "Tight (24px)" },
+        { "value": "48",  "label": "Compact (48px)" },
+        { "value": "64",  "label": "Normal (64px)" },
+        { "value": "96",  "label": "Loose (96px)" },
+        { "value": "128", "label": "Spacious (128px)" }
+      ],
+      "default": "64"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 220, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px). Also controls proof stat labels."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "1.25"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 12, "step": 0.5,
+      "unit": "rem",
+      "default": 3.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "1200"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_scale",
+      "min": 40, "max": 100, "step": 5,
+      "unit": "%",
+      "default": 55,
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile (as a % of desktop size)."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1.1,
+      "label": "Body text size",
+      "info": "Subheadline and text-link base size. Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "400", "label": "Narrow (400px)" },
+        { "value": "480", "label": "Medium (480px)" },
+        { "value": "640", "label": "Wide (640px)" },
+        { "value": "800", "label": "Full (800px)" }
+      ],
+      "default": "480"
     },
     {
       "type": "header",
@@ -274,17 +375,20 @@
       "label": "Background image"
     },
     {
+      "type": "header",
+      "content": "Orb"
+    },
+    {
       "type": "checkbox",
       "id": "show_orb",
       "default": true,
       "label": "Show orb",
-      "info": "Circular element on the hero. Shows a photo if uploaded, otherwise a gradient."
+      "info": "Circular decorative element. Shows a photo if uploaded, otherwise a gradient."
     },
     {
       "type": "image_picker",
       "id": "orb_image",
-      "label": "Orb image (optional)",
-      "info": "Upload a product photo to display as a circular image. Leave blank for the gradient orb."
+      "label": "Orb image (optional)"
     },
     {
       "type": "select",
@@ -292,45 +396,30 @@
       "label": "Image focal point",
       "options": [
         { "value": "center center", "label": "Center" },
-        { "value": "center top", "label": "Top" },
+        { "value": "center top",    "label": "Top" },
         { "value": "center bottom", "label": "Bottom" },
-        { "value": "left center", "label": "Left" },
-        { "value": "right center", "label": "Right" }
+        { "value": "left center",   "label": "Left" },
+        { "value": "right center",  "label": "Right" }
       ],
       "default": "center center"
     },
     {
       "type": "range",
       "id": "orb_image_scale",
-      "min": 80,
-      "max": 180,
-      "step": 5,
-      "default": 100,
+      "min": 80, "max": 180, "step": 5,
       "unit": "%",
-      "label": "Image zoom",
-      "info": "Zoom the image inside the circle."
+      "default": 100,
+      "label": "Image zoom"
     },
     {
       "type": "select",
       "id": "orb_style",
       "label": "Orb color style",
       "options": [
-        {
-          "value": "warm",
-          "label": "Warm cream (soft)"
-        },
-        {
-          "value": "cream",
-          "label": "Pale cream (softest)"
-        },
-        {
-          "value": "gold",
-          "label": "Gold (richer)"
-        },
-        {
-          "value": "amber",
-          "label": "Amber (warmest)"
-        }
+        { "value": "warm",  "label": "Warm cream (soft)" },
+        { "value": "cream", "label": "Pale cream (softest)" },
+        { "value": "gold",  "label": "Gold (richer)" },
+        { "value": "amber", "label": "Amber (warmest)" }
       ],
       "default": "warm"
     },
@@ -339,160 +428,76 @@
       "id": "orb_position",
       "label": "Orb position",
       "options": [
-        {
-          "value": "right",
-          "label": "Right"
-        },
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        }
+        { "value": "right",  "label": "Right" },
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" }
       ],
       "default": "right"
     },
     {
       "type": "range",
       "id": "orb_offset_x",
-      "min": -20,
-      "max": 20,
-      "step": 1,
-      "default": -8,
+      "min": -20, "max": 20, "step": 1,
       "unit": "vw",
-      "label": "Orb horizontal offset",
-      "info": "Negative = push off-screen. Positive = pull onto the page."
+      "default": -8,
+      "label": "Orb horizontal offset"
     },
     {
       "type": "range",
       "id": "orb_size",
-      "min": 300,
-      "max": 1200,
-      "step": 25,
-      "default": 750,
+      "min": 300, "max": 1200, "step": 25,
       "unit": "px",
+      "default": 750,
       "label": "Orb size"
     },
     {
       "type": "range",
       "id": "orb_opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "default": 35,
+      "min": 0, "max": 100, "step": 5,
       "unit": "%",
+      "default": 35,
       "label": "Orb opacity"
     },
     {
       "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "range",
-      "id": "content_max_width",
-      "min": 600,
-      "max": 1800,
-      "step": 50,
-      "default": 1200,
-      "unit": "px",
-      "label": "Content max width",
-      "info": "Controls how wide the text/button area can grow before wrapping."
-    },
-    {
-      "type": "range",
-      "id": "content_padding_x",
-      "min": 1,
-      "max": 10,
-      "step": 0.5,
-      "default": 3,
-      "unit": "rem",
-      "label": "Horizontal padding",
-      "info": "Space between the content and the section edges."
+      "content": "Content positioning"
     },
     {
       "type": "select",
       "id": "desktop_content_position",
       "label": "Desktop content position",
       "options": [
-        {
-          "value": "top-left",
-          "label": "Top left"
-        },
-        {
-          "value": "top-center",
-          "label": "Top center"
-        },
-        {
-          "value": "top-right",
-          "label": "Top right"
-        },
-        {
-          "value": "middle-left",
-          "label": "Middle left"
-        },
-        {
-          "value": "middle-center",
-          "label": "Middle center"
-        },
-        {
-          "value": "middle-right",
-          "label": "Middle right"
-        },
-        {
-          "value": "bottom-left",
-          "label": "Bottom left"
-        },
-        {
-          "value": "bottom-center",
-          "label": "Bottom center"
-        },
-        {
-          "value": "bottom-right",
-          "label": "Bottom right"
-        }
+        { "value": "top-left",      "label": "Top left" },
+        { "value": "top-center",    "label": "Top center" },
+        { "value": "top-right",     "label": "Top right" },
+        { "value": "middle-left",   "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right",  "label": "Middle right" },
+        { "value": "bottom-left",   "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right",  "label": "Bottom right" }
       ],
       "default": "middle-left"
     },
     {
       "type": "select",
       "id": "desktop_content_alignment",
-      "label": "Desktop content alignment",
+      "label": "Desktop text alignment",
       "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
       ],
-      "default": "left",
-      "info": "Text alignment within the positioned content area"
+      "default": "left"
     },
     {
       "type": "select",
       "id": "mobile_content_alignment",
-      "label": "Mobile content alignment",
+      "label": "Mobile text alignment",
       "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
       ],
       "default": "center"
     },
@@ -501,78 +506,36 @@
       "id": "text_animation",
       "label": "Text animation",
       "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "fade-up",
-          "label": "Fade up"
-        },
-        {
-          "value": "fade-in",
-          "label": "Fade in"
-        },
-        {
-          "value": "slide-left",
-          "label": "Slide from left"
-        },
-        {
-          "value": "slide-right",
-          "label": "Slide from right"
-        },
-        {
-          "value": "scale-up",
-          "label": "Scale up"
-        }
+        { "value": "none",        "label": "None" },
+        { "value": "fade-up",     "label": "Fade up" },
+        { "value": "fade-in",     "label": "Fade in" },
+        { "value": "slide-left",  "label": "Slide from left" },
+        { "value": "slide-right", "label": "Slide from right" },
+        { "value": "scale-up",    "label": "Scale up" }
       ],
-      "default": "fade-up",
-      "info": "Pure CSS animations, no JavaScript required"
+      "default": "fade-up"
     },
     {
       "type": "header",
-      "content": "Typography"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "min": 3,
-      "max": 14,
-      "step": 0.5,
-      "default": 5,
-      "unit": "rem",
-      "label": "Heading size (desktop)"
-    },
-    {
-      "type": "range",
-      "id": "mobile_heading_scale",
-      "min": 30,
-      "max": 100,
-      "step": 5,
-      "default": 55,
-      "unit": "%",
-      "label": "Mobile heading scale",
-      "info": "Percentage of desktop heading size used on mobile. Prevents word-break when desktop size is large."
-    },
-    {
-      "type": "range",
-      "id": "text_size",
-      "min": 80,
-      "max": 220,
-      "step": 5,
-      "default": 110,
-      "unit": "%",
-      "label": "Text size (eyebrow, sub, stat labels)"
+      "content": "Proof stats"
     },
     {
       "type": "range",
       "id": "proof_num_size",
-      "min": 2,
-      "max": 8,
-      "step": 0.1,
-      "default": 3,
+      "min": 2, "max": 8, "step": 0.1,
       "unit": "rem",
-      "label": "Proof stat number size"
+      "default": 3,
+      "label": "Stat number size (desktop)",
+      "info": "Size of the large stat numbers. Scales with mobile heading scale on phones."
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80, "max": 200, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Overall text scale",
+      "info": "Multiplies the entire hero's text (headline, subheadline, stat labels). Use body_size for subheadline-only sizing in rem."
     }
   ],
   "blocks": [
@@ -597,9 +560,9 @@
         {
           "type": "textarea",
           "id": "heading",
-          "default": "Think faster.\nAge slower.\nFeel the difference.",
+          "default": "Think faster.\nAge <em>slower.</em>\nFeel the difference.",
           "label": "Heading",
-          "info": "Use line breaks for dramatic impact. Supports <em>italic</em> formatting."
+          "info": "Use line breaks for dramatic impact. Supports <em>italic</em> and <br> formatting."
         }
       ]
     },
@@ -609,11 +572,10 @@
       "limit": 1,
       "settings": [
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "text",
-          "default": "Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.",
-          "label": "Subheadline text",
-          "info": "Press Enter for line breaks. You can also use inline HTML: <br>, <em>italic</em>, <strong>bold</strong>, or <span class=\"ig-font-display\">custom</span>."
+          "default": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days. Longevity biomarkers reduced. No caffeine, no crash, no fillers.</p>",
+          "label": "Subheadline text"
         }
       ]
     },
@@ -638,7 +600,7 @@
           "id": "button_style_1",
           "label": "Button 1 style",
           "options": [
-            { "value": "primary", "label": "Primary (filled)" },
+            { "value": "primary",   "label": "Primary (filled)" },
             { "value": "secondary", "label": "Secondary (outlined)" }
           ],
           "default": "primary"
@@ -659,9 +621,9 @@
           "id": "button_style_2",
           "label": "Button 2 style",
           "options": [
-            { "value": "primary", "label": "Primary (filled)" },
+            { "value": "primary",   "label": "Primary (filled)" },
             { "value": "secondary", "label": "Secondary (outlined)" },
-            { "value": "link", "label": "Text link (underlined)" }
+            { "value": "link",      "label": "Text link (underlined)" }
           ],
           "default": "link"
         }
@@ -681,8 +643,7 @@
           "type": "text",
           "id": "unit",
           "default": "%",
-          "label": "Unit (optional)",
-          "info": "Leave blank for no unit"
+          "label": "Unit (optional)"
         },
         {
           "type": "text",
@@ -697,50 +658,14 @@
     {
       "name": "Igniton Hero",
       "blocks": [
-        {
-          "type": "eyebrow"
-        },
-        {
-          "type": "headline"
-        },
-        {
-          "type": "subheadline"
-        },
-        {
-          "type": "buttons"
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "100",
-            "unit": "%",
-            "label": "Short-term memory improvement"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "51",
-            "unit": "%",
-            "label": "Improvement in attention"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "30",
-            "unit": "",
-            "label": "Days to measurable results"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "0",
-            "unit": "",
-            "label": "Stimulants, fillers, or excipients"
-          }
-        }
+        { "type": "eyebrow" },
+        { "type": "headline" },
+        { "type": "subheadline" },
+        { "type": "buttons" },
+        { "type": "stat", "settings": { "number": "100", "unit": "%", "label": "Short-term memory improvement" } },
+        { "type": "stat", "settings": { "number": "51",  "unit": "%", "label": "Improvement in attention" } },
+        { "type": "stat", "settings": { "number": "30",  "unit": "",  "label": "Days to measurable results" } },
+        { "type": "stat", "settings": { "number": "0",   "unit": "",  "label": "Stimulants, fillers, or excipients" } }
       ]
     }
   ]

@@ -1,27 +1,20 @@
 {{ 'component-ig-trust-bar.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  #IgTrustBar-{{ section.id }} .ig-trust-bar__item {
-    font-size: {{ section.settings.font_size | times: 0.01 }}rem;
-  }
+{% render 'ig-section-controls', section: section %}
 
-  @media screen and (max-width: 749px) {
-    #IgTrustBar-{{ section.id }} .ig-trust-bar__item {
-      font-size: {{ section.settings.font_size | times: 0.009 }}rem;
-    }
-  }
-{%- endstyle -%}
+{%- assign item_gap = section.settings.item_gap | default: '3' -%}
+{%- assign item_alignment = section.settings.item_alignment | default: 'center' -%}
 
-<section 
-  id="IgTrustBar-{{ section.id }}" 
-  class="ig-trust-bar color-{{ section.settings.color_scheme }}"
+<section
+  id="IgTrustBar-{{ section.id }}"
+  class="ig-trust-bar color-{{ section.settings.color_scheme }} ig-trust-bar--gap-{{ item_gap | replace: '.', '_' }} ig-trust-bar--align-{{ item_alignment }}{% if section.settings.show_separators %} ig-trust-bar--separators{% endif %}"
 >
   <div class="ig-trust-bar__container">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'trust_item' -%}
-          <div class="ig-trust-bar__item" {{ block.shopify_attributes }}>
-            <span class="ig-trust-bar__dot"></span>
+          <div class="ig-trust-bar__item ig-section-label" {{ block.shopify_attributes }}>
+            <span class="ig-trust-bar__dot" aria-hidden="true"></span>
             <span class="ig-trust-bar__text">{{ block.settings.text }}</span>
           </div>
       {%- endcase -%}
@@ -34,7 +27,14 @@
   "name": "Igniton Trust Bar",
   "tag": "section",
   "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
@@ -42,15 +42,128 @@
       "default": "scheme-1"
     },
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
       "type": "range",
-      "id": "font_size",
-      "min": 70,
-      "max": 130,
-      "step": 5,
-      "default": 95,
-      "unit": "%",
-      "label": "Font size",
-      "info": "Adjust the size of trust bar text"
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 24,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 24,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 16,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 16,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "select",
+      "id": "label_size",
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px). Controls the trust item text.",
+      "options": [
+        { "value": "70",  "label": "X-small (70%)" },
+        { "value": "85",  "label": "Small (85%)" },
+        { "value": "100", "label": "Normal (100%)" },
+        { "value": "120", "label": "Large (120%)" },
+        { "value": "150", "label": "X-large (150%)" }
+      ],
+      "default": "100"
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "info": "Rarely used on a trust bar — kept for consistency.",
+      "options": [
+        { "value": "0",    "label": "None" },
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" }
+      ],
+      "default": "0"
+    },
+    {
+      "type": "header",
+      "content": "Trust bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separators",
+      "label": "Show separator dots",
+      "default": true,
+      "info": "Small accent dot before each trust statement."
+    },
+    {
+      "type": "select",
+      "id": "item_gap",
+      "label": "Space between items",
+      "options": [
+        { "value": "1",    "label": "Tight (1rem)" },
+        { "value": "1.5",  "label": "Compact (1.5rem)" },
+        { "value": "2",    "label": "Normal (2rem)" },
+        { "value": "3",    "label": "Loose (3rem)" },
+        { "value": "4",    "label": "Spacious (4rem)" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "item_alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "center",  "label": "Center" },
+        { "value": "between", "label": "Space between" },
+        { "value": "start",   "label": "Start" }
+      ],
+      "default": "center"
     }
   ],
   "blocks": [

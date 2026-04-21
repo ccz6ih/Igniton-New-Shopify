@@ -1,17 +1,64 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Products Showcase Component
-   Clean text-based product cards with interactive image switcher
+   ─────────────────────────────────
+   Clean text-based product cards with interactive image switcher.
+
+   Font-size + color rules for .ig-section-label, .ig-section-title
+   and .ig-section-body are emitted by snippets/ig-section-controls.liquid
+   (ID-scoped for specificity). This file handles structure, layout,
+   cards, image display, and card-specific typography.
    ═══════════════════════════════════════════════════════════ */
 
+/* ─── Section wrapper ─── */
 .ig-products-showcase {
-  padding: 5rem 0;
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .ig-products-showcase {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.ig-products-showcase__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .ig-products-showcase__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Section label (eyebrow) ─── */
+.ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Section title ─── */
+.ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
 }
 
 /* ─── Layout Container ─── */
 .ig-products-showcase__layout {
   display: grid;
   gap: 3rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .ig-products-showcase__layout--with-images {
@@ -41,26 +88,28 @@
   display: flex;
   flex-direction: column;
   padding: 2.5rem 2rem;
-  background: var(--ig-card-bg);
+  background-color: rgba(var(--color-foreground), 0.03);
+  border: 1px solid rgba(var(--color-foreground), 0.08);
   border-radius: 4px;
-  color: inherit;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: rgb(var(--color-foreground));
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .ig-products-showcase__card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(18, 18, 65, 0.08);
+  box-shadow: 0 4px 20px rgba(var(--color-foreground), 0.08);
 }
 
 .ig-products-showcase__card.is-active {
-  background: rgba(18, 18, 65, 0.06);
-  box-shadow: 0 2px 12px rgba(18, 18, 65, 0.06);
+  background-color: rgba(var(--color-foreground), 0.06);
+  box-shadow: 0 2px 12px rgba(var(--color-foreground), 0.06);
 }
 
 /* ─── Featured Card (Bundle) - Full width below layout ─── */
 .ig-products-showcase__card--featured {
   padding: 2.5rem;
   margin-top: 2rem;
+  background-color: rgba(var(--color-foreground), 0.04);
 }
 
 .ig-products-showcase__card--featured .ig-products-showcase__name {
@@ -87,17 +136,19 @@
   font-size: calc(var(--font-heading-scale) * 1.8rem);
   font-weight: 400;
   letter-spacing: -0.01em;
-  color: var(--ig-ink);
+  color: rgb(var(--color-foreground));
   margin-bottom: 1.2rem;
   line-height: 1.2;
 }
 
 /* ─── Description ─── */
 .ig-products-showcase__desc {
-  font-size: calc(var(--font-body-scale) * 1.1rem);
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
   line-height: 1.7;
   margin-bottom: 1.8rem;
+  max-width: var(--ig-body-width, 640px);
+  /* font-size set by ig-section-controls snippet via .ig-section-body */
 }
 
 .ig-products-showcase__desc p {
@@ -122,13 +173,14 @@
 .ig-products-showcase__stat-num {
   font-size: calc(var(--font-heading-scale) * 1.3rem);
   font-weight: 400;
-  color: var(--ig-ink);
+  color: rgb(var(--color-foreground));
   line-height: 1;
 }
 
 .ig-products-showcase__stat-label {
   font-size: calc(var(--font-body-scale) * 0.85rem);
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
   letter-spacing: 0.02em;
   line-height: 1.4;
   max-width: 120px;
@@ -137,19 +189,21 @@
 /* ─── Featured Card Stats (horizontal layout with border) ─── */
 .ig-products-showcase__stats--featured {
   padding-top: 1.5rem;
-  border-top: 1px solid var(--ig-border);
+  border-top: 1px solid rgba(var(--color-foreground), 0.15);
   margin-top: auto;
 }
 
 /* ─── Price ─── */
 .ig-products-showcase__price {
   font-size: calc(var(--font-body-scale) * 1rem);
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.75;
   margin-bottom: 1.5rem;
 }
 
 .ig-products-showcase__price strong {
-  color: var(--ig-ink);
+  color: rgb(var(--color-foreground));
+  opacity: 1;
   font-weight: 500;
 }
 
@@ -165,7 +219,8 @@
 
 .ig-products-showcase__image-display {
   position: relative;
-  background: var(--ig-card-bg);
+  background-color: rgba(var(--color-foreground), 0.03);
+  border: 1px solid rgba(var(--color-foreground), 0.08);
   border-radius: 4px;
   overflow: hidden;
   min-height: 500px;
@@ -202,10 +257,6 @@
 
 /* ─── Mobile ─── */
 @media screen and (max-width: 749px) {
-  .ig-products-showcase {
-    padding: 4rem 0;
-  }
-
   .ig-products-showcase__layout {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -236,26 +287,16 @@
     font-size: calc(var(--font-heading-scale) * 1.7rem);
   }
 
-  .ig-products-showcase__desc {
-    font-size: calc(var(--font-body-scale) * 1rem);
-    margin-bottom: 1.5rem;
-  }
-  
-  .ig-products-showcase__link {
-    padding: 0.8rem 1.5rem;
-    font-size: calc(var(--font-body-scale) * 0.9rem);
-  }
-
   .ig-products-showcase__stats {
     gap: 1.5rem;
   }
 
   .ig-products-showcase__stat-num {
-    font-size: 1rem;
+    font-size: calc(var(--font-heading-scale) * 1rem);
   }
 
   .ig-products-showcase__stat-label {
-    font-size: 0.7rem;
+    font-size: calc(var(--font-body-scale) * 0.7rem);
     max-width: 100px;
   }
 }
@@ -268,9 +309,9 @@
 
   .ig-products-showcase__stats {
     gap: 1.5rem;
-  }card .button {
-    padding: 1.2rem 2.6rem;
-    min-height: calc(4rem + var(--buttons-border-width) * 2
+  }
+}
+
 /* ─── Accessibility ─── */
 @media (prefers-reduced-motion: reduce) {
   .ig-products-showcase__card {
@@ -281,7 +322,7 @@
     transform: none;
   }
 
-  .ig-products-showcase__link span {
+  .ig-products-showcase__image {
     transition: none;
   }
 }

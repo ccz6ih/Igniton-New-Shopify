@@ -1,67 +1,87 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Products Grid Component
    Product showcase cards with stats
+   Consumes CSS variables from snippets/ig-section-controls.liquid
+   and Dawn color-scheme variables (rgb triplets).
    ═══════════════════════════════════════════════════════════ */
 
+/* ─── Section wrapper ─── */
 .ig-products-grid {
-  background: var(--ig-warm-white);
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
 }
 
-/* ─── Section Header ─── */
+@media screen and (max-width: 749px) {
+  .ig-products-grid {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
+}
+
+/* ─── Container ─── */
+.ig-products-grid__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .ig-products-grid__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Section Header (section-level label/title styles handled by snippet) ─── */
 .ig-section-label {
-  font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ig-ember);
   font-weight: 500;
-  margin-bottom: 1rem;
+  color: rgb(var(--color-foreground));
 }
 
 .ig-section-title {
-  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 300;
   line-height: 1.15;
-  max-width: 600px;
-  margin-bottom: 3.5rem;
-  color: var(--ig-ink);
 }
 
-/* ─── Products Grid ─── */
+/* ─── Products grid wrapper ─── */
 .ig-products-grid__wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1.5px;
-  background: var(--ig-border);
-  border: 1px solid var(--ig-border);
+  background-color: rgba(var(--color-foreground), 0.12);
+  border: 1px solid rgba(var(--color-foreground), 0.12);
 }
 
 .ig-products-grid__placeholder {
   padding: 4rem 2rem;
   text-align: center;
-  color: var(--ig-muted);
-  background: var(--ig-card-bg);
-  border: 1px dashed var(--ig-border);
+  opacity: 0.6;
+  background-color: rgba(var(--color-foreground), 0.03);
+  border: 1px dashed rgba(var(--color-foreground), 0.2);
   border-radius: 4px;
 }
 
 /* ─── Product Card ─── */
 .ig-product-card {
-  background: var(--ig-warm-white);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease, filter 0.3s ease;
   cursor: pointer;
   text-decoration: none;
-  color: inherit;
 }
 
 .ig-product-card:hover {
-  background: #fdf8f2;
+  background-color: rgba(var(--color-foreground), 0.03);
 }
 
+/* Top accent bar on hover */
 .ig-product-card::before {
   content: '';
   position: absolute;
@@ -69,7 +89,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--ig-ember);
+  background-color: rgb(var(--color-foreground));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -79,17 +99,13 @@
   transform: scaleX(1);
 }
 
-/* Full width card (for bundles) */
+/* Full-width (bundle) card spans the entire grid row */
 .ig-product-card--full {
   grid-column: 1 / -1;
 }
 
-.ig-product-card--custom-bg {
-  background: var(--custom-bg, #f5f0e8);
-}
-
+/* Per-card custom background (inline style sets `background`) — just dampen hover */
 .ig-product-card--custom-bg:hover {
-  background: var(--custom-bg, #f5f0e8);
   filter: brightness(0.98);
 }
 
@@ -114,35 +130,38 @@
   transform: scale(1.03);
 }
 
-/* ─── Card Elements ─── */
+/* ─── Card Tag ─── */
 .ig-product-card__tag {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ig-ember);
+  color: rgb(var(--color-foreground));
+  opacity: 0.75;
   font-weight: 500;
   margin-bottom: 1.2rem;
 }
 
+/* ─── Card name (sized by inline style from section template) ─── */
 .ig-product-card__name {
-  font-size: 2rem;
   font-weight: 400;
   margin-bottom: 0.7rem;
   line-height: 1.1;
-  color: var(--ig-ink);
+  color: rgb(var(--color-foreground));
 }
 
 .ig-product-card--full .ig-product-card__name {
-  font-size: 1.5rem;
+  /* slightly smaller for bundle card's horizontal layout */
+  font-size: 0.85em;
 }
 
+/* ─── Description ─── */
 .ig-product-card__desc {
-  font-size: 0.92rem;
-  color: var(--ig-muted);
   line-height: 1.65;
   margin-bottom: 2rem;
   font-weight: 300;
   flex: 1;
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
 }
 
 .ig-product-card__desc p {
@@ -155,7 +174,7 @@
   gap: 2.25rem;
   margin-bottom: 2rem;
   padding-top: 1.75rem;
-  border-top: 1px solid var(--ig-border);
+  border-top: 1px solid rgba(var(--color-foreground), 0.12);
   flex-wrap: wrap;
 }
 
@@ -168,40 +187,41 @@
 .ig-product-card__stat-num {
   font-size: 2.4rem;
   line-height: 1;
-  color: var(--ig-ember);
+  color: rgb(var(--color-foreground));
 }
 
 .ig-product-card__stat-label {
   font-size: 0.82rem;
-  color: #5a554e;
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
   max-width: 140px;
   line-height: 1.4;
 }
 
 /* ─── Price ─── */
 .ig-product-card__price {
-  font-size: 0.88rem;
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
   margin-bottom: 0.5rem;
 }
 
 .ig-product-card__price strong {
-  color: var(--ig-ink);
+  color: rgb(var(--color-foreground));
   font-weight: 500;
+  opacity: 1;
 }
 
 .ig-product-card__price-note {
-  font-size: 0.85rem;
+  font-size: 0.95em;
 }
 
-/* ─── Link ─── */
+/* ─── Link (styled as a button-ish caret link) ─── */
 .ig-product-card__link {
-  font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ig-ink);
-  display: flex;
+  color: rgb(var(--color-foreground));
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: gap 0.2s ease;
@@ -212,11 +232,7 @@
   gap: 0.8rem;
 }
 
-.ig-product-card__arrow {
-  transition: transform 0.2s ease;
-}
-
-/* ─── Full width card adjustments ─── */
+/* ─── Full-width (bundle) card layout ─── */
 .ig-product-card--full {
   flex-direction: row;
   align-items: flex-start;
@@ -246,13 +262,8 @@
   margin-right: 1.5rem;
 }
 
-/* ─── Responsive - Mobile ─── */
+/* ─── Mobile ─── */
 @media screen and (max-width: 749px) {
-  .ig-section-title {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-    margin-bottom: 2.5rem;
-  }
-
   .ig-products-grid__wrapper {
     grid-template-columns: 1fr;
     gap: 1px;
@@ -265,14 +276,6 @@
   .ig-product-card__image-wrapper {
     max-width: var(--ig-product-image-max, 220px);
     margin-bottom: 1.2rem;
-  }
-
-  .ig-product-card__name {
-    font-size: 1.6rem;
-  }
-
-  .ig-product-card--full .ig-product-card__name {
-    font-size: 1.3rem;
   }
 
   .ig-product-card__stats {
@@ -298,7 +301,7 @@
   }
 }
 
-/* ─── Responsive - Tablet ─── */
+/* ─── Tablet ─── */
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .ig-products-grid__wrapper {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -307,20 +310,15 @@
   .ig-product-card {
     padding: 2.8rem 2.2rem;
   }
-
-  .ig-product-card__name {
-    font-size: 1.8rem;
-  }
 }
 
-/* ─── Desktop - Large screens ─── */
+/* ─── Large desktop ─── */
 @media screen and (min-width: 1200px) {
   .ig-products-grid__wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .ig-product-card--full {
-    display: flex;
     flex-direction: row;
     align-items: center;
   }
@@ -328,20 +326,25 @@
 
 /* ─── Accessibility ─── */
 @media (prefers-reduced-motion: reduce) {
+  .ig-product-card,
   .ig-product-card::before,
   .ig-product-card__link,
-  .ig-product-card__arrow {
+  .ig-product-card__image {
     transition: none;
   }
 
   .ig-product-card:hover .ig-product-card__link {
     gap: 0.5rem;
   }
+
+  .ig-product-card:hover .ig-product-card__image {
+    transform: none;
+  }
 }
 
 /* ─── Focus states ─── */
 .ig-product-card:focus-visible {
-  outline: 2px solid var(--ig-ember);
+  outline: 2px solid rgb(var(--color-foreground));
   outline-offset: 2px;
 }
 

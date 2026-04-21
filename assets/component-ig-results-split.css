@@ -1,13 +1,42 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Results Split Component
-   Split layout: Stats grid on left, testimonials on right
+   ─────────────────────────────────
+   Split layout: stats grid on left, testimonials on right.
+
+   Typography/colors for .ig-section-label, .ig-section-title, and
+   .ig-section-body are emitted by snippets/ig-section-controls.liquid
+   (ID-scoped). This file handles structure, layout, borders, and
+   section-specific styling.
    ═══════════════════════════════════════════════════════════ */
 
+/* ─── Section wrapper ─── */
 .ig-results-split {
-  background: var(--ig-warm-white);
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
 }
 
-/* ─── Split Layout ─── */
+@media screen and (max-width: 749px) {
+  .ig-results-split {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.ig-results-split__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .ig-results-split__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Split layout ─── */
 .ig-results-split__layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -15,49 +44,87 @@
   align-items: start;
 }
 
-/* ─── Left Side (Stats) ─── */
+/* ─── Section label + title overrides ─── */
+.ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+.ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Left side (stats) ─── */
 .ig-results-split__left {
   display: flex;
   flex-direction: column;
 }
 
-/* ─── Stats Grid ─── */
+/* ─── Stats grid ─── */
 .ig-results-split__stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  background: var(--ig-border);
-  margin-bottom: 1rem;
+  background-color: rgba(var(--color-foreground), 0.15);
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  margin-bottom: 1.5rem;
 }
 
 .ig-results-split__stat {
-  background: var(--ig-warm-white);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
   padding: 2.5rem 2rem;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.ig-results-split__stat:hover {
-  background: #fdfaf5;
+@media (hover: hover) {
+  .ig-results-split__stat:hover {
+    background-color: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+  }
+
+  .ig-results-split__stat:hover .ig-results-split__stat-num {
+    color: rgb(var(--color-button));
+  }
+
+  .ig-results-split__stat:hover .ig-results-split__stat-label,
+  .ig-results-split__stat:hover .ig-results-split__stat-source {
+    color: rgb(var(--color-background));
+  }
 }
 
+/* Stat number — size controlled by stat_number_size select */
 .ig-results-split__stat-num {
-  font-size: 3.5rem;
   font-weight: 300;
-  color: var(--ig-ember);
+  color: rgb(var(--color-button));
   line-height: 1;
   margin-bottom: 0.5rem;
 }
 
+.ig-results-split__stats-grid--size-sm .ig-results-split__stat-num { font-size: 2.25rem; }
+.ig-results-split__stats-grid--size-md .ig-results-split__stat-num { font-size: 2.75rem; }
+.ig-results-split__stats-grid--size-lg .ig-results-split__stat-num { font-size: 3.5rem; }
+.ig-results-split__stats-grid--size-xl .ig-results-split__stat-num { font-size: 4.25rem; }
+
 .ig-results-split__stat-label {
-  font-size: 0.85rem;
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.75;
   line-height: 1.5;
   margin-bottom: 0.5rem;
+  /* font-size inherited from .ig-section-body (body_size slider) */
 }
 
 .ig-results-split__stat-source {
   font-size: 0.72rem;
-  color: var(--ig-border);
+  color: rgb(var(--color-foreground));
+  opacity: 0.5;
   margin-top: 0.5rem;
   letter-spacing: 0.04em;
 }
@@ -65,7 +132,8 @@
 /* ─── Disclaimer ─── */
 .ig-results-split__disclaimer {
   font-size: 0.78rem;
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
   line-height: 1.6;
 }
 
@@ -74,7 +142,7 @@
 }
 
 .ig-results-split__disclaimer a {
-  color: var(--ig-ember);
+  color: rgb(var(--color-button));
   text-decoration: none;
 }
 
@@ -82,7 +150,7 @@
   text-decoration: underline;
 }
 
-/* ─── Right Side (Testimonials) ─── */
+/* ─── Right side (testimonials) ─── */
 .ig-results-split__right {
   display: flex;
   flex-direction: column;
@@ -103,52 +171,92 @@
 
 .ig-results-split__testimonial {
   padding: 1.5rem;
-  border: 1px solid var(--ig-border);
-  background: var(--ig-card-bg);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.ig-results-split__testimonial:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(18, 18, 65, 0.08);
+@media (hover: hover) {
+  .ig-results-split__testimonial:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--color-foreground), 0.08);
+    border-color: rgba(var(--color-foreground), 0.3);
+  }
 }
 
 .ig-results-split__stars {
-  color: var(--ig-gold);
+  color: rgb(var(--color-button));
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Optional testimonial portrait */
+.ig-results-split__portrait {
+  width: 4rem;
+  height: 4rem;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  background-color: rgba(var(--color-foreground), 0.05);
+}
+
+.ig-results-split__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Shape variants for portraits (wrapper sets shape via section settings) */
+.ig-results-split[class*="image-ratio-circle"] .ig-results-split__portrait,
+.ig-results-split__portrait--circle {
+  border-radius: 50%;
+}
+
+/* Default: circle (matches default section setting) */
+.ig-results-split__portrait {
+  border-radius: 50%;
 }
 
 .ig-results-split__quote {
-  font-size: 1.1rem;
   font-style: italic;
   font-weight: 300;
   line-height: 1.6;
-  color: var(--ig-ink);
+  color: rgb(var(--color-foreground));
   margin-bottom: 0.8rem;
+  /* font-size inherited from .ig-section-body (body_size slider) */
 }
 
 .ig-results-split__meta {
-  font-size: 0.78rem;
-  color: var(--ig-muted);
+  font-size: 0.8rem;
+  color: rgb(var(--color-foreground));
+  opacity: 0.65;
   margin: 0;
 }
 
-/* ─── Reviews Link ─── */
+/* ─── Reviews link ─── */
 .ig-results-split__reviews-link {
-  font-size: 0.82rem;
-  color: var(--ig-ember);
+  color: rgb(var(--color-button));
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: opacity 0.2s ease;
   display: inline-block;
+  font-weight: 500;
+  /* font-size inherited from .ig-section-body (body_size slider) */
 }
 
 .ig-results-split__reviews-link:hover {
-  color: var(--ig-ember-light);
+  opacity: 0.75;
+  text-decoration: underline;
 }
 
-/* ─── Responsive - Mobile ─── */
+.ig-results-split__reviews-link:focus-visible {
+  outline: 2px solid rgb(var(--color-button));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── Mobile (≤ 749px) ─── */
 @media screen and (max-width: 749px) {
   .ig-results-split__layout {
     grid-template-columns: 1fr;
@@ -163,53 +271,36 @@
     padding: 2rem 1.5rem;
   }
 
-  .ig-results-split__stat-num {
-    font-size: 2.8rem;
-  }
-
-  .ig-results-split__stat-label {
-    font-size: 0.82rem;
-  }
-
-  .ig-results-split__quote {
-    font-size: 1rem;
-  }
+  /* Slightly shrink stat number sizes on mobile */
+  .ig-results-split__stats-grid--size-sm .ig-results-split__stat-num { font-size: 2rem; }
+  .ig-results-split__stats-grid--size-md .ig-results-split__stat-num { font-size: 2.4rem; }
+  .ig-results-split__stats-grid--size-lg .ig-results-split__stat-num { font-size: 2.8rem; }
+  .ig-results-split__stats-grid--size-xl .ig-results-split__stat-num { font-size: 3.25rem; }
 
   .ig-results-split__testimonial {
     padding: 1.2rem;
   }
 }
 
-/* ─── Responsive - Tablet ─── */
+/* ─── Tablet (750–989px) ─── */
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .ig-results-split__layout {
     gap: 3rem;
   }
 
-  .ig-results-split__stat-num {
-    font-size: 3rem;
-  }
-
-  .ig-results-split__quote {
-    font-size: 1.05rem;
-  }
+  .ig-results-split__stats-grid--size-lg .ig-results-split__stat-num { font-size: 3rem; }
+  .ig-results-split__stats-grid--size-xl .ig-results-split__stat-num { font-size: 3.75rem; }
 }
 
-/* ─── Accessibility ─── */
+/* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .ig-results-split__stat,
-  .ig-results-split__testimonial {
+  .ig-results-split__testimonial,
+  .ig-results-split__reviews-link {
     transition: none;
   }
 
   .ig-results-split__testimonial:hover {
     transform: none;
   }
-}
-
-/* ─── Focus states ─── */
-.ig-results-split__reviews-link:focus-visible {
-  outline: 2px solid var(--ig-ember);
-  outline-offset: 2px;
-  border-radius: 2px;
 }

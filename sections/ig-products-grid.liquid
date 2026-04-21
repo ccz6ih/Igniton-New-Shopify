@@ -1,90 +1,42 @@
 {{ 'component-ig-products-grid.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
-{% render 'ig-section-header-style',
-  section_id_selector: 'IgProductsGrid-' | append: section.id,
-  label_size: section.settings.label_size,
-  label_spacing: section.settings.label_spacing,
-  heading_size: section.settings.heading_size,
-  heading_max_width: section.settings.heading_max_width,
-  heading_spacing: section.settings.heading_spacing,
-  mobile_heading_scale: section.settings.mobile_heading_scale
-%}
+{% render 'ig-section-controls', section: section %}
 
+{%- comment -%}
+  Section-specific inline overrides the snippet can't emit:
+    • product_heading_size  — per-card product name (rem)
+    • text_size             — per-card description scale (% of body_size)
+  Scoped to this section instance via #IgProductsGrid-{id}.
+{%- endcomment -%}
 {%- liquid
-  assign text_scale = section.settings.text_size | divided_by: 100.0
-  assign tag_scale = section.settings.tag_size | divided_by: 100.0
-  assign stat_label_scale = section.settings.stat_label_size | divided_by: 100.0
-  assign mobile_scale = section.settings.mobile_heading_scale | divided_by: 100.0
+  assign product_heading_size = section.settings.product_heading_size | default: 2
+  assign text_size_pct        = section.settings.text_size | default: 100
+  assign text_size_scale      = text_size_pct | divided_by: 100.0
+  assign mobile_scale         = section.settings.mobile_heading_scale | default: 65 | divided_by: 100.0
+  assign product_heading_m    = product_heading_size | times: mobile_scale
 -%}
-
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
   #IgProductsGrid-{{ section.id }} .ig-product-card__name {
-    font-size: {{ section.settings.product_heading_size }}rem;
+    font-size: {{ product_heading_m }}rem;
   }
-
-  #IgProductsGrid-{{ section.id }} .ig-product-card__tag {
-    font-size: calc(0.78rem * {{ tag_scale }});
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-product-card__desc {
-    font-size: calc(1rem * {{ text_scale }});
-    line-height: 1.75;
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-product-card__stat-num {
-    font-size: {{ section.settings.stat_num_size }}rem;
-    letter-spacing: -0.01em;
-    {% if section.settings.stat_color == 'gold' %}
-      color: var(--ig-ember);
-    {% elsif section.settings.stat_color == 'ink' %}
-      color: var(--ig-ink);
-    {% endif %}
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-product-card__stat-label {
-    font-size: calc(0.78rem * {{ stat_label_scale }});
-    letter-spacing: 0.02em;
-    line-height: 1.4;
-    color: #5a554e;
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-product-card__price {
-    font-size: calc(0.95rem * {{ text_scale }});
-  }
-
-  #IgProductsGrid-{{ section.id }} .ig-product-card__link {
-    font-size: calc(0.85rem * {{ text_scale }});
-    letter-spacing: 0.12em;
-  }
-
-  @media screen and (max-width: 749px) {
+  @media screen and (min-width: 750px) {
     #IgProductsGrid-{{ section.id }} .ig-product-card__name {
-      font-size: calc({{ section.settings.product_heading_size }}rem * {{ mobile_scale }});
+      font-size: {{ product_heading_size }}rem;
     }
-    #IgProductsGrid-{{ section.id }} .ig-product-card__stat-num {
-      font-size: calc({{ section.settings.stat_num_size }}rem * {{ mobile_scale }});
-    }
+  }
+
+  {%- comment -%} text_size scales the per-card description only {%- endcomment -%}
+  #shopify-section-{{ section.id }} .ig-product-card__desc.ig-section-body {
+    font-size: calc(var(--ig-body-size, 1rem) * {{ text_size_scale }});
   }
 {%- endstyle -%}
 
-<section 
-  id="IgProductsGrid-{{ section.id }}" 
-  class="ig-products-grid section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+<section
+  id="IgProductsGrid-{{ section.id }}"
+  class="ig-products-grid color-{{ section.settings.color_scheme }}"
 >
-  <div class="page-width">
+  <div class="ig-products-grid__container">
     {%- if section.settings.section_label != blank -%}
       <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
         {{ section.settings.section_label }}
@@ -100,114 +52,142 @@
     {%- if section.blocks.size > 0 -%}
       <div class="ig-products-grid__wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
         {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'product_card' -%}
-              {%- liquid
-                assign product = block.settings.product
-                assign is_full_width = block.settings.full_width
-                assign custom_bg = block.settings.custom_background
-              -%}
+          {%- if block.type == 'product_card' -%}
+            {%- liquid
+              assign product = block.settings.product
+              assign product_name = block.settings.custom_name
+              if product_name == blank and product != blank
+                assign product_name = product.title
+              endif
 
-              <a 
-                href="{% if product != blank %}{{ product.url }}{% else %}{{ block.settings.custom_link }}{% endif %}" 
-                class="ig-product-card{% if is_full_width %} ig-product-card--full{% endif %}{% if custom_bg != blank %} ig-product-card--custom-bg{% endif %}"
-                {% if custom_bg != blank %}style="background-color: {{ custom_bg }};"{% endif %}
+              assign product_url = block.settings.custom_link
+              if product_url == blank and product != blank
+                assign product_url = product.url
+              endif
+
+              assign product_image = null
+              if product != blank
+                assign product_image = product.featured_image
+              endif
+
+              assign card_classes = 'ig-product-card'
+              if block.settings.full_width
+                assign card_classes = card_classes | append: ' ig-product-card--full'
+              endif
+              if block.settings.custom_background != blank
+                assign card_classes = card_classes | append: ' ig-product-card--custom-bg'
+              endif
+
+              assign card_style = ''
+              if block.settings.custom_background != blank
+                assign card_style = 'background: ' | append: block.settings.custom_background | append: ';'
+              endif
+
+              assign image_max = block.settings.image_size | default: 220
+            -%}
+
+            {%- if product_url != blank -%}
+              <a
+                href="{{ product_url }}"
+                class="{{ card_classes }}"
+                {% if card_style != '' %}style="{{ card_style }} --ig-product-image-max: {{ image_max }}px;"{% else %}style="--ig-product-image-max: {{ image_max }}px;"{% endif %}
                 {{ block.shopify_attributes }}
               >
-                {%- if block.settings.show_image and product != blank and product.featured_image != blank -%}
-                  <div class="ig-product-card__image-wrapper" style="--ig-product-image-max: {{ block.settings.image_size }}px;">
-                    <img
-                      src="{{ product.featured_image | image_url: width: 1200 }}"
-                      srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
-                              {{ product.featured_image | image_url: width: 800 }} 800w,
-                              {{ product.featured_image | image_url: width: 1200 }} 1200w"
-                      sizes="(min-width: 990px) {{ block.settings.image_size }}px, (min-width: 750px) 50vw, 100vw"
-                      alt="{{ product.featured_image.alt | default: product.title }}"
-                      class="ig-product-card__image"
-                      loading="lazy"
-                      width="{{ block.settings.image_size }}"
-                      height="{{ block.settings.image_size }}"
-                    >
+            {%- else -%}
+              <div
+                class="{{ card_classes }}"
+                {% if card_style != '' %}style="{{ card_style }} --ig-product-image-max: {{ image_max }}px;"{% else %}style="--ig-product-image-max: {{ image_max }}px;"{% endif %}
+                {{ block.shopify_attributes }}
+              >
+            {%- endif -%}
+
+              {%- if block.settings.show_image and product_image != blank -%}
+                <div class="ig-product-card__image-wrapper">
+                  {{ product_image | image_url: width: 800 | image_tag:
+                    loading: 'lazy',
+                    class: 'ig-product-card__image',
+                    alt: product.title
+                  }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.tag != blank -%}
+                <p class="ig-product-card__tag">{{ block.settings.tag }}</p>
+              {%- endif -%}
+
+              {%- if product_name != blank -%}
+                <h3 class="ig-product-card__name ig-font-display">{{ product_name }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.custom_description != blank -%}
+                <div class="ig-product-card__desc ig-section-body ig-font-body">
+                  {{ block.settings.custom_description }}
+                </div>
+              {%- elsif product != blank and product.description != blank -%}
+                <div class="ig-product-card__desc ig-section-body ig-font-body">
+                  {{ product.description | strip_html | truncatewords: 30 }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.show_stats -%}
+                {%- liquid
+                  assign has_any_stat = false
+                  for i in (1..3)
+                    assign num_key = 'stat_' | append: i | append: '_num'
+                    if block.settings[num_key] != blank
+                      assign has_any_stat = true
+                      break
+                    endif
+                  endfor
+                -%}
+                {%- if has_any_stat -%}
+                  <div class="ig-product-card__stats">
+                    {%- for i in (1..3) -%}
+                      {%- assign num_key = 'stat_' | append: i | append: '_num' -%}
+                      {%- assign label_key = 'stat_' | append: i | append: '_label' -%}
+                      {%- assign stat_num = block.settings[num_key] -%}
+                      {%- assign stat_label = block.settings[label_key] -%}
+                      {%- if stat_num != blank -%}
+                        <div class="ig-product-card__stat">
+                          <span class="ig-product-card__stat-num ig-font-display">{{ stat_num }}</span>
+                          <span class="ig-product-card__stat-label">{{ stat_label }}</span>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
                   </div>
                 {%- endif -%}
+              {%- endif -%}
 
-                {%- if block.settings.tag != blank -%}
-                  <p class="ig-product-card__tag">{{ block.settings.tag }}</p>
-                {%- endif -%}
-
-                <h3 class="ig-product-card__name ig-font-display">
-                  {% if product != blank and block.settings.custom_name == blank %}
-                    {{ product.title }}
-                  {% else %}
-                    {{ block.settings.custom_name }}
-                  {% endif %}
-                </h3>
-
-                <div class="ig-product-card__desc ig-font-body">
-                  {% if block.settings.custom_description != blank %}
-                    {{ block.settings.custom_description }}
-                  {% elsif product != blank %}
-                    {{ product.description | strip_html | truncate: 180 }}
-                  {% else %}
-                    <p>Add a product or custom description to complete this card.</p>
-                  {% endif %}
-                </div>
-
-                {%- if block.settings.show_stats -%}
-                  {%- liquid
-                    assign has_any = false
-                    if block.settings.stat_1_num != blank
-                      assign has_any = true
-                    endif
-                    if block.settings.stat_2_num != blank
-                      assign has_any = true
-                    endif
-                    if block.settings.stat_3_num != blank
-                      assign has_any = true
-                    endif
-                  -%}
-                  {%- if has_any -%}
-                    <div class="ig-product-card__stats">
-                      {%- if block.settings.stat_1_num != blank -%}
-                        <div class="ig-product-card__stat">
-                          <span class="ig-product-card__stat-num ig-font-display">{{ block.settings.stat_1_num }}</span>
-                          <span class="ig-product-card__stat-label ig-font-body">{{ block.settings.stat_1_label }}</span>
-                        </div>
-                      {%- endif -%}
-                      {%- if block.settings.stat_2_num != blank -%}
-                        <div class="ig-product-card__stat">
-                          <span class="ig-product-card__stat-num ig-font-display">{{ block.settings.stat_2_num }}</span>
-                          <span class="ig-product-card__stat-label ig-font-body">{{ block.settings.stat_2_label }}</span>
-                        </div>
-                      {%- endif -%}
-                      {%- if block.settings.stat_3_num != blank -%}
-                        <div class="ig-product-card__stat">
-                          <span class="ig-product-card__stat-num ig-font-display">{{ block.settings.stat_3_num }}</span>
-                          <span class="ig-product-card__stat-label ig-font-body">{{ block.settings.stat_3_label }}</span>
-                        </div>
-                      {%- endif -%}
-                    </div>
-                  {%- endif -%}
-                {%- endif -%}
-
-                {%- if block.settings.show_price and product != blank -%}
-                  <div class="ig-product-card__price ig-font-body">
+              {%- if block.settings.show_price -%}
+                {%- if block.settings.custom_price != blank -%}
+                  <p class="ig-product-card__price ig-section-body">
+                    <strong>{{ block.settings.custom_price }}</strong>
+                    {%- if block.settings.price_note != blank -%}
+                      <span class="ig-product-card__price-note"> · {{ block.settings.price_note }}</span>
+                    {%- endif -%}
+                  </p>
+                {%- elsif product != blank -%}
+                  <p class="ig-product-card__price ig-section-body">
                     From <strong>{{ product.price | money }}</strong>
                     {%- if block.settings.price_note != blank -%}
                       <span class="ig-product-card__price-note"> · {{ block.settings.price_note }}</span>
                     {%- endif -%}
-                  </div>
-                {%- elsif block.settings.custom_price != blank -%}
-                  <div class="ig-product-card__price ig-font-body">
-                    {{ block.settings.custom_price }}
-                  </div>
+                  </p>
                 {%- endif -%}
+              {%- endif -%}
 
-                <span class="ig-product-card__link ig-font-body">
-                  {{ block.settings.link_text | default: 'Shop Now' }} <span class="ig-product-card__arrow">→</span>
+              {%- if block.settings.link_text != blank -%}
+                <span class="ig-product-card__link ig-section-body">
+                  {{ block.settings.link_text }}
                 </span>
+              {%- endif -%}
+
+            {%- if product_url != blank -%}
               </a>
-          {%- endcase -%}
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
         {%- endfor -%}
       </div>
     {%- else -%}
@@ -228,80 +208,90 @@
   },
   "settings": [
     {
+      "type": "header",
+      "content": "Color"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
     },
     {
-      "type": "text",
-      "id": "section_label",
-      "default": "Two products. One breakthrough.",
-      "label": "Section label"
+      "type": "header",
+      "content": "Layout"
     },
     {
-      "type": "inline_richtext",
-      "id": "section_title",
-      "default": "Every ingredient enhanced for maximum effect.",
-      "label": "Section title"
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
     },
     {
       "type": "header",
-      "content": "Typography — sliders"
+      "content": "Spacing — desktop"
     },
     {
       "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "select",
       "id": "label_size",
-      "min": 60,
-      "max": 180,
-      "step": 5,
-      "default": 100,
-      "unit": "%",
-      "label": "Section label size"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "min": 2,
-      "max": 8,
-      "step": 0.25,
-      "default": 3.5,
-      "unit": "rem",
-      "label": "Section heading size"
-    },
-    {
-      "type": "range",
-      "id": "product_heading_size",
-      "min": 1.5,
-      "max": 4,
-      "step": 0.1,
-      "default": 2.4,
-      "unit": "rem",
-      "label": "Product name size"
-    },
-    {
-      "type": "range",
-      "id": "text_size",
-      "min": 80,
-      "max": 180,
-      "step": 5,
-      "default": 115,
-      "unit": "%",
-      "label": "Body text size"
-    },
-    {
-      "type": "range",
-      "id": "stat_num_size",
-      "min": 1.2,
-      "max": 4,
-      "step": 0.1,
-      "default": 2.4,
-      "unit": "rem",
-      "label": "Stat number size"
-    },
-    {
-      "type": "header",
-      "content": "Typography — options"
+      "label": "Label size",
+      "options": [
+        { "value": "60",  "label": "XS (60%)" },
+        { "value": "80",  "label": "S (80%)" },
+        { "value": "100", "label": "Default (100%)" },
+        { "value": "120", "label": "L (120%)" },
+        { "value": "150", "label": "XL (150%)" },
+        { "value": "180", "label": "XXL (180%)" }
+      ],
+      "default": "100",
+      "info": "Percent of base label size (0.8125rem / 13px)."
     },
     {
       "type": "select",
@@ -315,6 +305,18 @@
         { "value": "2",    "label": "Spacious" }
       ],
       "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 8, "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
     },
     {
       "type": "select",
@@ -339,104 +341,100 @@
         { "value": "3.5",  "label": "Loose" },
         { "value": "5",    "label": "Spacious" }
       ],
-      "default": "2.5"
-    },
-    {
-      "type": "select",
-      "id": "tag_size",
-      "label": "Tag / eyebrow size",
-      "options": [
-        { "value": "70",  "label": "Extra small" },
-        { "value": "85",  "label": "Small" },
-        { "value": "100", "label": "Normal" },
-        { "value": "120", "label": "Large" },
-        { "value": "140", "label": "Extra large" }
-      ],
-      "default": "100"
-    },
-    {
-      "type": "select",
-      "id": "stat_label_size",
-      "label": "Stat label size",
-      "options": [
-        { "value": "70",  "label": "Extra small" },
-        { "value": "85",  "label": "Small" },
-        { "value": "100", "label": "Normal" },
-        { "value": "120", "label": "Large" },
-        { "value": "140", "label": "Extra large" }
-      ],
-      "default": "100"
-    },
-    {
-      "type": "select",
-      "id": "stat_color",
-      "label": "Stat number color",
-      "options": [
-        { "value": "ink", "label": "Ink (navy)" },
-        { "value": "gold", "label": "Ember gold" }
-      ],
-      "default": "gold"
+      "default": "3.5"
     },
     {
       "type": "select",
       "id": "mobile_heading_scale",
       "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
       "options": [
         { "value": "40",  "label": "Aggressive (40%)" },
         { "value": "55",  "label": "Balanced (55%)" },
-        { "value": "70",  "label": "Gentle (70%)" },
-        { "value": "85",  "label": "Subtle (85%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
         { "value": "100", "label": "Same as desktop" }
       ],
-      "default": "55"
+      "default": "65"
     },
     {
       "type": "header",
-      "content": "Section padding"
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Card description / price / link base size. Minimum 1rem / 16px."
     },
     {
       "type": "select",
-      "id": "padding_top",
-      "label": "Padding top",
+      "id": "body_max_width",
+      "label": "Body container width",
       "options": [
-        { "value": "0",   "label": "None" },
-        { "value": "50",  "label": "Compact" },
-        { "value": "75",  "label": "Normal" },
-        { "value": "100", "label": "Large" },
-        { "value": "125", "label": "Extra large" },
-        { "value": "150", "label": "XXL" }
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
       ],
-      "default": "100"
+      "default": "800"
     },
     {
-      "type": "select",
-      "id": "padding_bottom",
-      "label": "Padding bottom",
-      "options": [
-        { "value": "0",   "label": "None" },
-        { "value": "50",  "label": "Compact" },
-        { "value": "75",  "label": "Normal" },
-        { "value": "100", "label": "Large" },
-        { "value": "125", "label": "Extra large" },
-        { "value": "150", "label": "XXL" }
-      ],
-      "default": "100"
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Two products. One breakthrough.",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Every ingredient enhanced for maximum effect.",
+      "label": "Section title"
+    },
+    {
+      "type": "header",
+      "content": "Per-card typography"
+    },
+    {
+      "type": "range",
+      "id": "product_heading_size",
+      "min": 1.2, "max": 4, "step": 0.1,
+      "unit": "rem",
+      "default": 2,
+      "label": "Product name size (desktop)",
+      "info": "Size of each card's product name. Scales with mobile heading scale on phones."
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 80, "max": 200, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Card description scale",
+      "info": "Multiplies the per-card description size (percent of Body text size)."
     }
   ],
   "blocks": [
     {
       "type": "product_card",
       "name": "Product Card",
-      "limit": 6,
       "settings": [
         {
           "type": "product",
           "id": "product",
-          "label": "Product"
+          "label": "Product",
+          "info": "When set, the card uses the live product's title, image, price, and URL unless overridden below."
         },
         {
           "type": "header",
-          "content": "Product image"
+          "content": "Image"
         },
         {
           "type": "checkbox",
@@ -447,12 +445,10 @@
         {
           "type": "range",
           "id": "image_size",
-          "min": 80,
-          "max": 600,
-          "step": 10,
-          "default": 220,
+          "min": 120, "max": 600, "step": 20,
           "unit": "px",
-          "label": "Image size"
+          "default": 220,
+          "label": "Image max width"
         },
         {
           "type": "header",
@@ -462,7 +458,7 @@
           "type": "text",
           "id": "tag",
           "default": "Cognition",
-          "label": "Tag text"
+          "label": "Product tag"
         },
         {
           "type": "text",
@@ -489,37 +485,42 @@
         {
           "type": "text",
           "id": "stat_1_num",
-          "label": "Stat 1 — number",
-          "info": "Leave blank to skip"
+          "default": "100%",
+          "label": "Stat 1 - Number"
         },
         {
           "type": "text",
           "id": "stat_1_label",
-          "label": "Stat 1 — label"
+          "default": "Memory improvement",
+          "label": "Stat 1 - Label"
         },
         {
           "type": "text",
           "id": "stat_2_num",
-          "label": "Stat 2 — number"
+          "default": "83%",
+          "label": "Stat 2 - Number"
         },
         {
           "type": "text",
           "id": "stat_2_label",
-          "label": "Stat 2 — label"
+          "default": "Performance quality",
+          "label": "Stat 2 - Label"
         },
         {
           "type": "text",
           "id": "stat_3_num",
-          "label": "Stat 3 — number"
+          "default": "30 days",
+          "label": "Stat 3 - Number"
         },
         {
           "type": "text",
           "id": "stat_3_label",
-          "label": "Stat 3 — label"
+          "default": "To measurable results",
+          "label": "Stat 3 - Label"
         },
         {
           "type": "header",
-          "content": "Price settings"
+          "content": "Price and link"
         },
         {
           "type": "checkbox",
@@ -536,18 +537,14 @@
         {
           "type": "text",
           "id": "custom_price",
-          "label": "Custom price text",
-          "info": "Overrides product price if set"
-        },
-        {
-          "type": "header",
-          "content": "Link settings"
+          "label": "Custom price",
+          "info": "Leave blank to use live product price"
         },
         {
           "type": "url",
           "id": "custom_link",
           "label": "Custom link",
-          "info": "Used if no product is selected"
+          "info": "Leave blank to use product URL"
         },
         {
           "type": "text",
@@ -557,20 +554,20 @@
         },
         {
           "type": "header",
-          "content": "Card styling"
+          "content": "Layout"
         },
         {
           "type": "checkbox",
           "id": "full_width",
           "default": false,
-          "label": "Full width card",
-          "info": "Spans entire grid width (for bundle cards)"
+          "label": "Full-width card (bundle)",
+          "info": "Makes card span the full grid row. Useful for bundle cards."
         },
         {
           "type": "color",
           "id": "custom_background",
           "label": "Custom background color",
-          "info": "Leave blank for default"
+          "info": "Optional per-card tint. Leave blank to use scheme background."
         }
       ]
     }
@@ -590,7 +587,8 @@
             "stat_2_num": "83%",
             "stat_2_label": "Performance quality",
             "stat_3_num": "30 days",
-            "stat_3_label": "To measurable results"
+            "stat_3_label": "To measurable results",
+            "link_text": "Shop Now →"
           }
         },
         {
@@ -604,7 +602,8 @@
             "stat_2_num": "NAD⁺",
             "stat_2_label": "Cellular energy support",
             "stat_3_num": "60 days",
-            "stat_3_label": "To longevity results"
+            "stat_3_label": "To longevity results",
+            "link_text": "Shop Now →"
           }
         },
         {
@@ -614,8 +613,8 @@
             "custom_name": "The Complete Stack — Cognition + Longevity",
             "custom_description": "Both formulas together for comprehensive brain and body support.",
             "show_stats": false,
-            "full_width": true,
-            "custom_background": "#f5f0e8"
+            "link_text": "Shop Now →",
+            "full_width": true
           }
         }
       ]

@@ -1,37 +1,12 @@
 {{ 'component-ig-why-different.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+{% render 'ig-section-controls', section: section %}
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
-  #IgWhyDifferent-{{ section.id }} {
-    background: {{ section.settings.background_color }};
-    color: {{ section.settings.text_color }};
-  }
-  
-  #IgWhyDifferent-{{ section.id }} .ig-section-title {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
-  }
-  
-  #IgWhyDifferent-{{ section.id }} .ig-why-different__desc {
-    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
-  }
-{%- endstyle -%}
-
-<section 
-  id="IgWhyDifferent-{{ section.id }}" 
-  class="ig-why-different section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+<section
+  id="IgWhyDifferent-{{ section.id }}"
+  class="ig-why-different color-{{ section.settings.color_scheme }}"
 >
-  <div class="page-width">
+  <div class="ig-why-different__container">
     {%- if section.settings.section_label != blank -%}
       <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
         {{ section.settings.section_label }}
@@ -51,7 +26,7 @@
             {%- when 'feature_card' -%}
               <div class="ig-why-different__card" {{ block.shopify_attributes }}>
                 {%- if block.settings.icon_svg != blank or block.settings.icon_emoji != blank -%}
-                  <div class="ig-why-different__icon" {% if block.settings.icon_bg_color != blank %}style="background: {{ block.settings.icon_bg_color }};"{% endif %}>
+                  <div class="ig-why-different__icon">
                     {%- if block.settings.icon_emoji != blank -%}
                       <span class="ig-why-different__icon-emoji">{{ block.settings.icon_emoji }}</span>
                     {%- elsif block.settings.icon_svg != blank -%}
@@ -59,12 +34,12 @@
                     {%- endif -%}
                   </div>
                 {%- endif -%}
-                
-                <div class="ig-why-different__title ig-font-body">
+
+                <div class="ig-why-different__title ig-section-body ig-font-body">
                   {{ block.settings.title }}
                 </div>
-                
-                <div class="ig-why-different__desc ig-font-body">
+
+                <div class="ig-why-different__desc ig-section-body ig-font-body">
                   {{ block.settings.description }}
                 </div>
               </div>
@@ -89,22 +64,35 @@
   },
   "settings": [
     {
+      "type": "header",
+      "content": "Color"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background color",
-      "default": "#121241"
+      "type": "header",
+      "content": "Layout"
     },
     {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "#fdfaf5"
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Content"
     },
     {
       "type": "text",
@@ -120,51 +108,150 @@
     },
     {
       "type": "header",
-      "content": "Typography"
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "select",
+      "id": "label_size",
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px).",
+      "options": [
+        { "value": "70",  "label": "XS (70%)" },
+        { "value": "85",  "label": "Small (85%)" },
+        { "value": "100", "label": "Default (100%)" },
+        { "value": "120", "label": "Large (120%)" },
+        { "value": "150", "label": "XL (150%)" }
+      ],
+      "default": "100"
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
     },
     {
       "type": "range",
       "id": "heading_size",
-      "min": 2,
-      "max": 5,
-      "step": 0.5,
-      "default": 3,
+      "min": 2, "max": 8, "step": 0.5,
       "unit": "rem",
-      "label": "Section heading size"
+      "default": 3,
+      "label": "Heading size (desktop)"
     },
     {
-      "type": "range",
-      "id": "text_size",
-      "min": 80,
-      "max": 140,
-      "step": 5,
-      "default": 110,
-      "unit": "%",
-      "label": "Text size"
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
     },
     {
       "type": "header",
-      "content": "Section padding"
+      "content": "Body"
     },
     {
       "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 150,
-      "step": 5,
-      "default": 100,
-      "unit": "px",
-      "label": "Padding top"
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
     },
     {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 150,
-      "step": 5,
-      "default": 100,
-      "unit": "px",
-      "label": "Padding bottom"
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
     }
   ],
   "blocks": [
@@ -184,12 +271,6 @@
           "id": "icon_svg",
           "label": "Icon SVG code",
           "info": "Paste SVG code here. Leave blank if using emoji."
-        },
-        {
-          "type": "color",
-          "id": "icon_bg_color",
-          "label": "Icon background color",
-          "default": "#b49153"
         },
         {
           "type": "text",

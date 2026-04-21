@@ -3,33 +3,29 @@
    ─────────────────────────────────
    Numbered process steps in a border-ruled grid.
 
-   Consumes variables from snippets/ig-section-controls.liquid:
-     --ig-container-width, --ig-pad-start/-end/-m,
-     --ig-label-scale, --ig-label-spacing,
-     --ig-heading-size, --ig-heading-width, --ig-heading-spacing,
-     --ig-mobile-scale, --ig-body-size, --ig-body-width
-
-   Color vars come from Dawn's color scheme (scoped to .color-scheme-N):
-     --color-foreground, --color-background, --color-accent (if set)
+   Font-size + color rules for typography elements are emitted by
+   snippets/ig-section-controls.liquid (ID-scoped for specificity).
+   This file handles structure, layout, borders, and the
+   alternating-step treatment.
    ═══════════════════════════════════════════════════════════ */
 
 /* ─── Section wrapper ─── */
 .ig-how-it-works {
-  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
   background-color: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
 }
 
 @media screen and (max-width: 749px) {
   .ig-how-it-works {
-    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
   }
 }
 
 /* ─── Container ─── */
 .ig-how-it-works__container {
   width: 100%;
-  max-width: var(--ig-container-width);
+  max-width: var(--ig-container-width, 1200px);
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
@@ -42,27 +38,20 @@
 
 /* ─── Section label (eyebrow) ─── */
 .ig-section-label {
-  font-size: calc(0.8125rem * var(--ig-label-scale));
-  margin: 0 0 var(--ig-label-spacing);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   font-weight: 500;
-  color: rgb(var(--color-foreground));
   opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
 }
 
 /* ─── Section title ─── */
 .ig-section-title {
-  font-size: clamp(
-    calc(var(--ig-heading-size) * var(--ig-mobile-scale)),
-    4vw + 1rem,
-    var(--ig-heading-size)
-  );
-  max-width: var(--ig-heading-width);
-  margin: 0 0 var(--ig-heading-spacing);
   line-height: 1.15;
-  color: rgb(var(--color-foreground));
   font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
 }
 
 /* ─── Steps grid ─── */
@@ -70,51 +59,115 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0;
-  border: 1px solid rgba(var(--color-foreground), 0.12);
+  border: 1px solid rgba(var(--color-foreground), 0.15);
 }
 
 .ig-how-it-works__step {
   padding: 2.5rem 2rem;
-  border-right: 1px solid rgba(var(--color-foreground), 0.12);
+  border-right: 1px solid rgba(var(--color-foreground), 0.15);
   position: relative;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
 }
 
 .ig-how-it-works__step:last-child {
   border-right: none;
 }
 
-.ig-how-it-works__step:hover {
-  background-color: rgba(var(--color-foreground), 0.02);
-}
-
 /* ─── Step number ─── */
 .ig-how-it-works__step-num {
   font-size: 3.5rem;
   font-weight: 300;
-  color: rgba(var(--color-foreground), 0.15);
+  color: rgba(var(--color-foreground), 0.2);
   line-height: 1;
-  margin-bottom: 1.2rem;
-  font-style: italic; /* Playfair italic — brand signature for numerals */
+  margin-bottom: 1.25rem;
+  font-style: italic;
 }
 
 /* ─── Step title ─── */
 .ig-how-it-works__step-title {
-  font-size: 1rem; /* 1rem floor — brand standard for structural labels */
-  font-weight: 500;
-  margin-bottom: 0.6rem;
-  color: rgb(var(--color-foreground));
+  font-weight: 600;
+  margin-bottom: 0.75rem;
   line-height: 1.35;
+  letter-spacing: 0.01em;
+  /* font-size set by ig-section-controls snippet (tied to body_size slider) */
 }
 
 /* ─── Step description ─── */
 .ig-how-it-works__step-desc {
-  font-size: var(--ig-body-size);
-  max-width: var(--ig-body-width);
-  color: rgb(var(--color-foreground));
-  opacity: 0.75;
-  line-height: 1.6;
-  font-weight: 300;
+  max-width: var(--ig-body-width, 640px);
+  opacity: 0.9;
+  line-height: 1.65;
+  font-weight: 400;
+  /* font-size set by ig-section-controls snippet */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ALTERNATING-COLOR STEP PATTERN
+   Toggled via .ig-how-it-works__steps--alternating modifier.
+   Even-numbered steps invert: foreground becomes background, 
+   background becomes foreground. Creates a rhythmic reading cadence.
+   Works on every color scheme because it uses scheme tokens.
+   ═══════════════════════════════════════════════════════════ */
+
+.ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even) {
+  background-color: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even) .ig-how-it-works__step-num {
+  color: rgba(var(--color-background), 0.3);
+}
+
+.ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even) .ig-how-it-works__step-title {
+  color: rgb(var(--color-background));
+}
+
+.ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even) .ig-how-it-works__step-desc {
+  color: rgb(var(--color-background));
+  opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOVER: FULL COLOR INVERSION
+   On hover, every step flips its colors — same visual logic as
+   the alternating pattern. Creates a "focus pulse" on interaction.
+   Gated on hover: hover so touch devices don't get sticky states.
+   ═══════════════════════════════════════════════════════════ */
+
+@media (hover: hover) {
+  /* Default (non-alternating) + odd cards in alternating mode: flip TO inverted on hover */
+  .ig-how-it-works__step:hover {
+    background-color: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    border-color: rgba(var(--color-background), 0.15);
+  }
+
+  .ig-how-it-works__step:hover .ig-how-it-works__step-num {
+    color: rgba(var(--color-background), 0.3);
+  }
+
+  .ig-how-it-works__step:hover .ig-how-it-works__step-title,
+  .ig-how-it-works__step:hover .ig-how-it-works__step-desc {
+    color: rgb(var(--color-background));
+  }
+
+  /* Alternating even cards: flip BACK to scheme-normal on hover (they start inverted) */
+  .ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even):hover {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    border-color: rgba(var(--color-foreground), 0.15);
+  }
+
+  .ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even):hover .ig-how-it-works__step-num {
+    color: rgba(var(--color-foreground), 0.2);
+  }
+
+  .ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even):hover .ig-how-it-works__step-title,
+  .ig-how-it-works__steps--alternating .ig-how-it-works__step:nth-child(even):hover .ig-how-it-works__step-desc {
+    color: rgb(var(--color-foreground));
+  }
 }
 
 /* ─── Footer link ─── */
@@ -123,22 +176,28 @@
 }
 
 .ig-how-it-works__link {
-  font-size: 1rem; /* 1rem floor */
-  color: var(--ig-ember);
-  text-decoration: none;
-  transition: color 0.2s ease;
-  display: inline-block;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-decoration-color: var(--ig-ember);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+  font-weight: 500;
   letter-spacing: 0.02em;
+  display: inline-block;
+  transition: text-decoration-thickness 0.2s ease, color 0.2s ease;
+  /* font-size set by ig-section-controls snippet (scales with body_size) */
 }
 
 .ig-how-it-works__link:hover {
-  color: var(--ig-ember-light);
+  color: var(--ig-ember);
+  text-decoration-thickness: 3px;
 }
 
 .ig-how-it-works__link:focus-visible {
   outline: 2px solid var(--ig-ember);
   outline-offset: 4px;
   border-radius: 2px;
+  text-decoration: none;
 }
 
 /* ─── Placeholder (when no blocks) ─── */
@@ -157,18 +216,13 @@
   .ig-how-it-works__steps {
     grid-template-columns: 1fr;
     gap: 1px;
-    background-color: rgba(var(--color-foreground), 0.12);
-    border: 1px solid rgba(var(--color-foreground), 0.12);
+    background-color: rgba(var(--color-foreground), 0.15);
+    border: 1px solid rgba(var(--color-foreground), 0.15);
   }
 
   .ig-how-it-works__step {
     padding: 2rem 1.5rem;
     border-right: none;
-    background-color: rgb(var(--color-background));
-  }
-
-  .ig-how-it-works__step:hover {
-    background-color: rgba(var(--color-foreground), 0.02);
   }
 
   .ig-how-it-works__step-num {
@@ -182,16 +236,11 @@
   .ig-how-it-works__steps {
     grid-template-columns: repeat(2, 1fr);
     gap: 1px;
-    background-color: rgba(var(--color-foreground), 0.12);
+    background-color: rgba(var(--color-foreground), 0.15);
   }
 
   .ig-how-it-works__step {
-    background-color: rgb(var(--color-background));
     border-right: none;
-  }
-
-  .ig-how-it-works__step:hover {
-    background-color: rgba(var(--color-foreground), 0.02);
   }
 }
 

@@ -1,23 +1,52 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Guarantee Strip Component
-   Full-width guarantee/trust banner
+   ─────────────────────────────────
+   Full-width guarantee/trust banner.
+
+   Background maps to the active color scheme's BUTTON color so the
+   gold-stripe UX is preserved across every scheme the merchant picks
+   (scheme-1 = white bg + gold button → gold stripe; scheme-2 = navy
+   bg + gold button → gold stripe; etc.). Foreground uses the scheme's
+   button-text token so contrast always resolves against the button
+   color.
+
+   Typography font-size comes from ig-section-controls via
+   `.ig-section-body` (Body size slider). This file handles
+   structure, layout, and scheme-token color mapping only.
+   No raw hex. No font-family.
    ═══════════════════════════════════════════════════════════ */
 
+/* ─── Section wrapper ─── */
 .ig-guarantee-strip {
-  background: var(--ig-ember);
-  color: var(--ig-warm-white);
-  padding: 1.5rem 1.5rem;
+  padding-block: var(--ig-pad-start, 24px) var(--ig-pad-end, 24px);
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
 }
 
+@media screen and (max-width: 749px) {
+  .ig-guarantee-strip {
+    padding-block: var(--ig-pad-start-m, 20px) var(--ig-pad-end-m, 20px);
+  }
+}
+
+/* ─── Container ─── */
 .ig-guarantee-strip__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 100%);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   text-align: center;
-  max-width: var(--page-width);
-  margin: 0 auto;
   flex-wrap: wrap;
+}
+
+@media screen and (min-width: 750px) {
+  .ig-guarantee-strip__container {
+    padding-inline: 2rem;
+  }
 }
 
 /* ─── Icon ─── */
@@ -25,14 +54,17 @@
   font-size: 1.5rem;
   line-height: 1;
   flex-shrink: 0;
+  color: rgb(var(--color-button-text));
 }
 
 /* ─── Text ─── */
 .ig-guarantee-strip__text {
-  font-size: 0.88rem;
+  /* font-size comes from .ig-section-body via ig-section-controls */
   font-weight: 400;
   letter-spacing: 0.03em;
   line-height: 1.5;
+  max-width: var(--ig-body-width, 1000px);
+  color: rgb(var(--color-button-text));
 }
 
 .ig-guarantee-strip__text p {
@@ -44,12 +76,8 @@
   font-weight: 500;
 }
 
-/* ─── Responsive - Mobile ─── */
+/* ─── Responsive tweaks ─── */
 @media screen and (max-width: 749px) {
-  .ig-guarantee-strip {
-    padding: 1.2rem 1.5rem;
-  }
-
   .ig-guarantee-strip__container {
     gap: 0.8rem;
   }
@@ -57,28 +85,6 @@
   .ig-guarantee-strip__icon {
     font-size: 1.3rem;
   }
-
-  .ig-guarantee-strip__text {
-    font-size: 0.82rem;
-  }
-}
-
-/* ─── Responsive - Tablet ─── */
-@media screen and (min-width: 750px) and (max-width: 989px) {
-  .ig-guarantee-strip {
-    padding: 1.4rem 2rem;
-  }
-}
-
-/* ─── Color scheme variations ─── */
-.ig-guarantee-strip.color-accent {
-  background: var(--ig-ember);
-  color: var(--ig-warm-white);
-}
-
-.ig-guarantee-strip.color-inverse {
-  background: var(--ig-ink);
-  color: var(--ig-warm-white);
 }
 
 /* ─── Accessibility ─── */

@@ -1,30 +1,22 @@
 {{ 'component-ig-products-showcase.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  #IgProductsShowcase-{{ section.id }} .ig-products-showcase__title {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
-  }
-  
-  #IgProductsShowcase-{{ section.id }} .ig-products-showcase__card {
-    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
-  }
-{%- endstyle -%}
+{% render 'ig-section-controls', section: section %}
 
-<section 
-  id="IgProductsShowcase-{{ section.id }}" 
+<section
+  id="IgProductsShowcase-{{ section.id }}"
   class="ig-products-showcase color-{{ section.settings.color_scheme }}"
 >
-  <div class="page-width">
+  <div class="ig-products-showcase__container">
     {%- if section.settings.eyebrow != blank -%}
       <p class="ig-section-label">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
-    
+
     {%- if section.settings.heading != blank -%}
       <h2 class="ig-products-showcase__title ig-section-title ig-font-display">
         {{ section.settings.heading }}
       </h2>
     {%- endif -%}
-    
+
     {%- liquid
       assign has_product_images = false
       for block in section.blocks
@@ -53,99 +45,99 @@
                 assign product_url = product.url
               endif
             -%}
-            
-            <div 
+
+            <div
               class="ig-products-showcase__card{% if forloop.first %} is-active{% endif %}"
               {{ block.shopify_attributes }}
               data-product-id="{{ block.id }}"
               data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 1200 }}{% endif %}"
             >
-                {%- if block.settings.tag != blank -%}
-                  <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
-                {%- endif -%}
-                
-                <h3 class="ig-products-showcase__name ig-font-display">
-                  {%- if block.settings.custom_name != blank -%}
-                    {{ block.settings.custom_name }}
-                  {%- elsif product != blank -%}
-                    {{ product.title }}
-                  {%- else -%}
-                    Product name
-                  {%- endif -%}
-                </h3>
-                
-                {%- if block.settings.custom_description != blank or product.description != blank -%}
-                  <div class="ig-products-showcase__desc ig-font-body">
-                    {%- if block.settings.custom_description != blank -%}
-                      {{ block.settings.custom_description }}
-                    {%- elsif product != blank -%}
-                      {{ product.description | strip_html | truncatewords: 30 }}
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
-              
-                {%- if block.settings.show_stats -%}
-                  <div class="ig-products-showcase__stats">
-                    {%- for i in (1..3) -%}
-                      {%- assign stat_num_key = 'stat_' | append: i | append: '_num' -%}
-                      {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
-                      {%- assign stat_num = block.settings[stat_num_key] -%}
-                      {%- assign stat_label = block.settings[stat_label_key] -%}
-                      
-                      {%- if stat_num != blank -%}
-                        <div class="ig-products-showcase__stat">
-                          <span class="ig-products-showcase__stat-num">{{ stat_num }}</span>
-                          <span class="ig-products-showcase__stat-label">{{ stat_label }}</span>
-                        </div>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </div>
-                {%- endif -%}
-                
-                {%- if block.settings.show_price and product != blank -%}
-                  <p class="ig-products-showcase__price">
-                    From <strong>{{ product.price | money }}</strong>
-                    {%- if block.settings.price_note != blank -%}
-                      · {{ block.settings.price_note }}
-                    {%- endif -%}
-                  </p>
-                {%- endif -%}
-                
-                {%- if block.settings.link_text != blank -%}
-                  <a 
-                    href="{{ product_url }}"
-                    class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
-                  >
-                    {{ block.settings.link_text }}
-                  </a>
-                {%- endif -%}
-              </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-      
-      {%- if has_product_images -%}
-      <div class="ig-products-showcase__image-display">
-        {%- assign first_non_featured = true -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'product_card' and block.settings.featured != true -%}
-            {%- liquid
-              assign product = block.settings.product
-              assign product_image = product.featured_image
-            -%}
+              {%- if block.settings.tag != blank -%}
+                <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
+              {%- endif -%}
 
-            {%- if product_image != blank -%}
-              <div
-                class="ig-products-showcase__image{% if first_non_featured %} is-active{% endif %}"
-                data-product-id="{{ block.id }}"
-              >
-                {{ product_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'ig-products-showcase__img', alt: product.title }}
-              </div>
-              {%- assign first_non_featured = false -%}
-            {%- endif -%}
+              <h3 class="ig-products-showcase__name ig-font-display">
+                {%- if block.settings.custom_name != blank -%}
+                  {{ block.settings.custom_name }}
+                {%- elsif product != blank -%}
+                  {{ product.title }}
+                {%- else -%}
+                  Product name
+                {%- endif -%}
+              </h3>
+
+              {%- if block.settings.custom_description != blank or product.description != blank -%}
+                <div class="ig-products-showcase__desc ig-section-body ig-font-body">
+                  {%- if block.settings.custom_description != blank -%}
+                    {{ block.settings.custom_description }}
+                  {%- elsif product != blank -%}
+                    {{ product.description | strip_html | truncatewords: 30 }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.show_stats -%}
+                <div class="ig-products-showcase__stats">
+                  {%- for i in (1..3) -%}
+                    {%- assign stat_num_key = 'stat_' | append: i | append: '_num' -%}
+                    {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
+                    {%- assign stat_num = block.settings[stat_num_key] -%}
+                    {%- assign stat_label = block.settings[stat_label_key] -%}
+
+                    {%- if stat_num != blank -%}
+                      <div class="ig-products-showcase__stat">
+                        <span class="ig-products-showcase__stat-num">{{ stat_num }}</span>
+                        <span class="ig-products-showcase__stat-label">{{ stat_label }}</span>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.show_price and product != blank -%}
+                <p class="ig-products-showcase__price">
+                  From <strong>{{ product.price | money }}</strong>
+                  {%- if block.settings.price_note != blank -%}
+                    · {{ block.settings.price_note }}
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
+
+              {%- if block.settings.link_text != blank -%}
+                <a
+                  href="{{ product_url }}"
+                  class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
+                >
+                  {{ block.settings.link_text }}
+                </a>
+              {%- endif -%}
+            </div>
           {%- endif -%}
         {%- endfor -%}
       </div>
+
+      {%- if has_product_images -%}
+        <div class="ig-products-showcase__image-display">
+          {%- assign first_non_featured = true -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'product_card' and block.settings.featured != true -%}
+              {%- liquid
+                assign product = block.settings.product
+                assign product_image = product.featured_image
+              -%}
+
+              {%- if product_image != blank -%}
+                <div
+                  class="ig-products-showcase__image{% if first_non_featured %} is-active{% endif %}"
+                  data-product-id="{{ block.id }}"
+                >
+                  {{ product_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'ig-products-showcase__img', alt: product.title }}
+                </div>
+                {%- assign first_non_featured = false -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
 
@@ -159,16 +151,15 @@
             assign product_url = product.url
           endif
         -%}
-        
-        <div 
+
+        <div
           class="ig-products-showcase__card ig-products-showcase__card--featured"
           {{ block.shopify_attributes }}
-          style="background: {{ block.settings.featured_bg }};"
         >
           {%- if block.settings.tag != blank -%}
             <p class="ig-products-showcase__tag">{{ block.settings.tag }}</p>
           {%- endif -%}
-          
+
           <h3 class="ig-products-showcase__name ig-font-display">
             {%- if block.settings.custom_name != blank -%}
               {{ block.settings.custom_name }}
@@ -178,9 +169,9 @@
               Product name
             {%- endif -%}
           </h3>
-          
+
           {%- if block.settings.custom_description != blank or product.description != blank -%}
-            <div class="ig-products-showcase__desc ig-font-body">
+            <div class="ig-products-showcase__desc ig-section-body ig-font-body">
               {%- if block.settings.custom_description != blank -%}
                 {{ block.settings.custom_description }}
               {%- elsif product != blank -%}
@@ -188,7 +179,7 @@
               {%- endif -%}
             </div>
           {%- endif -%}
-          
+
           {%- if block.settings.show_stats -%}
             <div class="ig-products-showcase__stats ig-products-showcase__stats--featured">
               {%- for i in (1..3) -%}
@@ -196,7 +187,7 @@
                 {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
                 {%- assign stat_num = block.settings[stat_num_key] -%}
                 {%- assign stat_label = block.settings[stat_label_key] -%}
-                
+
                 {%- if stat_num != blank -%}
                   <div class="ig-products-showcase__stat">
                     <span class="ig-products-showcase__stat-num">{{ stat_num }}</span>
@@ -206,7 +197,7 @@
               {%- endfor -%}
             </div>
           {%- endif -%}
-          
+
           {%- if block.settings.show_price and product != blank -%}
             <p class="ig-products-showcase__price">
               From <strong>{{ product.price | money }}</strong>
@@ -215,9 +206,9 @@
               {%- endif -%}
             </p>
           {%- endif -%}
-          
+
           {%- if block.settings.link_text != blank -%}
-            <a 
+            <a
               href="{{ product_url }}"
               class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
             >
@@ -234,18 +225,18 @@
 (function() {
   const showcaseSection = document.querySelector('#IgProductsShowcase-{{ section.id }}');
   if (!showcaseSection) return;
-  
+
   const cards = showcaseSection.querySelectorAll('.ig-products-showcase__card:not(.ig-products-showcase__card--featured)');
   const images = showcaseSection.querySelectorAll('.ig-products-showcase__image');
-  
+
   cards.forEach(card => {
     card.addEventListener('mouseenter', () => {
       const productId = card.dataset.productId;
-      
+
       // Remove active class from all cards and images
       cards.forEach(c => c.classList.remove('is-active'));
       images.forEach(img => img.classList.remove('is-active'));
-      
+
       // Add active class to current card and matching image
       card.classList.add('is-active');
       const matchingImage = showcaseSection.querySelector(`.ig-products-showcase__image[data-product-id="${productId}"]`);
@@ -262,12 +253,40 @@
   "name": "Products Showcase",
   "tag": "section",
   "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Content"
     },
     {
       "type": "text",
@@ -283,27 +302,151 @@
     },
     {
       "type": "header",
-      "content": "Typography"
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "select",
+      "id": "label_size",
+      "label": "Label size",
+      "options": [
+        { "value": "60",  "label": "XS (60%)" },
+        { "value": "80",  "label": "S (80%)" },
+        { "value": "100", "label": "Default (100%)" },
+        { "value": "120", "label": "L (120%)" },
+        { "value": "150", "label": "XL (150%)" },
+        { "value": "180", "label": "XXL (180%)" }
+      ],
+      "default": "100",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
     },
     {
       "type": "range",
       "id": "heading_size",
-      "min": 2,
-      "max": 5,
-      "step": 0.5,
-      "default": 3,
+      "min": 2, "max": 8, "step": 0.5,
       "unit": "rem",
-      "label": "Heading size"
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
     },
     {
       "type": "range",
-      "id": "text_size",
-      "min": 80,
-      "max": 140,
-      "step": 5,
-      "default": 100,
-      "unit": "%",
-      "label": "Text size"
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
     }
   ],
   "blocks": [
@@ -315,7 +458,7 @@
           "type": "product",
           "id": "product",
           "label": "Product",
-          "info": "Product image will be shown on right when hovered"
+          "info": "Product image will be shown on right when hovered. Title/description/price use the live product unless overridden below."
         },
         {
           "type": "checkbox",
@@ -323,12 +466,6 @@
           "default": false,
           "label": "Featured card (bundle)",
           "info": "Makes card full-width and places it below the grid"
-        },
-        {
-          "type": "color",
-          "id": "featured_bg",
-          "label": "Featured card background",
-          "default": "#fdfaf5"
         },
         {
           "type": "header",

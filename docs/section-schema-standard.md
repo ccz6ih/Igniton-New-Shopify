@@ -175,7 +175,7 @@ Section labels are smallcaps/tracked and sit above the heading. Think "UNIVERSIT
 {
   "type": "range",
   "id": "heading_size",
-  "min": 2, "max": 8, "step": 0.25,
+  "min": 2, "max": 8, "step": 0.5,
   "unit": "rem",
   "default": 3.5,
   "label": "Heading size (desktop)"
@@ -233,7 +233,7 @@ The `min: 1` on `body_size` enforces the 1rem floor — merchants cannot configu
 {
   "type": "range",
   "id": "body_size",
-  "min": 1, "max": 1.5, "step": 0.0625,
+  "min": 1, "max": 1.5, "step": 0.1,
   "unit": "rem",
   "default": 1,
   "label": "Body text size",
@@ -413,16 +413,32 @@ This is the checklist for migrating a section currently using inline styles, har
 | Section | Retrofit status | Notes |
 |---|---|---|
 | `ig-how-it-works.liquid` | ✅ retrofitted 2026-04-17 | Reference implementation |
-| `ig-hero.liquid` | ⏳ pending | |
-| `ig-trust-bar.liquid` | ⏳ pending | |
-| `ig-products-grid.liquid` | ⏳ pending | Was on old `ig-section-header-style` pattern |
-| `ig-products-showcase.liquid` | ⏳ pending | |
-| `ig-guarantee-strip.liquid` | ⏳ pending | |
-| `ig-results-split.liquid` | ⏳ pending | |
-| `ig-why-different.liquid` | ⏳ pending | |
-| `ig-final-cta.liquid` | ⏳ pending | |
+| `ig-products-showcase.liquid` | ✅ retrofitted 2026-04-19 | Dropped `featured_bg` block color; product picker confirmed |
+| `ig-results-split.liquid` | ✅ retrofitted 2026-04-19 | Added optional `linked_product` + `portrait` per block; stat size kept as select |
+| `ig-why-different.liquid` | ✅ retrofitted 2026-04-19 | Dropped per-block `icon_bg_color`; inverts via scheme |
+| `ig-final-cta.liquid` | ✅ retrofitted 2026-04-19 | Added `muted` button tier (no Dawn equivalent) |
+| `ig-guarantee-strip.liquid` | ✅ retrofitted 2026-04-19 | Gold stripe preserved via `rgb(var(--color-button))` |
+| `ig-trust-bar.liquid` | ✅ retrofitted 2026-04-19 | Items use `.ig-section-label` class; separator dots opt-in |
+| `ig-hero.liquid` | ✅ retrofitted 2026-04-19 | All custom orb/animation/position controls preserved as section-specific; `heading_size` max widened to 12; orb gradients via `color-mix()` from `--ig-ember`; 13 ranges total |
+| `ig-products-grid.liquid` | ✅ retrofitted 2026-04-19 | All 20 block setting IDs preserved; `custom_background` per-block tint kept as inline style |
 
 When every `ig-*` section is retrofitted, delete `snippets/ig-section-header-style.liquid` and `docs/section-header-typography-standard.md`.
+
+---
+
+## 7a. `ig-section-controls` snippet — known gaps (audit 2026-04-19)
+
+Surfaced during the Phase A retrofit of 4 low-risk sections. Fixes deferred to a later phase (per user direction — "next phase to review and fix").
+
+| Gap | Workaround in retrofit |
+|---|---|
+| Snippet emits no `--ig-image-*` variables. Spec §3.7 lists image controls but §4 contract omits them. | Sections needing image sizing handle `image_ratio` / `image_max_width` directly in section CSS. |
+| Heading mobile scaling uses a plain `@media (min-width: 750px)` swap rather than §5's suggested `clamp()`. Functional, just inconsistent with the doc. | None needed; accept current behavior. |
+| Per-block color controls (e.g. `icon_bg_color`, `featured_bg`) conflict with scheme-first architecture. | Removed from retrofitted sections. Icons invert via scheme; cards tint via `rgba(var(--color-foreground), 0.04)`. |
+| `ig-how-it-works` reference has 8 ranges; project memory suggests a 5-range-per-section silent drop, but the reference is live and working. | Treated memory as uncertain. Retrofitted sections have 5–8 ranges matching the reference. Verify real limit in Phase F. |
+| No Dawn-native 3rd button tier (for "muted" style). | `ig-final-cta` ships a custom `__btn--muted` class styled only from scheme tokens. |
+
+Fix plan (Phase F): add image-group vars to snippet, swap @media for `clamp()` where justified, verify the 5-range limit empirically, decide whether to upstream the 3rd button tier into Dawn's button snippet.
 
 ---
 

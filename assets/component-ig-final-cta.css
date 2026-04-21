@@ -1,15 +1,30 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Final CTA Component
-   Centered call-to-action with optional radial gradient
+   ───────────────────────────
+   Centered call-to-action with optional radial gradient.
+
+   Font-size + color rules for typography elements are emitted by
+   snippets/ig-section-controls.liquid (ID-scoped for specificity).
+   This file handles structure, layout, background, and button
+   treatments.
    ═══════════════════════════════════════════════════════════ */
 
+/* ─── Section wrapper ─── */
 .ig-final-cta {
-  background: var(--ig-warm-white);
+  padding-block: var(--ig-pad-start, 120px) var(--ig-pad-end, 120px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
   position: relative;
   overflow: hidden;
 }
 
-/* ─── Gradient Variant ─── */
+@media screen and (max-width: 749px) {
+  .ig-final-cta {
+    padding-block: var(--ig-pad-start-m, 64px) var(--ig-pad-end-m, 64px);
+  }
+}
+
+/* ─── Gradient variant ─── */
 .ig-final-cta--gradient::before {
   content: '';
   position: absolute;
@@ -19,37 +34,65 @@
   height: 800px;
   background: radial-gradient(
     circle,
-    rgba(180, 145, 83, 0.08) 0%,
-    rgba(180, 145, 83, 0.02) 40%,
+    rgba(var(--color-foreground), 0.06) 0%,
+    rgba(var(--color-foreground), 0.02) 40%,
     transparent 70%
   );
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-/* ─── Content Container ─── */
-.ig-final-cta__content {
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto;
+/* ─── Container ─── */
+.ig-final-cta__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
   position: relative;
   z-index: 1;
 }
 
-.ig-final-cta .ig-section-label {
-  margin-bottom: 0.8rem;
+@media screen and (min-width: 750px) {
+  .ig-final-cta__container {
+    padding-inline: 5rem;
+  }
 }
 
-.ig-final-cta .ig-section-title {
-  margin-bottom: 1.2rem;
+/* ─── Content block ─── */
+.ig-final-cta__content {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ─── Section label (eyebrow) ─── */
+.ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Section title ─── */
+.ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-inline: auto;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
 }
 
 /* ─── Subtitle ─── */
 .ig-final-cta__subtitle {
-  font-size: 1.08rem;
-  color: var(--ig-muted);
-  line-height: 1.6;
+  max-width: var(--ig-body-width, 640px);
+  margin-inline: auto;
   margin-bottom: 2rem;
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+  line-height: 1.6;
+  /* font-size set by ig-section-controls snippet (ig-section-body class) */
 }
 
 .ig-final-cta__subtitle p {
@@ -66,62 +109,45 @@
   flex-wrap: wrap;
 }
 
-/* Button styles (reusable across components) */
-.ig-btn {
+.ig-final-cta__buttons .button {
+  min-width: 12rem;
+}
+
+/* Muted variant — sits between Dawn's primary & secondary.
+   Uses Dawn scheme tokens only (no raw hex). */
+.ig-final-cta__btn--muted {
+  background-color: rgba(var(--color-foreground), 0.06);
+  color: rgb(var(--color-foreground));
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  padding: 0.8rem 2rem;
+  border-radius: 2px;
+  text-decoration: none;
+  font-weight: 500;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 2rem;
-  font-size: 0.88rem;
-  font-weight: 500;
-  text-decoration: none;
-  border-radius: 2px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
   white-space: nowrap;
-  cursor: pointer;
-  border: none;
 }
 
-.ig-btn--primary {
-  background: var(--ig-ink);
-  color: white;
+.ig-final-cta__btn--muted:hover {
+  background-color: rgba(var(--color-foreground), 0.1);
+  border-color: rgba(var(--color-foreground), 0.35);
 }
 
-.ig-btn--primary:hover {
-  background: #1a1a52;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(18, 18, 65, 0.2);
+.ig-final-cta__btn--muted:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 3px;
 }
 
-.ig-btn--secondary {
-  background: transparent;
-  color: var(--ig-ink);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  padding: 0.8rem 0.5rem;
-}
-
-.ig-btn--secondary:hover {
-  color: var(--ig-ember);
-  text-decoration-color: var(--ig-ember);
-}
-
-.ig-btn--muted {
-  background: var(--ig-card-bg);
-  color: var(--ig-ink);
-  border: 1px solid var(--ig-border);
-}
-
-.ig-btn--muted:hover {
-  background: rgba(18, 18, 65, 0.06);
-  border-color: rgba(18, 18, 65, 0.2);
-}
-
-/* ─── Footer Text ─── */
+/* ─── Footer text ─── */
 .ig-final-cta__footer {
   font-size: 0.82rem;
-  color: var(--ig-muted);
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
   line-height: 1.5;
+  max-width: var(--ig-body-width, 640px);
+  margin-inline: auto;
 }
 
 .ig-final-cta__footer p {
@@ -129,25 +155,27 @@
 }
 
 .ig-final-cta__footer a {
-  color: var(--ig-ember);
-  text-decoration: none;
-  transition: color 0.2s ease;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
 }
 
 .ig-final-cta__footer a:hover {
-  color: var(--ig-ember-light);
-  text-decoration: underline;
+  opacity: 0.7;
 }
 
-/* ─── Responsive - Mobile ─── */
+.ig-final-cta__footer a:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── Mobile (≤ 749px) ─── */
 @media screen and (max-width: 749px) {
   .ig-final-cta--gradient::before {
     width: 500px;
     height: 500px;
-  }
-
-  .ig-final-cta__subtitle {
-    font-size: 1rem;
   }
 
   .ig-final-cta__buttons {
@@ -155,17 +183,14 @@
     width: 100%;
   }
 
-  .ig-btn {
+  .ig-final-cta__buttons .button,
+  .ig-final-cta__btn--muted {
     width: 100%;
     min-width: 200px;
   }
-
-  .ig-btn--secondary {
-    width: auto;
-  }
 }
 
-/* ─── Responsive - Tablet ─── */
+/* ─── Tablet (750–989px) ─── */
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .ig-final-cta--gradient::before {
     width: 600px;
@@ -173,36 +198,17 @@
   }
 }
 
-/* ─── Accessibility ─── */
+/* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
-  .ig-btn {
+  .ig-final-cta__btn--muted,
+  .ig-final-cta__footer a {
     transition: none;
   }
-
-  .ig-btn--primary:hover {
-    transform: none;
-  }
 }
 
-/* ─── Focus States ─── */
-.ig-btn:focus-visible {
-  outline: 2px solid var(--ig-ember);
-  outline-offset: 3px;
-}
-
-.ig-final-cta__footer a:focus-visible {
-  outline: 2px solid var(--ig-ember);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-/* ─── High Contrast Mode ─── */
+/* ─── High contrast ─── */
 @media (prefers-contrast: high) {
-  .ig-btn--primary {
-    border: 2px solid currentColor;
-  }
-
-  .ig-btn--muted {
-    border: 2px solid currentColor;
+  .ig-final-cta__btn--muted {
+    border-width: 2px;
   }
 }

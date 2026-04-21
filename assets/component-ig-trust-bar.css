@@ -1,31 +1,52 @@
 /* ═══════════════════════════════════════════════════════════
    Igniton Trust Bar Component
-   Horizontal trust signals strip
+   Horizontal strip of tracked small-caps trust statements.
+   Reads CSS variables from `ig-section-controls`.
    ═══════════════════════════════════════════════════════════ */
 
 .ig-trust-bar {
-  background: var(--ig-ink);
-  color: var(--ig-warm-white);
-  padding: 1rem 1.5rem;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
 }
 
 .ig-trust-bar__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
   flex-wrap: wrap;
-  max-width: var(--page-width);
-  margin: 0 auto;
+  gap: 3rem;
 }
 
+/* ─── Gap modifiers (from item_gap select) ─── */
+.ig-trust-bar--gap-1   .ig-trust-bar__container { gap: 1rem; }
+.ig-trust-bar--gap-1_5 .ig-trust-bar__container { gap: 1.5rem; }
+.ig-trust-bar--gap-2   .ig-trust-bar__container { gap: 2rem; }
+.ig-trust-bar--gap-3   .ig-trust-bar__container { gap: 3rem; }
+.ig-trust-bar--gap-4   .ig-trust-bar__container { gap: 4rem; }
+
+/* ─── Alignment modifiers (from item_alignment select) ─── */
+.ig-trust-bar--align-center  .ig-trust-bar__container { justify-content: center; }
+.ig-trust-bar--align-between .ig-trust-bar__container { justify-content: space-between; }
+.ig-trust-bar--align-start   .ig-trust-bar__container { justify-content: flex-start; }
+
+@media screen and (min-width: 750px) {
+  .ig-trust-bar__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Trust item (uses .ig-section-label for label-scale typography) ─── */
 .ig-trust-bar__item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 0.95rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  margin-bottom: 0; /* override label spacing inherited from snippet */
+  color: rgb(var(--color-foreground));
   opacity: 0.85;
   transition: opacity 0.2s ease;
 }
@@ -34,62 +55,45 @@
   opacity: 1;
 }
 
+/* ─── Separator dot (toggleable) ─── */
 .ig-trust-bar__dot {
+  display: none;
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--ig-ember-light);
+  background: rgb(var(--color-foreground));
+  opacity: 0.6;
   flex-shrink: 0;
+}
+
+.ig-trust-bar--separators .ig-trust-bar__dot {
+  display: inline-block;
 }
 
 .ig-trust-bar__text {
   white-space: nowrap;
 }
 
-/* ─── Responsive - Mobile ─── */
-@media screen and (max-width: 749px) {
-  .ig-trust-bar {
-    padding: 1rem 1.5rem;
-  }
-
-  .ig-trust-bar__container {
-    gap: 1.5rem;
-    justify-content: flex-start;
-  }
-
-  .ig-trust-bar__item {
-    font-size: 0.86rem;
-  }
-
-  .ig-trust-bar__text {
-    white-space: normal;
-  }
-}
-
-/* ─── Responsive - Tablet ─── */
-@media screen and (min-width: 750px) and (max-width: 989px) {
+/* ─── Responsive ─── */
+@media screen and (max-width: 989px) {
   .ig-trust-bar__container {
     gap: 2rem;
   }
 }
 
-/* ─── Color Scheme Support ─── */
-.ig-trust-bar.color-scheme-1,
-.ig-trust-bar.color-scheme-2 {
-  /* Dark background schemes */
-  background: var(--ig-ink);
-  color: var(--ig-warm-white);
-}
+@media screen and (max-width: 749px) {
+  .ig-trust-bar {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
 
-.ig-trust-bar.color-scheme-3,
-.ig-trust-bar.color-inverse {
-  /* Light background schemes */
-  background: var(--ig-warm-white);
-  color: var(--ig-ink);
-}
+  .ig-trust-bar__container {
+    gap: 1.25rem;
+    justify-content: flex-start;
+  }
 
-.ig-trust-bar.color-inverse .ig-trust-bar__dot {
-  background: var(--ig-ember);
+  .ig-trust-bar__text {
+    white-space: normal;
+  }
 }
 
 /* ─── Accessibility ─── */

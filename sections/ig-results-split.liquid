@@ -1,36 +1,12 @@
 {{ 'component-ig-results-split.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+{% render 'ig-section-controls', section: section %}
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-  
-  #IgResultsSplit-{{ section.id }} .ig-section-title {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.heading_size }}rem);
-  }
-  
-  #IgResultsSplit-{{ section.id }} .ig-results-split__stat-num {
-    font-size: calc(var(--font-heading-scale) * {{ section.settings.stat_size }}rem);
-  }
-  
-  #IgResultsSplit-{{ section.id }} .ig-results-split__quote {
-    font-size: calc(1rem * {{ section.settings.text_size | divided_by: 100.0 }});
-  }
-{%- endstyle -%}
-
-<section 
-  id="IgResultsSplit-{{ section.id }}" 
-  class="ig-results-split section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+<section
+  id="IgResultsSplit-{{ section.id }}"
+  class="ig-results-split color-{{ section.settings.color_scheme }}"
 >
-  <div class="page-width">
+  <div class="ig-results-split__container">
     <div class="ig-results-split__layout">
       {%- comment -%} Left side: Stats grid {%- endcomment -%}
       <div class="ig-results-split__left">
@@ -48,14 +24,23 @@
 
         {%- assign stat_blocks = section.blocks | where: "type", "big_stat" -%}
         {%- if stat_blocks.size > 0 -%}
-          <div class="ig-results-split__stats-grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <div
+            class="ig-results-split__stats-grid ig-results-split__stats-grid--size-{{ section.settings.stat_number_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+          >
             {%- for block in stat_blocks -%}
+              {%- assign linked_product = block.settings.linked_product -%}
+              {%- assign display_number = block.settings.stat_number -%}
+              {%- assign display_label = block.settings.stat_label -%}
+              {%- if display_number == blank and linked_product != blank -%}
+                {%- assign display_number = linked_product.title -%}
+              {%- endif -%}
+
               <div class="ig-results-split__stat" {{ block.shopify_attributes }}>
                 <div class="ig-results-split__stat-num ig-font-display">
-                  {{ block.settings.stat_number }}
+                  {{ display_number }}
                 </div>
-                <div class="ig-results-split__stat-label ig-font-body">
-                  {{ block.settings.stat_label }}
+                <div class="ig-results-split__stat-label ig-section-body ig-font-body">
+                  {{ display_label }}
                 </div>
                 {%- if block.settings.stat_source != blank -%}
                   <div class="ig-results-split__stat-source ig-font-body">
@@ -86,20 +71,42 @@
         {%- if testimonial_blocks.size > 0 -%}
           <div class="ig-results-split__testimonials">
             {%- for block in testimonial_blocks -%}
+              {%- assign t_product = block.settings.linked_product -%}
+              {%- assign t_quote = block.settings.quote -%}
+              {%- assign t_meta = block.settings.customer_meta -%}
+              {%- if t_meta == blank and t_product != blank -%}
+                {%- assign t_meta = 'Verified customer · ' | append: t_product.title -%}
+              {%- endif -%}
+
               <div class="ig-results-split__testimonial" {{ block.shopify_attributes }}>
                 {%- if block.settings.star_rating > 0 -%}
-                  <div class="ig-results-split__stars">
+                  <div class="ig-results-split__stars" aria-label="{{ block.settings.star_rating }} out of 5 stars">
                     {%- for i in (1..block.settings.star_rating) -%}
                       ★
                     {%- endfor -%}
                   </div>
                 {%- endif -%}
-                <p class="ig-results-split__quote ig-font-display">
-                  {{ block.settings.quote }}
+
+                {%- if block.settings.portrait != blank -%}
+                  <div class="ig-results-split__portrait">
+                    {{
+                      block.settings.portrait
+                      | image_url: width: 200
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '80, 120, 160, 200',
+                        sizes: '80px',
+                        alt: block.settings.portrait.alt | default: t_meta
+                    }}
+                  </div>
+                {%- endif -%}
+
+                <p class="ig-results-split__quote ig-section-body ig-font-display">
+                  {{ t_quote }}
                 </p>
-                {%- if block.settings.customer_meta != blank -%}
+                {%- if t_meta != blank -%}
                   <p class="ig-results-split__meta ig-font-body">
-                    {{ block.settings.customer_meta }}
+                    {{ t_meta }}
                   </p>
                 {%- endif -%}
               </div>
@@ -108,9 +115,9 @@
         {%- endif -%}
 
         {%- if section.settings.reviews_link_text != blank -%}
-          <a 
-            href="{{ section.settings.reviews_link_url }}" 
-            class="ig-results-split__reviews-link ig-font-body"
+          <a
+            href="{{ section.settings.reviews_link_url }}"
+            class="ig-results-split__reviews-link ig-section-body ig-font-body"
           >
             {{ section.settings.reviews_link_text }}
           </a>
@@ -130,6 +137,10 @@
   },
   "settings": [
     {
+      "type": "header",
+      "content": "Color"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
@@ -137,19 +148,198 @@
     },
     {
       "type": "header",
-      "content": "Left side - Stats"
+      "content": "Layout"
     },
     {
-      "type": "text",
-      "id": "section_label",
-      "default": "Clinical results",
-      "label": "Section label"
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
     },
     {
-      "type": "inline_richtext",
-      "id": "section_title",
-      "default": "Numbers from the university study, not our marketing team.",
-      "label": "Section title"
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 8, "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Testimonial portrait shape",
+      "info": "Applies to optional portrait images on testimonial blocks.",
+      "options": [
+        { "value": "circle",    "label": "Circle" },
+        { "value": "square",    "label": "Square (1:1)" },
+        { "value": "portrait",  "label": "Portrait (4:5)" }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "header",
+      "content": "Stats styling"
+    },
+    {
+      "type": "select",
+      "id": "stat_number_size",
+      "label": "Stat number size",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" },
+        { "value": "xl", "label": "Extra large" }
+      ],
+      "default": "lg"
+    },
+    {
+      "type": "header",
+      "content": "Stats content"
     },
     {
       "type": "richtext",
@@ -159,7 +349,7 @@
     },
     {
       "type": "header",
-      "content": "Right side - Testimonials"
+      "content": "Testimonials content"
     },
     {
       "type": "text",
@@ -180,61 +370,19 @@
     },
     {
       "type": "header",
-      "content": "Typography"
+      "content": "Section header"
     },
     {
-      "type": "range",
-      "id": "heading_size",
-      "min": 2,
-      "max": 5,
-      "step": 0.5,
-      "default": 3,
-      "unit": "rem",
-      "label": "Section heading size"
+      "type": "text",
+      "id": "section_label",
+      "default": "Clinical results",
+      "label": "Section label"
     },
     {
-      "type": "range",
-      "id": "stat_size",
-      "min": 2,
-      "max": 5,
-      "step": 0.5,
-      "default": 3.5,
-      "unit": "rem",
-      "label": "Stat number size"
-    },
-    {
-      "type": "range",
-      "id": "text_size",
-      "min": 80,
-      "max": 140,
-      "step": 5,
-      "default": 110,
-      "unit": "%",
-      "label": "Text size"
-    },
-    {
-      "type": "header",
-      "content": "Section padding"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 150,
-      "step": 5,
-      "default": 100,
-      "unit": "px",
-      "label": "Padding top"
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 150,
-      "step": 5,
-      "default": 100,
-      "unit": "px",
-      "label": "Padding bottom"
+      "type": "inline_richtext",
+      "id": "section_title",
+      "default": "Numbers from the university study, not our marketing team.",
+      "label": "Section title"
     }
   ],
   "blocks": [
@@ -260,6 +408,12 @@
           "id": "stat_source",
           "label": "Source citation",
           "default": "IgniCognition trial · 90 days · n=80"
+        },
+        {
+          "type": "product",
+          "id": "linked_product",
+          "label": "Linked product (optional)",
+          "info": "If set, falls back to product title when the stat number is left blank."
         }
       ]
     },
@@ -283,10 +437,21 @@
           "label": "Customer quote"
         },
         {
+          "type": "image_picker",
+          "id": "portrait",
+          "label": "Customer portrait (optional)"
+        },
+        {
           "type": "text",
           "id": "customer_meta",
           "default": "Verified customer · IgniCognition",
           "label": "Customer info"
+        },
+        {
+          "type": "product",
+          "id": "linked_product",
+          "label": "Linked product (optional)",
+          "info": "If set and customer info is blank, displays \"Verified customer · [product title]\"."
         }
       ]
     }
