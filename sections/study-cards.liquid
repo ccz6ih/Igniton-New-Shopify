@@ -1,0 +1,550 @@
+{{ 'component-study-cards.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="StudyCards-{{ section.id }}"
+  class="study-cards color-{{ section.settings.color_scheme }} study-cards--cols-{{ section.settings.columns_desktop }} study-cards--style-{{ section.settings.card_style }}"
+>
+  <div class="study-cards__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title ig-font-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="study-cards__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'study' -%}
+            {%- liquid
+              assign resolved_link = ''
+              if block.settings.link_article != blank
+                assign resolved_link = block.settings.link_article.url
+              elsif block.settings.link_url != blank
+                assign resolved_link = block.settings.link_url
+              endif
+
+              assign link_label_text = block.settings.link_label
+              if link_label_text == blank
+                assign link_label_text = 'Read study →'
+              endif
+            -%}
+
+            <article class="study-card" {{ block.shopify_attributes }}>
+              {%- if block.settings.tag != blank -%}
+                <span class="study-card__tag ig-section-label">{{ block.settings.tag }}</span>
+              {%- endif -%}
+
+              {%- if block.settings.title != blank -%}
+                <h3 class="study-card__title ig-section-body ig-font-body">{{ block.settings.title }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.authors != blank -%}
+                <p class="study-card__authors">{{ block.settings.authors }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.design_stat_1_value != blank or block.settings.design_stat_2_value != blank or block.settings.design_stat_3_value != blank -%}
+                <div class="study-card__design">
+                  {%- if block.settings.design_stat_1_value != blank -%}
+                    <div class="study-card__design-cell">
+                      <div class="study-card__design-value">{{ block.settings.design_stat_1_value }}</div>
+                      {%- if block.settings.design_stat_1_label != blank -%}
+                        <div class="study-card__design-label">{{ block.settings.design_stat_1_label }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.design_stat_2_value != blank -%}
+                    <div class="study-card__design-cell">
+                      <div class="study-card__design-value">{{ block.settings.design_stat_2_value }}</div>
+                      {%- if block.settings.design_stat_2_label != blank -%}
+                        <div class="study-card__design-label">{{ block.settings.design_stat_2_label }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.design_stat_3_value != blank -%}
+                    <div class="study-card__design-cell">
+                      <div class="study-card__design-value">{{ block.settings.design_stat_3_value }}</div>
+                      {%- if block.settings.design_stat_3_label != blank -%}
+                        <div class="study-card__design-label">{{ block.settings.design_stat_3_label }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.integrity_markers != blank -%}
+                {%- assign marker_lines = block.settings.integrity_markers | newline_to_br | split: '<br />' -%}
+                <ul class="study-card__markers">
+                  {%- for line in marker_lines -%}
+                    {%- assign clean = line | strip -%}
+                    {%- if clean != blank -%}
+                      <li class="study-card__marker">{{ clean }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+              {%- if resolved_link != blank -%}
+                <a href="{{ resolved_link }}" class="study-card__link">{{ link_label_text }}</a>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="study-cards__placeholder">
+        <p>Add study blocks to showcase clinical evidence.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Study Cards",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60,
+      "max": 180,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 6,
+      "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Clinical evidence"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Proven in independent studies."
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "filled",   "label": "Filled" },
+        { "value": "minimal",  "label": "Minimal" }
+      ],
+      "default": "bordered"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "study",
+      "name": "Study",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Study tag",
+          "info": "e.g. University study, Clinical trial",
+          "default": "University study"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Study title",
+          "default": "Double-blind trial on cellular energy markers"
+        },
+        {
+          "type": "text",
+          "id": "authors",
+          "label": "Authors / institution",
+          "info": "e.g. Hunt, Hertz, Zou, Whitney et al.",
+          "default": "Hunt, Hertz, Zou, Whitney et al."
+        },
+        {
+          "type": "header",
+          "content": "Design summary"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_1_label",
+          "label": "Stat 1 label",
+          "default": "Participants"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_1_value",
+          "label": "Stat 1 value",
+          "default": "n = 80"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_2_label",
+          "label": "Stat 2 label",
+          "default": "Duration"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_2_value",
+          "label": "Stat 2 value",
+          "default": "90 days"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_3_label",
+          "label": "Stat 3 label",
+          "default": "Design"
+        },
+        {
+          "type": "text",
+          "id": "design_stat_3_value",
+          "label": "Stat 3 value",
+          "default": "Double-blind"
+        },
+        {
+          "type": "header",
+          "content": "Integrity checklist"
+        },
+        {
+          "type": "textarea",
+          "id": "integrity_markers",
+          "label": "Integrity markers",
+          "info": "One per line. Rendered as a ✓ checklist.",
+          "default": "Randomized\nPlacebo-controlled\nPeer-reviewed"
+        },
+        {
+          "type": "header",
+          "content": "Link (optional)"
+        },
+        {
+          "type": "article",
+          "id": "link_article",
+          "label": "Linked article"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "External link",
+          "info": "Used if no article is picked."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Read study →"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Study cards — 2 columns",
+      "settings": {
+        "columns_desktop": "2",
+        "card_style": "bordered",
+        "section_label": "Clinical evidence",
+        "section_heading": "Proven in independent studies."
+      },
+      "blocks": [
+        {
+          "type": "study",
+          "settings": {
+            "tag": "University study",
+            "title": "Double-blind trial on cellular energy markers",
+            "authors": "Hunt, Hertz, Zou, Whitney et al.",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 80",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "90 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Double-blind",
+            "integrity_markers": "Randomized\nPlacebo-controlled\nPeer-reviewed",
+            "link_label": "Read study →"
+          }
+        },
+        {
+          "type": "study",
+          "settings": {
+            "tag": "Clinical trial",
+            "title": "Bioavailability assay vs. unenhanced formula",
+            "authors": "Chen, Rowe, Patel et al.",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 48",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "60 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Crossover",
+            "integrity_markers": "Randomized\nBlinded assay\nIRB-approved",
+            "link_label": "Read study →"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Study cards — 3 columns",
+      "settings": {
+        "columns_desktop": "3",
+        "card_style": "filled",
+        "section_label": "Clinical evidence",
+        "section_heading": "Three trials. One formula."
+      },
+      "blocks": [
+        {
+          "type": "study",
+          "settings": {
+            "tag": "University study",
+            "title": "Cellular energy markers",
+            "authors": "Hunt, Hertz, Zou et al.",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 80",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "90 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Double-blind",
+            "integrity_markers": "Randomized\nPlacebo-controlled",
+            "link_label": "Read study →"
+          }
+        },
+        {
+          "type": "study",
+          "settings": {
+            "tag": "Clinical trial",
+            "title": "Bioavailability assay",
+            "authors": "Chen, Rowe, Patel et al.",
+            "design_stat_1_label": "Participants",
+            "design_stat_1_value": "n = 48",
+            "design_stat_2_label": "Duration",
+            "design_stat_2_value": "60 days",
+            "design_stat_3_label": "Design",
+            "design_stat_3_value": "Crossover",
+            "integrity_markers": "Randomized\nBlinded assay",
+            "link_label": "Read study →"
+          }
+        },
+        {
+          "type": "study",
+          "settings": {
+            "tag": "Independent lab",
+            "title": "Third-party potency verification",
+            "authors": "Eurofins Scientific",
+            "design_stat_1_label": "Batches",
+            "design_stat_1_value": "n = 12",
+            "design_stat_2_label": "Period",
+            "design_stat_2_value": "2024 – 2025",
+            "design_stat_3_label": "Method",
+            "design_stat_3_value": "HPLC / LC-MS",
+            "integrity_markers": "Third-party\nISO 17025 accredited",
+            "link_label": "View results →"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

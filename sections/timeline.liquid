@@ -1,0 +1,420 @@
+{{ 'component-timeline.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="Timeline-{{ section.id }}"
+  class="timeline color-{{ section.settings.color_scheme }} timeline--{{ section.settings.orientation }} timeline--num-{{ section.settings.number_style }} timeline--accent-{{ section.settings.accent_color_source }}{% if section.settings.show_connecting_line %} timeline--connected{% endif %}"
+>
+  <div class="timeline__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="timeline__steps" style="--timeline-step-count: {{ section.blocks.size }};">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <li
+              class="timeline__step{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+              style="--timeline-step-index: {{ forloop.index0 }};"
+              {{ block.shopify_attributes }}
+            >
+              <div class="timeline__marker" aria-hidden="true">
+                {%- unless section.settings.number_style == 'none' -%}
+                  {%- if section.settings.number_style == 'numbered' -%}
+                    <span class="timeline__marker-text">{{ block.settings.step_marker }}</span>
+                  {%- endif -%}
+                {%- endunless -%}
+              </div>
+              <div class="timeline__content">
+                {%- if block.settings.time_label != blank -%}
+                  <div class="timeline__time ig-section-label">{{ block.settings.time_label }}</div>
+                {%- endif -%}
+                <h3 class="timeline__title ig-section-body">{{ block.settings.step_title }}</h3>
+                <p class="timeline__desc ig-section-body">{{ block.settings.step_description }}</p>
+              </div>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+    {%- else -%}
+      <div class="timeline__placeholder">
+        <p>Add step blocks to build your timeline.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Timeline",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Timeline",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "default": "A measurable progression",
+      "label": "Section heading"
+    },
+    {
+      "type": "header",
+      "content": "Timeline style"
+    },
+    {
+      "type": "select",
+      "id": "orientation",
+      "label": "Orientation",
+      "info": "Horizontal collapses to vertical on mobile automatically.",
+      "options": [
+        { "value": "horizontal", "label": "Horizontal" },
+        { "value": "vertical",   "label": "Vertical" }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_connecting_line",
+      "label": "Show connecting line",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "number_style",
+      "label": "Marker style",
+      "options": [
+        { "value": "numbered", "label": "Numbered (01, 02, 1990s…)" },
+        { "value": "bullet",   "label": "Bullet (dot)" },
+        { "value": "none",     "label": "None (no circle)" }
+      ],
+      "default": "numbered"
+    },
+    {
+      "type": "select",
+      "id": "accent_color_source",
+      "label": "Marker accent color",
+      "options": [
+        { "value": "scheme-button",     "label": "Button color" },
+        { "value": "scheme-foreground", "label": "Foreground color" }
+      ],
+      "default": "scheme-button"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_marker",
+          "default": "01",
+          "label": "Marker",
+          "info": "e.g. 01, A, 1990s"
+        },
+        {
+          "type": "text",
+          "id": "time_label",
+          "label": "Time label",
+          "info": "Optional (e.g. Week 1-2, Day 30, 1990s)"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "default": "Step title",
+          "label": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "step_description",
+          "default": "Describe what happens at this point in the timeline.",
+          "label": "Step description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline — horizontal (results)",
+      "settings": {
+        "section_label": "Cognitive timeline",
+        "section_heading": "What to expect, week by week",
+        "orientation": "horizontal",
+        "show_connecting_line": true,
+        "number_style": "numbered",
+        "accent_color_source": "scheme-button"
+      },
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "01",
+            "time_label": "Week 1-2",
+            "step_title": "Initial clarity",
+            "step_description": "Subtle mental sharpness and steadier energy begin to surface in the first two weeks."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "02",
+            "time_label": "Day 30",
+            "step_title": "Focus compounding",
+            "step_description": "Sustained focus windows lengthen; recall feels noticeably faster."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "03",
+            "time_label": "Day 60",
+            "step_title": "Cognitive endurance",
+            "step_description": "Late-day mental fatigue drops; complex tasks feel less taxing."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "04",
+            "time_label": "Day 90",
+            "step_title": "Measurable gains",
+            "step_description": "University-trial–level improvements in attention and working memory consolidate."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Timeline — vertical (about)",
+      "settings": {
+        "section_label": "Our story",
+        "section_heading": "Three decades in the making",
+        "orientation": "vertical",
+        "show_connecting_line": false,
+        "number_style": "numbered",
+        "accent_color_source": "scheme-foreground"
+      },
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "1990s",
+            "time_label": "Origins",
+            "step_title": "Cold plasma physics research begins",
+            "step_description": "Three decades of advanced physics research lay the groundwork for the enhancement system."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "2010s",
+            "time_label": "Proof of concept",
+            "step_title": "First biological enhancement trials",
+            "step_description": "Lab work moves from materials science into nutraceutical bioavailability."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_marker": "2024",
+            "time_label": "Today",
+            "step_title": "Igniton launches",
+            "step_description": "A clinically validated formula — gold-standard ingredients, enhanced for real cellular uptake."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

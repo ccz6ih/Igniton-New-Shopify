@@ -1,0 +1,570 @@
+{{ 'component-comparison-table.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="ComparisonTable-{{ section.id }}"
+  class="compare color-{{ section.settings.color_scheme }} compare--cols-{{ section.settings.column_count }} compare--highlight-{{ section.settings.highlight_style }}"
+>
+  <div class="compare__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div
+        class="compare__table{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        role="table"
+        aria-label="Comparison table"
+      >
+        {%- comment -%} Header row {%- endcomment -%}
+        <div class="compare__head" role="row">
+          <div class="compare__cell compare__cell--feature compare__cell--head" role="columnheader">
+            <span class="visually-hidden">Feature</span>
+          </div>
+          <div
+            class="compare__cell compare__cell--head{% if section.settings.col_1_highlighted %} compare__cell--highlighted{% endif %}"
+            role="columnheader"
+          >
+            {{ section.settings.col_1_header }}
+          </div>
+          <div
+            class="compare__cell compare__cell--head{% if section.settings.col_2_highlighted %} compare__cell--highlighted{% endif %}"
+            role="columnheader"
+          >
+            {{ section.settings.col_2_header }}
+          </div>
+          {%- if section.settings.column_count == '3' -%}
+            <div
+              class="compare__cell compare__cell--head{% if section.settings.col_3_highlighted %} compare__cell--highlighted{% endif %}"
+              role="columnheader"
+            >
+              {{ section.settings.col_3_header }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Feature rows {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'row' -%}
+            <div class="compare__row" role="row" {{ block.shopify_attributes }}>
+              <div
+                class="compare__cell compare__cell--feature ig-section-body"
+                role="rowheader"
+              >
+                {{ block.settings.feature_label }}
+              </div>
+
+              <div
+                class="compare__cell ig-section-body{% if section.settings.col_1_highlighted %} compare__cell--highlighted{% endif %}"
+                role="cell"
+                data-label="{{ section.settings.col_1_header | escape }}"
+              >
+                {%- assign v1 = block.settings.col_1_value | strip -%}
+                {%- if v1 == '✓' -%}
+                  <span class="compare__mark compare__mark--check" aria-label="Yes">✓</span>
+                {%- elsif v1 == '✗' -%}
+                  <span class="compare__mark compare__mark--cross" aria-label="No">✗</span>
+                {%- else -%}
+                  <span class="compare__text">{{ block.settings.col_1_value }}</span>
+                {%- endif -%}
+              </div>
+
+              <div
+                class="compare__cell ig-section-body{% if section.settings.col_2_highlighted %} compare__cell--highlighted{% endif %}"
+                role="cell"
+                data-label="{{ section.settings.col_2_header | escape }}"
+              >
+                {%- assign v2 = block.settings.col_2_value | strip -%}
+                {%- if v2 == '✓' -%}
+                  <span class="compare__mark compare__mark--check" aria-label="Yes">✓</span>
+                {%- elsif v2 == '✗' -%}
+                  <span class="compare__mark compare__mark--cross" aria-label="No">✗</span>
+                {%- else -%}
+                  <span class="compare__text">{{ block.settings.col_2_value }}</span>
+                {%- endif -%}
+              </div>
+
+              {%- if section.settings.column_count == '3' -%}
+                <div
+                  class="compare__cell ig-section-body{% if section.settings.col_3_highlighted %} compare__cell--highlighted{% endif %}"
+                  role="cell"
+                  data-label="{{ section.settings.col_3_header | escape }}"
+                >
+                  {%- assign v3 = block.settings.col_3_value | strip -%}
+                  {%- if v3 == '✓' -%}
+                    <span class="compare__mark compare__mark--check" aria-label="Yes">✓</span>
+                  {%- elsif v3 == '✗' -%}
+                    <span class="compare__mark compare__mark--cross" aria-label="No">✗</span>
+                  {%- elsif v3 == blank -%}
+                    <span class="compare__text compare__text--empty" aria-hidden="true">—</span>
+                  {%- else -%}
+                    <span class="compare__text">{{ block.settings.col_3_value }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="compare__placeholder">
+        <p>Add feature rows to build the comparison table.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "1000"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "The difference"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "See how we compare."
+    },
+    {
+      "type": "header",
+      "content": "Columns"
+    },
+    {
+      "type": "select",
+      "id": "column_count",
+      "label": "Number of comparison columns",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "highlight_style",
+      "label": "Highlight style",
+      "info": "How highlighted columns are visually emphasized.",
+      "options": [
+        { "value": "accent-border", "label": "Accent border" },
+        { "value": "accent-bg",     "label": "Accent background" },
+        { "value": "bold",          "label": "Bold values" }
+      ],
+      "default": "accent-border"
+    },
+    {
+      "type": "header",
+      "content": "Column 1"
+    },
+    {
+      "type": "text",
+      "id": "col_1_header",
+      "label": "Header",
+      "default": "Standard"
+    },
+    {
+      "type": "checkbox",
+      "id": "col_1_highlighted",
+      "label": "Highlight this column",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Column 2"
+    },
+    {
+      "type": "text",
+      "id": "col_2_header",
+      "label": "Header",
+      "default": "Enhanced"
+    },
+    {
+      "type": "checkbox",
+      "id": "col_2_highlighted",
+      "label": "Highlight this column",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Column 3",
+      "info": "Only used when column count is 3."
+    },
+    {
+      "type": "text",
+      "id": "col_3_header",
+      "label": "Header",
+      "default": "Best Value"
+    },
+    {
+      "type": "checkbox",
+      "id": "col_3_highlighted",
+      "label": "Highlight this column",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Feature row",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Enter ✓ or ✗ to render a check or cross icon, or type any free text (e.g. \"High\", \"85%\", \"Included\")."
+        },
+        {
+          "type": "text",
+          "id": "feature_label",
+          "label": "Feature",
+          "default": "Bioavailability"
+        },
+        {
+          "type": "text",
+          "id": "col_1_value",
+          "label": "Column 1 value",
+          "default": "✗"
+        },
+        {
+          "type": "text",
+          "id": "col_2_value",
+          "label": "Column 2 value",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "col_3_value",
+          "label": "Column 3 value",
+          "info": "Only used when column count is 3."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison — 2 columns (science)",
+      "settings": {
+        "section_label": "The difference",
+        "section_heading": "Standard ingredients vs. enhanced ingredients.",
+        "column_count": "2",
+        "highlight_style": "accent-border",
+        "col_1_header": "Standard ingredients",
+        "col_1_highlighted": false,
+        "col_2_header": "Enhanced ingredients",
+        "col_2_highlighted": true
+      },
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Bioavailability",
+            "col_1_value": "Baseline",
+            "col_2_value": "Significantly higher"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Cellular uptake",
+            "col_1_value": "✗",
+            "col_2_value": "✓"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Clinically tested",
+            "col_1_value": "✗",
+            "col_2_value": "✓"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Cold-plasma processed",
+            "col_1_value": "✗",
+            "col_2_value": "✓"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Fillers & excipients",
+            "col_1_value": "Common",
+            "col_2_value": "None"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "University-led trial",
+            "col_1_value": "✗",
+            "col_2_value": "✓"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comparison — 3 columns (products)",
+      "settings": {
+        "section_label": "Compare",
+        "section_heading": "Choose the formula that matches your goals.",
+        "column_count": "3",
+        "highlight_style": "accent-border",
+        "col_1_header": "IgniCognition",
+        "col_1_highlighted": false,
+        "col_2_header": "IgniLongevity",
+        "col_2_highlighted": false,
+        "col_3_header": "Bundle",
+        "col_3_highlighted": true
+      },
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Cognitive support",
+            "col_1_value": "✓",
+            "col_2_value": "✗",
+            "col_3_value": "✓"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Longevity support",
+            "col_1_value": "✗",
+            "col_2_value": "✓",
+            "col_3_value": "✓"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Enhanced ingredients",
+            "col_1_value": "✓",
+            "col_2_value": "✓",
+            "col_3_value": "✓"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Monthly supply",
+            "col_1_value": "30 days",
+            "col_2_value": "30 days",
+            "col_3_value": "30 days"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Savings",
+            "col_1_value": "—",
+            "col_2_value": "—",
+            "col_3_value": "Save 15%"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_label": "Free shipping",
+            "col_1_value": "✓",
+            "col_2_value": "✓",
+            "col_3_value": "✓"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

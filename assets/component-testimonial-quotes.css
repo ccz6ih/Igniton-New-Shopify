@@ -1,0 +1,243 @@
+/* ==========================================================================
+   Testimonial Quotes
+   Pull-quote card grid (1/2/3 columns). Reads ig-section-controls CSS vars
+   and Dawn scheme/color/font variables. No raw hex, no hardcoded families.
+   ========================================================================== */
+
+/* ── Section wrapper ──────────────────────────────────────────────────── */
+.testimonials {
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .testimonials {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
+}
+
+/* ── Container ────────────────────────────────────────────────────────── */
+.testimonials__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .testimonials__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ── Section header (label + heading) ─────────────────────────────────── */
+.testimonials .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+}
+
+.testimonials .ig-section-title {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  max-width: var(--ig-heading-width);
+  margin-inline: auto;
+  text-align: center;
+  color: rgb(var(--color-foreground));
+}
+
+/* Center the small header block above the grid */
+.testimonials__container > .ig-section-label,
+.testimonials__container > .ig-section-title {
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────── */
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .testimonials__grid {
+    gap: 2rem;
+  }
+
+  .testimonials--cols-2 .testimonials__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonials--cols-3 .testimonials__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  margin: 0;
+  border-radius: 1rem;
+  background-color: rgb(var(--color-foreground) / 0.03);
+  border: 1px solid rgb(var(--color-foreground) / 0.08);
+  transition: transform 200ms ease, border-color 200ms ease;
+}
+
+@media screen and (min-width: 750px) {
+  .testimonial-card {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* ── Portrait ─────────────────────────────────────────────────────────── */
+.testimonial-card__portrait {
+  overflow: hidden;
+  width: 5rem;
+  height: 5rem;
+  flex: 0 0 auto;
+  background-color: rgb(var(--color-foreground) / 0.06);
+}
+
+.testimonial-card__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.testimonial-card__portrait--square {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+.testimonial-card__portrait--portrait {
+  aspect-ratio: 4 / 5;
+  width: 5rem;
+  height: auto;
+  border-radius: 0.75rem;
+}
+
+.testimonial-card__portrait--natural {
+  width: 5rem;
+  height: auto;
+  aspect-ratio: auto;
+  border-radius: 0.75rem;
+}
+
+/* ── Stars ────────────────────────────────────────────────────────────── */
+.testimonial-card__stars {
+  display: inline-flex;
+  gap: 0.15rem;
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.testimonial-card__star {
+  color: rgb(var(--color-foreground) / 0.2);
+}
+
+.testimonial-card__star--filled {
+  color: rgb(var(--color-button));
+}
+
+/* ── Quote body ───────────────────────────────────────────────────────── */
+.testimonial-card__quote {
+  margin: 0;
+  color: rgb(var(--color-foreground));
+  max-width: var(--ig-body-width);
+}
+
+.testimonial-card__quote > * {
+  margin: 0;
+}
+
+.testimonial-card__quote > * + * {
+  margin-top: 0.75rem;
+}
+
+/* Serif-large: Dawn heading family, italic, larger */
+.testimonials--style-serif-large .testimonial-card__quote {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(1.25rem, 1.5vw + 1rem, 1.5rem);
+  line-height: 1.35;
+}
+
+/* Sans-medium: Dawn body family, regular, 1rem */
+.testimonials--style-sans-medium .testimonial-card__quote {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* ── Attribution ──────────────────────────────────────────────────────── */
+.testimonial-card__cite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.testimonial-card__name {
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: rgb(var(--color-foreground));
+  letter-spacing: 0.01em;
+}
+
+.testimonial-card__credentials {
+  font-family: var(--font-body-family);
+  font-size: 0.8125rem;
+  color: rgb(var(--color-foreground) / 0.7);
+  letter-spacing: 0.02em;
+}
+
+.testimonial-card__verified {
+  margin-top: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-body-family);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-caps: all-small-caps;
+  font-weight: 600;
+  color: rgb(var(--color-button));
+}
+
+.testimonial-card__verified-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  font-size: 0.625rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* ── Single-column centering (narrower card) ──────────────────────────── */
+@media screen and (min-width: 750px) {
+  .testimonials--cols-1 .testimonial-card {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+}

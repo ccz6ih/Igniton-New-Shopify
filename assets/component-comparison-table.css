@@ -1,0 +1,324 @@
+/* ═══════════════════════════════════════════════════════════
+   Comparison Table Component
+   ─────────────────────────────
+   Feature-row × value-column comparison grid. Desktop renders as
+   a CSS grid "table" (div-based with ARIA roles). Mobile collapses
+   each row into a stacked card with the feature label as card title
+   and values as key/value pairs keyed off data-label.
+
+   Font-size + color rules for .ig-section-label, .ig-section-title,
+   and .ig-section-body are emitted by snippets/ig-section-controls.
+   This file owns structure, grid geometry, dividers, highlighted
+   column treatments, and the responsive collapse.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.compare {
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .compare {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.compare__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .compare__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Label (eyebrow) ─── */
+.ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Heading ─── */
+.ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLE — desktop grid layout
+   role="table" on container, role="row" on rows, cells as divs.
+   Mobile collapses to cards via a re-layout below.
+   ═══════════════════════════════════════════════════════════ */
+
+.compare__table {
+  width: 100%;
+  max-width: var(--ig-body-width, 1000px);
+  margin-inline: auto;
+  border: 1px solid rgba(var(--color-foreground), 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: rgb(var(--color-background));
+}
+
+/* Head + data rows share the same grid. `display: grid` is set on
+   .compare__head and .compare__row so the columns line up even when
+   the container's grid would otherwise be disturbed by wrapping. */
+.compare__head,
+.compare__row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: stretch;
+}
+
+.compare--cols-3 .compare__head,
+.compare--cols-3 .compare__row {
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+
+/* Row divider — last row has no bottom border */
+.compare__row {
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+/* ─── Cells ─── */
+.compare__cell {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  color: rgb(var(--color-foreground));
+  text-align: left;
+  justify-content: flex-start;
+}
+
+/* Value cells (all except first/feature column) are centered */
+.compare__row .compare__cell:not(.compare__cell--feature),
+.compare__head .compare__cell:not(.compare__cell--feature) {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Feature column */
+.compare__cell--feature {
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+/* Header row cells */
+.compare__cell--head {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-block: 1rem;
+  background-color: rgba(var(--color-foreground), 0.03);
+  min-height: 3rem;
+  color: rgb(var(--color-foreground));
+  opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHECK / CROSS MARKS
+   Rendered when a value is exactly "✓" or "✗". Otherwise
+   free text is shown.
+   ═══════════════════════════════════════════════════════════ */
+
+.compare__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.compare__mark--check {
+  color: rgb(var(--color-button));
+  background-color: rgba(var(--color-button), 0.12);
+}
+
+.compare__mark--cross {
+  color: rgb(var(--color-foreground));
+  background-color: rgba(var(--color-foreground), 0.08);
+  opacity: 0.55;
+}
+
+.compare__text {
+  display: inline-block;
+}
+
+.compare__text--empty {
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HIGHLIGHT TREATMENTS
+   Three styles toggled by the .compare--highlight-* wrapper class
+   combined with the per-cell .compare__cell--highlighted modifier.
+   Only cells that belong to a highlighted column receive the mod.
+   ═══════════════════════════════════════════════════════════ */
+
+/* accent-border — subtle tint + left accent border */
+.compare--highlight-accent-border .compare__cell--highlighted {
+  background-color: rgba(var(--color-button), 0.04);
+  box-shadow: inset 2px 0 0 0 rgb(var(--color-button));
+}
+
+.compare--highlight-accent-border .compare__cell--head.compare__cell--highlighted {
+  background-color: rgba(var(--color-button), 0.08);
+  color: rgb(var(--color-button));
+  opacity: 1;
+}
+
+/* accent-bg — full tinted background */
+.compare--highlight-accent-bg .compare__cell--highlighted {
+  background-color: rgba(var(--color-button), 0.08);
+}
+
+.compare--highlight-accent-bg .compare__cell--head.compare__cell--highlighted {
+  background-color: rgba(var(--color-button), 0.16);
+  color: rgb(var(--color-button));
+  opacity: 1;
+}
+
+/* bold — just heavier weight on values */
+.compare--highlight-bold .compare__cell--highlighted {
+  font-weight: 600;
+}
+
+.compare--highlight-bold .compare__cell--head.compare__cell--highlighted {
+  color: rgb(var(--color-button));
+  opacity: 1;
+}
+
+/* ─── Placeholder (no blocks) ─── */
+.compare__placeholder {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: rgba(var(--color-foreground), 0.55);
+  background: rgba(var(--color-foreground), 0.03);
+  border: 1px dashed rgba(var(--color-foreground), 0.15);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE — collapse to stacked cards (≤ 749px)
+   Each row becomes a card:
+     - Feature label rendered as card title (bigger, bolder).
+     - Value cells restacked vertically with their column header
+       printed via a ::before using data-label.
+     - Head row is visually hidden because the cards surface it.
+   ═══════════════════════════════════════════════════════════ */
+
+@media screen and (max-width: 749px) {
+  .compare__table {
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .compare__head {
+    display: none;
+  }
+
+  .compare__row {
+    display: block;
+    border: 1px solid rgba(var(--color-foreground), 0.12);
+    border-radius: 6px;
+    background-color: rgb(var(--color-background));
+    padding: 1.25rem 1.25rem 0.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .compare__row:last-child {
+    margin-bottom: 0;
+  }
+
+  .compare__cell {
+    padding: 0.65rem 0;
+    min-height: 0;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    justify-content: space-between;
+    text-align: right;
+  }
+
+  /* Override desktop centered rule on mobile */
+  .compare__row .compare__cell:not(.compare__cell--feature) {
+    justify-content: space-between;
+    text-align: right;
+  }
+
+  .compare__cell--feature {
+    border-top: none;
+    padding: 0.25rem 0 0.75rem;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    display: block;
+    text-align: left;
+  }
+
+  /* Render column header as label on the left, value on the right */
+  .compare__row .compare__cell:not(.compare__cell--feature)::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.65;
+    margin-right: 1rem;
+    text-align: left;
+    flex: 1 1 auto;
+  }
+
+  /* Mobile highlight: drop the inset box-shadow, keep tint only */
+  .compare--highlight-accent-border .compare__cell--highlighted,
+  .compare--highlight-accent-bg .compare__cell--highlighted {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  /* Wrap the highlighted row in a left accent bar instead */
+  .compare--highlight-accent-border .compare__row,
+  .compare--highlight-accent-bg .compare__row {
+    position: relative;
+  }
+
+  /* Mobile: mark highlighted values with accent color on the value text */
+  .compare--highlight-accent-border .compare__cell--highlighted .compare__text,
+  .compare--highlight-accent-bg .compare__cell--highlighted .compare__text {
+    color: rgb(var(--color-button));
+    font-weight: 600;
+  }
+
+  .compare--highlight-bold .compare__cell--highlighted .compare__text {
+    font-weight: 700;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .compare,
+  .compare__row,
+  .compare__cell {
+    transition: none;
+  }
+}

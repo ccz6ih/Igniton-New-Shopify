@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════
+   Igniton FAQ Component
+   ─────────────────────
+   Collapsible Q&A list built on native <details>/<summary>.
+   No JS required. Keyboard + screen reader semantics are free.
+
+   Font-size + color rules for typography elements are emitted by
+   snippets/ig-section-controls.liquid (ID-scoped for specificity).
+   This file handles structure, dividers, disclosure icons,
+   focus rings, and the open/closed visual state.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.faq {
+  padding-block: var(--ig-pad-start, 96px) var(--ig-pad-end, 96px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+@media screen and (max-width: 749px) {
+  .faq {
+    padding-block: var(--ig-pad-start-m, 48px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container (narrow by default — set via schema) ─── */
+.faq__container {
+  width: 100%;
+  max-width: var(--ig-container-width, 720px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .faq__container {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* ─── Section label (eyebrow) ─── */
+.faq .ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Section title ─── */
+.faq .ig-section-title {
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
+}
+
+/* ─── Intro paragraph (optional) ─── */
+.faq__intro {
+  max-width: var(--ig-body-width, 640px);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+  color: rgb(var(--color-foreground));
+}
+
+.faq__intro > * {
+  margin: 0 0 0.75rem;
+}
+
+.faq__intro > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── List wrapper ─── */
+.faq__list {
+  display: block;
+  width: 100%;
+}
+
+/* ─── Individual Q&A item (<details>) ─── */
+.faq__item {
+  display: block;
+  width: 100%;
+}
+
+/* Divider styles between items — applied via modifier on section */
+.faq--dividers-line .faq__item {
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+}
+
+.faq--dividers-subtle .faq__item {
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.05);
+}
+
+.faq--dividers-line .faq__item:first-of-type,
+.faq--dividers-subtle .faq__item:first-of-type {
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+}
+
+.faq--dividers-subtle .faq__item:first-of-type {
+  border-top-color: rgba(var(--color-foreground), 0.05);
+}
+
+.faq--dividers-none .faq__item + .faq__item {
+  margin-top: 0.25rem;
+}
+
+/* ─── Question row (<summary>) ─── */
+.faq__question {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.25rem;
+  min-height: 44px; /* tap target */
+  color: rgb(var(--color-foreground));
+  transition: color 0.2s ease;
+}
+
+/* Remove default marker in all engines */
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq__question::marker {
+  content: '';
+}
+
+.faq__q-text {
+  flex: 1 1 auto;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+  color: rgb(var(--color-foreground));
+  /* font-size set by ig-section-controls snippet (scales with body_size) */
+}
+
+/* Hover state — gated so touch devices don't stick */
+@media (hover: hover) {
+  .faq__question:hover {
+    color: var(--ig-ember, rgb(var(--color-foreground)));
+  }
+
+  .faq__question:hover .faq__q-text {
+    color: inherit;
+  }
+
+  .faq__question:hover .faq__icon {
+    color: inherit;
+    border-color: currentColor;
+  }
+}
+
+/* Focus ring (keyboard) */
+.faq__question:focus {
+  outline: none;
+}
+
+.faq__question:focus-visible {
+  outline: 2px solid rgb(var(--color-button, var(--color-foreground)));
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ─── Disclosure icon ─── */
+.faq__icon {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  position: relative;
+  display: inline-block;
+  color: rgb(var(--color-foreground));
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Plus-minus variant (default) */
+.faq--icon-plus-minus .faq__icon::before,
+.faq--icon-plus-minus .faq__icon::after {
+  content: '';
+  position: absolute;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.faq--icon-plus-minus .faq__icon::before {
+  /* horizontal bar */
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.faq--icon-plus-minus .faq__icon::after {
+  /* vertical bar — hides when open to form minus */
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.faq--icon-plus-minus .faq__item[open] .faq__icon::after {
+  transform: translateX(-50%) scaleY(0);
+  opacity: 0;
+}
+
+/* Chevron variant — CSS-drawn arrow that rotates on open */
+.faq--icon-chevron .faq__icon {
+  transform: rotate(0deg);
+}
+
+.faq--icon-chevron .faq__icon::before {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.faq--icon-chevron .faq__item[open] .faq__icon {
+  transform: rotate(180deg);
+}
+
+/* None variant — hide icon entirely */
+.faq--icon-none .faq__icon {
+  display: none;
+}
+
+/* ─── Answer body ─── */
+.faq__answer {
+  padding-block: 0.25rem 1.5rem;
+  padding-inline-end: 2.5rem;
+  line-height: 1.65;
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+  /* font-size set by ig-section-controls snippet (scales with body_size) */
+}
+
+.faq__answer > *:first-child {
+  margin-top: 0;
+}
+
+.faq__answer > *:last-child {
+  margin-bottom: 0;
+}
+
+.faq__answer p {
+  margin: 0 0 0.75rem;
+}
+
+.faq__answer p:last-child {
+  margin-bottom: 0;
+}
+
+.faq__answer a {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: color 0.2s ease, text-decoration-thickness 0.2s ease;
+}
+
+.faq__answer a:hover {
+  color: var(--ig-ember, rgb(var(--color-foreground)));
+  text-decoration-thickness: 2px;
+}
+
+.faq__answer ul,
+.faq__answer ol {
+  margin: 0 0 0.75rem;
+  padding-inline-start: 1.5rem;
+}
+
+.faq__answer li {
+  margin-bottom: 0.35rem;
+}
+
+/* ─── Mobile (≤ 749px) ─── */
+@media screen and (max-width: 749px) {
+  .faq__question {
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+
+  .faq__answer {
+    padding-inline-end: 1.5rem;
+    padding-bottom: 1.25rem;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .faq__question,
+  .faq__icon,
+  .faq--icon-plus-minus .faq__icon::before,
+  .faq--icon-plus-minus .faq__icon::after,
+  .faq--icon-chevron .faq__icon::before,
+  .faq__answer a {
+    transition: none;
+  }
+}

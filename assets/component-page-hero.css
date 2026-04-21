@@ -1,0 +1,257 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Hero Component
+   ─────────────────────
+   Lightweight page header for about / science / results pages.
+   No image picker, no stats — just breadcrumb, eyebrow, heading,
+   sub-headline, optional CTA, optional decorative orbs.
+
+   Font-size + color rules for .ig-section-label / .ig-section-title
+   / .ig-section-body are emitted by snippets/ig-section-controls.liquid
+   (ID-scoped for specificity). This file handles structure, layout,
+   orb rendering, and optional fade-in animation.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Section wrapper ─── */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--ig-pad-start, 120px) var(--ig-pad-end, 80px);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  isolation: isolate;
+}
+
+@media screen and (max-width: 749px) {
+  .page-hero {
+    padding-block: var(--ig-pad-start-m, 64px) var(--ig-pad-end-m, 48px);
+  }
+}
+
+/* ─── Container ─── */
+.page-hero__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--ig-container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .page-hero__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* ─── Alignment ─── */
+.page-hero--align-left .page-hero__container {
+  text-align: left;
+}
+
+.page-hero--align-center .page-hero__container {
+  text-align: center;
+}
+
+.page-hero--align-center .ig-section-title,
+.page-hero--align-center .page-hero__sub {
+  margin-inline: auto;
+}
+
+/* ─── Breadcrumb ─── */
+.page-hero__breadcrumb {
+  display: block;
+  margin-bottom: 0.5rem;
+  opacity: 0.65;
+  /* letter-spacing + uppercase inherited via .ig-section-label below */
+}
+
+.page-hero__breadcrumb,
+.page-hero__breadcrumb:visited {
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+}
+
+/* ─── Eyebrow + section label shared styling ─── */
+.ig-section-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: block;
+  opacity: 0.75;
+  /* font-size, margin-bottom, color set by ig-section-controls snippet */
+}
+
+.page-hero__eyebrow {
+  opacity: 0.85;
+}
+
+/* ─── Heading (h1) ─── */
+.ig-section-title {
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* font-size, max-width, margin-bottom, color set by ig-section-controls snippet */
+}
+
+.page-hero__heading em {
+  font-style: italic;
+  color: var(--ig-ember, rgb(var(--color-button)));
+}
+
+/* ─── Sub-headline ─── */
+.page-hero__sub {
+  max-width: var(--ig-body-width, 640px);
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-top: 0;
+  margin-bottom: 0;
+  /* font-size set by ig-section-controls snippet */
+}
+
+.page-hero__sub > :first-child { margin-top: 0; }
+.page-hero__sub > :last-child  { margin-bottom: 0; }
+
+/* ─── CTA ─── */
+.page-hero__actions {
+  margin-top: 2rem;
+}
+
+.page-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DECORATIVE ORBS
+   Subtle radial-gradient blobs positioned via wrapper modifier.
+   All color via scheme tokens and --ig-ember + color-mix() so
+   they remain brand-consistent across schemes. No raw hex.
+   ═══════════════════════════════════════════════════════════ */
+
+.page-hero__orb {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 0;
+  width: clamp(320px, 45vw, 640px);
+  height: clamp(320px, 45vw, 640px);
+  opacity: var(--page-hero-orb-opacity, 0.2);
+  background: radial-gradient(
+    circle at center,
+    var(--page-hero-orb-core, color-mix(in srgb, var(--ig-ember) 80%, transparent)) 0%,
+    var(--page-hero-orb-edge, color-mix(in srgb, var(--ig-ember) 20%, transparent)) 60%,
+    transparent 100%
+  );
+}
+
+/* ─── Orb opacity modifiers (4 discrete steps, no 5-range limit hit) ─── */
+.page-hero--orb-opacity-10 { --page-hero-orb-opacity: 0.10; }
+.page-hero--orb-opacity-20 { --page-hero-orb-opacity: 0.20; }
+.page-hero--orb-opacity-30 { --page-hero-orb-opacity: 0.30; }
+.page-hero--orb-opacity-40 { --page-hero-orb-opacity: 0.40; }
+
+/* ─── Orb color modifiers ─── */
+.page-hero--orb-color-gold {
+  --page-hero-orb-core: color-mix(in srgb, var(--ig-ember) 80%, transparent);
+  --page-hero-orb-edge: color-mix(in srgb, var(--ig-ember) 20%, transparent);
+}
+
+.page-hero--orb-color-cream {
+  --page-hero-orb-core: color-mix(in srgb, var(--ig-warm-white, rgb(var(--color-background))) 90%, var(--ig-ember));
+  --page-hero-orb-edge: color-mix(in srgb, var(--ig-warm-white, rgb(var(--color-background))) 40%, transparent);
+}
+
+.page-hero--orb-color-navy {
+  --page-hero-orb-core: rgba(var(--color-foreground), 0.9);
+  --page-hero-orb-edge: rgba(var(--color-foreground), 0.2);
+}
+
+.page-hero--orb-color-auto {
+  --page-hero-orb-core: rgba(var(--color-button), 0.8);
+  --page-hero-orb-edge: rgba(var(--color-button), 0.15);
+}
+
+/* ─── Orb position: top-right only ─── */
+.page-hero--orb-top-right .page-hero__orb--1 {
+  top: -15%;
+  right: -10%;
+}
+
+/* ─── Orb position: bottom-left only ─── */
+.page-hero--orb-bottom-left .page-hero__orb--1 {
+  bottom: -15%;
+  left: -10%;
+}
+
+/* ─── Orb position: both ─── */
+.page-hero--orb-both .page-hero__orb--1 {
+  top: -15%;
+  right: -10%;
+}
+
+.page-hero--orb-both .page-hero__orb--2 {
+  bottom: -20%;
+  left: -10%;
+  width: clamp(260px, 35vw, 500px);
+  height: clamp(260px, 35vw, 500px);
+  opacity: calc(var(--page-hero-orb-opacity, 0.2) * 0.75);
+}
+
+/* ─── Mobile: shrink + pull orbs closer so they don't blow out layout ─── */
+@media screen and (max-width: 749px) {
+  .page-hero__orb {
+    width: clamp(240px, 70vw, 360px);
+    height: clamp(240px, 70vw, 360px);
+    filter: blur(30px);
+  }
+
+  .page-hero--orb-top-right .page-hero__orb--1,
+  .page-hero--orb-both .page-hero__orb--1 {
+    top: -10%;
+    right: -25%;
+  }
+
+  .page-hero--orb-bottom-left .page-hero__orb--1,
+  .page-hero--orb-both .page-hero__orb--2 {
+    bottom: -15%;
+    left: -25%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOTION
+   Fade-in on load, gated on prefers-reduced-motion: no-preference.
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-hero__container > * {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: page-hero-fade-in 0.6s ease-out forwards;
+  }
+
+  .page-hero__container > *:nth-child(1) { animation-delay: 0.05s; }
+  .page-hero__container > *:nth-child(2) { animation-delay: 0.15s; }
+  .page-hero__container > *:nth-child(3) { animation-delay: 0.25s; }
+  .page-hero__container > *:nth-child(4) { animation-delay: 0.35s; }
+  .page-hero__container > *:nth-child(5) { animation-delay: 0.45s; }
+
+  .page-hero__orb {
+    animation: page-hero-orb-fade 1.2s ease-out 0.1s both;
+  }
+
+  @keyframes page-hero-fade-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes page-hero-orb-fade {
+    from { opacity: 0; }
+    to   { opacity: var(--page-hero-orb-opacity, 0.2); }
+  }
+}

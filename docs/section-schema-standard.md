@@ -421,6 +421,13 @@ This is the checklist for migrating a section currently using inline styles, har
 | `ig-trust-bar.liquid` | ✅ retrofitted 2026-04-19 | Items use `.ig-section-label` class; separator dots opt-in |
 | `ig-hero.liquid` | ✅ retrofitted 2026-04-19 | All custom orb/animation/position controls preserved as section-specific; `heading_size` max widened to 12; orb gradients via `color-mix()` from `--ig-ember`; 13 ranges total |
 | `ig-products-grid.liquid` | ✅ retrofitted 2026-04-19 | All 20 block setting IDs preserved; `custom_background` per-block tint kept as inline style |
+| `page-hero.liquid` | ✅ new 2026-04-19 | Reusable page header; orb-color variants via `color-mix()` + brand tokens |
+| `stats-bar.liquid` | ✅ new 2026-04-19 | N-column numeric stat grid; optional `linked_product` per cell |
+| `timeline.liquid` | ✅ new 2026-04-19 | Horizontal/vertical orientation; connecting line via pseudo-element |
+| `comparison-table.liquid` | ✅ new 2026-04-19 | 2- or 3-column; div-grid with ARIA roles; mobile collapses to stacked cards |
+| `study-cards.liquid` | ✅ new 2026-04-19 | Clinical study card grid; article-picker with URL fallback |
+| `testimonial-quotes.liquid` | ✅ new 2026-04-19 | Quote cards with optional portraits + star ratings + verified badge |
+| `faq.liquid` | ✅ new 2026-04-19 | Native `<details>/<summary>`; 3 icon styles (plus-minus, chevron, none) |
 
 When every `ig-*` section is retrofitted, delete `snippets/ig-section-header-style.liquid` and `docs/section-header-typography-standard.md`.
 

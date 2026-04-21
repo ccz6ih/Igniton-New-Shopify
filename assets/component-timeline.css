@@ -1,0 +1,284 @@
+/* ============================================================
+   Timeline — numbered step sequence
+   Reads --ig-* from ig-section-controls and --color-* from Dawn.
+   No raw hex. No font-family.
+   ============================================================ */
+
+.timeline {
+  padding-block: var(--ig-pad-start) var(--ig-pad-end);
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+
+  /* Accent tokens — resolved from scheme only */
+  --timeline-accent-bg: rgb(var(--color-button));
+  --timeline-accent-fg: rgb(var(--color-button-text));
+  --timeline-line: rgb(var(--color-foreground) / 0.2);
+  --timeline-marker-size: 3rem;
+  --timeline-marker-gap: 1.25rem;
+  --timeline-step-gap: 2.5rem;
+}
+
+.timeline--accent-scheme-foreground {
+  --timeline-accent-bg: rgb(var(--color-foreground));
+  --timeline-accent-fg: rgb(var(--color-background));
+}
+
+@media screen and (max-width: 749px) {
+  .timeline {
+    padding-block: var(--ig-pad-start-m) var(--ig-pad-end-m);
+  }
+}
+
+.timeline__container {
+  width: 100%;
+  max-width: var(--ig-container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .timeline__container {
+    padding-inline: 5rem;
+  }
+}
+
+/* Label + heading come in from ig-section-controls — nothing to do */
+
+.timeline__placeholder {
+  padding: 2rem;
+  border: 0.125rem dashed rgb(var(--color-foreground) / 0.2);
+  border-radius: 0.5rem;
+  text-align: center;
+  color: rgb(var(--color-foreground) / 0.7);
+}
+
+/* ---- Ordered list ---- */
+.timeline__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+/* ---- Step (shared) ---- */
+.timeline__step {
+  position: relative;
+  display: flex;
+  gap: var(--timeline-marker-gap);
+}
+
+.timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.timeline__time {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.timeline__title {
+  margin: 0;
+  font-size: calc(var(--ig-body-size) * 1.15);
+  line-height: 1.3;
+  color: rgb(var(--color-foreground));
+}
+
+.timeline__desc {
+  margin: 0;
+  max-width: var(--ig-body-width);
+  color: rgb(var(--color-foreground));
+  opacity: 0.85;
+  line-height: 1.55;
+}
+
+/* ---- Marker circle ---- */
+.timeline__marker {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--timeline-marker-size);
+  height: var(--timeline-marker-size);
+  border-radius: 50%;
+  background: var(--timeline-accent-bg);
+  color: var(--timeline-accent-fg);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.timeline__marker-text {
+  line-height: 1;
+}
+
+/* Bullet variant — smaller dot, same accent */
+.timeline--num-bullet .timeline__marker {
+  width: 0.875rem;
+  height: 0.875rem;
+  align-self: flex-start;
+  margin-top: 0.4rem;
+}
+
+/* None variant — remove the circle entirely */
+.timeline--num-none .timeline__marker {
+  display: none;
+}
+
+/* ============================================================
+   VERTICAL orientation
+   ============================================================ */
+.timeline--vertical .timeline__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--timeline-step-gap);
+}
+
+/* Vertical connecting line: drawn down the center of the marker
+   column using a pseudo-element anchored to the list. Line starts
+   at the first marker and ends at the last — no overflow past ends. */
+.timeline--vertical.timeline--connected .timeline__steps::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--timeline-marker-size) / 2);
+  bottom: calc(var(--timeline-marker-size) / 2);
+  left: calc(var(--timeline-marker-size) / 2);
+  width: 0.125rem;
+  transform: translateX(-50%);
+  background: var(--timeline-line);
+  z-index: 0;
+}
+
+/* Bullet variant — thinner line aligned to bullet center */
+.timeline--vertical.timeline--num-bullet.timeline--connected .timeline__steps::before {
+  top: 0.85rem;
+  bottom: 0.85rem;
+  left: 0.4375rem;
+}
+
+/* None variant — draw line aligned to content edge */
+.timeline--vertical.timeline--num-none.timeline--connected .timeline__steps::before {
+  left: 0.0625rem;
+  top: 0.25rem;
+  bottom: 0.25rem;
+}
+
+.timeline--vertical.timeline--num-none .timeline__step {
+  padding-left: 1.25rem;
+  border-left: 0.125rem solid transparent; /* spacing anchor */
+}
+
+/* ============================================================
+   HORIZONTAL orientation (desktop only)
+   ============================================================ */
+@media screen and (min-width: 750px) {
+  .timeline--horizontal .timeline__steps {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .timeline--horizontal .timeline__step {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .timeline--horizontal .timeline__content {
+    padding-right: 1rem;
+  }
+
+  /* Horizontal connecting line — single pseudo-element spanning
+     from first marker center to last marker center.
+     Markers sit on row 1; line runs behind them via z-index. */
+  .timeline--horizontal.timeline--connected .timeline__steps::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--timeline-marker-size) / 2);
+    /* Inset by half a column so the line starts at the first marker
+       center and ends at the last marker center (each step is 1fr,
+       gap is 1.5rem, marker centers sit at column-start + 50% of
+       column minus half gap). Approximation: inset 1/(2n) of width. */
+    left: calc(100% / var(--timeline-step-count, 4) / 2);
+    right: calc(100% / var(--timeline-step-count, 4) / 2);
+    height: 0.125rem;
+    background: var(--timeline-line);
+    z-index: 0;
+    transform: translateY(-50%);
+  }
+
+  /* Bullet variant adjustments (horizontal) — line aligns to bullet center */
+  .timeline--horizontal.timeline--num-bullet.timeline--connected .timeline__steps::before {
+    top: 0.8375rem;
+  }
+
+  /* None variant (horizontal) — line sits at content top edge */
+  .timeline--horizontal.timeline--num-none.timeline--connected .timeline__steps::before {
+    top: 0;
+  }
+}
+
+/* ============================================================
+   MOBILE — always vertical, regardless of orientation setting
+   ============================================================ */
+@media screen and (max-width: 749px) {
+  .timeline__steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--timeline-step-gap);
+  }
+
+  .timeline__step {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  /* Force a vertical line on mobile when connecting line is on */
+  .timeline--connected .timeline__steps::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--timeline-marker-size) / 2);
+    bottom: calc(var(--timeline-marker-size) / 2);
+    left: calc(var(--timeline-marker-size) / 2);
+    width: 0.125rem;
+    transform: translateX(-50%);
+    right: auto;
+    height: auto;
+    background: var(--timeline-line);
+    z-index: 0;
+  }
+
+  .timeline--num-bullet.timeline--connected .timeline__steps::before {
+    top: 0.85rem;
+    bottom: 0.85rem;
+    left: 0.4375rem;
+  }
+
+  .timeline--num-none.timeline--connected .timeline__steps::before {
+    left: 0.0625rem;
+    top: 0.25rem;
+    bottom: 0.25rem;
+  }
+
+  .timeline--num-none .timeline__step {
+    padding-left: 1.25rem;
+  }
+}
+
+/* ============================================================
+   Animation — stagger-fade on scroll, reduced-motion safe
+   Uses Dawn's existing .scroll-trigger.animate--fade-in class
+   which is gated by prefers-reduced-motion in Dawn's base CSS.
+   We only add per-step stagger delay here.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .timeline__step.scroll-trigger {
+    animation-delay: calc(var(--timeline-step-index, 0) * 120ms);
+  }
+}

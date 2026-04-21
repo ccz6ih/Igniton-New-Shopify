@@ -1,0 +1,398 @@
+{{ 'component-faq.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="Faq-{{ section.id }}"
+  class="faq color-{{ section.settings.color_scheme }} faq--dividers-{{ section.settings.divider_style }} faq--icon-{{ section.settings.icon_style }}"
+>
+  <div class="faq__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.intro_text != blank -%}
+      <div class="faq__intro ig-section-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.intro_text }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq__list{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'item' -%}
+            <details
+              class="faq__item"
+              role="listitem"
+              {% if section.settings.first_open and forloop.first %}open{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <summary class="faq__question">
+                <span class="faq__q-text ig-section-body">{{ block.settings.question }}</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__answer ig-section-body">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="faq__placeholder">
+        <p>Add FAQ item blocks to populate this section.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "narrow"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 96,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 3,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "default": "Questions",
+      "label": "Section label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "default": "Frequently asked",
+      "label": "Section heading"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro text",
+      "info": "Optional short paragraph below the heading."
+    },
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "first_open",
+      "label": "Open first item by default",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "divider_style",
+      "label": "Divider between items",
+      "options": [
+        { "value": "line",   "label": "Line" },
+        { "value": "subtle", "label": "Subtle" },
+        { "value": "none",   "label": "None" }
+      ],
+      "default": "line"
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "Disclosure icon",
+      "options": [
+        { "value": "plus-minus", "label": "Plus / minus" },
+        { "value": "chevron",    "label": "Chevron" },
+        { "value": "none",       "label": "None" }
+      ],
+      "default": "plus-minus"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "FAQ item",
+      "limit": 20,
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Is IgniCognition safe?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Yes. Every ingredient is selected on the strength of clinical evidence and the finished formula is manufactured in GMP-certified facilities.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ — product",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "container_width": "narrow",
+        "section_label": "Questions",
+        "section_heading": "Frequently asked",
+        "first_open": true,
+        "divider_style": "line",
+        "icon_style": "plus-minus"
+      },
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "Is IgniCognition safe?",
+            "answer": "<p>Yes. Every ingredient is chosen on the strength of published clinical evidence, at clinically studied doses. The finished formula is manufactured in a GMP-certified facility and third-party tested for purity.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "How quickly will I feel the effects?",
+            "answer": "<p>Most people notice sharper focus and calmer energy within 45–90 minutes of the first dose. The deeper cognitive and cellular benefits build over 4–8 weeks of daily use.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Can I take it with other supplements or medications?",
+            "answer": "<p>IgniCognition is formulated to stack well with most nootropics and daily vitamins. If you're on prescription medication — especially blood thinners or antidepressants — check with your physician before starting any new supplement.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "What makes the cold plasma process different?",
+            "answer": "<p>It's a proprietary physics-based enhancement that increases cellular uptake of the active compounds. University-led trials showed statistically significant improvements over the same unenhanced formula.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>We back every bottle with a 60-day money-back guarantee. If you're not satisfied, email us and we'll refund your order — no questions asked.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "FAQ — science",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "container_width": "narrow",
+        "section_label": "The science",
+        "section_heading": "Common questions about the process",
+        "first_open": false,
+        "divider_style": "line",
+        "icon_style": "chevron"
+      },
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "What is cold plasma enhancement?",
+            "answer": "<p>Cold plasma is a low-temperature, electrically excited gas state. When applied to a finished formula, it modifies surface chemistry at the molecular level — improving the bioavailability of the active compounds without altering their identity.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Is the underlying research peer-reviewed?",
+            "answer": "<p>Yes. The core physics has been published across 30+ years in peer-reviewed journals, and our applied trials were conducted in partnership with an accredited university research group.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "How were the trials designed?",
+            "answer": "<p>Placebo-controlled, double-blind. Subjects received either the enhanced formula or the same formula without enhancement. Endpoints measured cognitive performance, subjective clarity, and biomarker shifts over 8 weeks.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

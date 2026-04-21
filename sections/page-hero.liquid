@@ -1,0 +1,366 @@
+{{ 'component-page-hero.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="PageHero-{{ section.id }}"
+  class="page-hero color-{{ section.settings.color_scheme }} page-hero--align-{{ section.settings.content_alignment }}{% if section.settings.show_orb %} page-hero--with-orb page-hero--orb-{{ section.settings.orb_position }} page-hero--orb-color-{{ section.settings.orb_color }} page-hero--orb-opacity-{{ section.settings.orb_opacity }}{% endif %}"
+>
+  <div class="page-hero__container">
+    {%- if section.settings.show_breadcrumb and section.settings.breadcrumb_text != blank -%}
+      <nav
+        class="page-hero__breadcrumb ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        aria-label="Breadcrumb"
+      >
+        {{ section.settings.breadcrumb_text }}
+      </nav>
+    {%- endif -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ig-section-label page-hero__eyebrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.eyebrow }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="ig-section-title ig-font-display page-hero__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.heading }}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <div class="ig-section-body ig-font-body page-hero__sub{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.subheading }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="page-hero__actions{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <a
+          href="{{ section.settings.button_link | default: '#' }}"
+          class="button button--primary page-hero__cta"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_orb -%}
+    <span class="page-hero__orb page-hero__orb--1" aria-hidden="true"></span>
+    {%- if section.settings.orb_position == 'both' -%}
+      <span class="page-hero__orb page-hero__orb--2" aria-hidden="true"></span>
+    {%- endif -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Page Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 120,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 80,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 64,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 8, "step": 0.5,
+      "unit": "rem",
+      "default": 3.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "1.75"
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_scale",
+      "min": 40, "max": 100, "step": 5,
+      "unit": "%",
+      "default": 65,
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile (as a % of desktop size)."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 1, "max": 1.5, "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "label": "Body text size",
+      "info": "Minimum 1rem / 16px. Legal disclaimers are handled separately."
+    },
+    {
+      "type": "select",
+      "id": "body_max_width",
+      "label": "Body container width",
+      "options": [
+        { "value": "480", "label": "Narrow (480px)" },
+        { "value": "640", "label": "Medium (640px)" },
+        { "value": "800", "label": "Wide (800px)" },
+        { "value": "1000","label": "Full (1000px)" }
+      ],
+      "default": "640"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_text",
+      "label": "Breadcrumb text",
+      "default": "Home / Science",
+      "info": "Only shown when the breadcrumb toggle is on."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Clinical research"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Headline lives here"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Sub-headline",
+      "default": "<p>Supporting paragraph that introduces the page's core promise.</p>"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Button (optional)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Decorative orb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_orb",
+      "label": "Show decorative orb",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "orb_position",
+      "label": "Orb position",
+      "options": [
+        { "value": "top-right",   "label": "Top right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "both",        "label": "Both (top-right + bottom-left)" }
+      ],
+      "default": "top-right"
+    },
+    {
+      "type": "select",
+      "id": "orb_color",
+      "label": "Orb color",
+      "options": [
+        { "value": "gold",  "label": "Gold (ember)" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "navy",  "label": "Navy (foreground)" },
+        { "value": "auto",  "label": "Auto (scheme accent)" }
+      ],
+      "default": "gold"
+    },
+    {
+      "type": "select",
+      "id": "orb_opacity",
+      "label": "Orb opacity",
+      "options": [
+        { "value": "10", "label": "10%" },
+        { "value": "20", "label": "20%" },
+        { "value": "30", "label": "30%" },
+        { "value": "40", "label": "40%" }
+      ],
+      "default": "20"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page hero — dark",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "content_alignment": "left",
+        "show_orb": true,
+        "orb_position": "top-right",
+        "orb_color": "gold",
+        "orb_opacity": "20",
+        "eyebrow": "Clinical research",
+        "heading": "Headline lives here",
+        "subheading": "<p>Supporting paragraph that introduces the page's core promise.</p>"
+      }
+    },
+    {
+      "name": "Page hero — light",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "content_alignment": "center",
+        "show_orb": false,
+        "orb_position": "top-right",
+        "orb_color": "gold",
+        "orb_opacity": "20",
+        "eyebrow": "About Igniton",
+        "heading": "Headline lives here",
+        "subheading": "<p>Supporting paragraph that introduces the page's core promise.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,426 @@
+{{ 'component-stats-bar.css' | asset_url | stylesheet_tag }}
+
+{% render 'ig-section-controls', section: section %}
+
+<section
+  id="StatsBar-{{ section.id }}"
+  class="stats-bar color-{{ section.settings.color_scheme }} stats-bar--align-{{ section.settings.stat_alignment }} stats-bar--cols-d-{{ section.settings.columns_desktop }} stats-bar--cols-m-{{ section.settings.columns_mobile }} stats-bar--num-{{ section.settings.stat_number_size }}{% if section.settings.show_dividers %} stats-bar--dividers{% endif %}"
+>
+  <div class="stats-bar__container">
+    {%- if section.settings.section_label != blank -%}
+      <p class="ig-section-label{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_label }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="ig-section-title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ section.settings.section_heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="stats-bar__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            {%- liquid
+              assign is_linked = false
+              if block.settings.linked_product != blank
+                assign is_linked = true
+                assign link_url = block.settings.linked_product.url
+              endif
+            -%}
+            {%- if is_linked -%}
+              <a href="{{ link_url }}" class="stats-bar__cell stats-bar__cell--link" {{ block.shopify_attributes }}>
+            {%- else -%}
+              <div class="stats-bar__cell" {{ block.shopify_attributes }}>
+            {%- endif -%}
+              <div class="stats-bar__number">
+                <span class="stats-bar__num">{{ block.settings.number }}</span>
+                {%- if block.settings.unit != blank -%}
+                  <span class="stats-bar__unit">{{ block.settings.unit }}</span>
+                {%- endif -%}
+              </div>
+              <div class="stats-bar__label ig-section-body">{{ block.settings.label }}</div>
+              {%- if block.settings.source != blank -%}
+                <div class="stats-bar__source">{{ block.settings.source }}</div>
+              {%- endif -%}
+            {%- if is_linked -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="stats-bar__placeholder">
+        <p>Add stat blocks to populate the stats bar.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stats Bar",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "narrow",  "label": "Narrow (720px)" },
+        { "value": "medium",  "label": "Medium (960px)" },
+        { "value": "default", "label": "Default (1200px)" },
+        { "value": "wide",    "label": "Wide (1440px)" },
+        { "value": "full",    "label": "Full bleed" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 72,
+      "label": "Top padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_desktop",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 72,
+      "label": "Bottom padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_start_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_block_end_mobile",
+      "min": 0, "max": 200, "step": 4,
+      "unit": "px",
+      "default": 48,
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 60, "max": 180, "step": 5,
+      "unit": "%",
+      "default": 100,
+      "label": "Label size",
+      "info": "Percent of base label size (0.8125rem / 13px)."
+    },
+    {
+      "type": "select",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "options": [
+        { "value": "0.25", "label": "Tight" },
+        { "value": "0.5",  "label": "Compact" },
+        { "value": "0.75", "label": "Normal" },
+        { "value": "1.25", "label": "Loose" },
+        { "value": "2",    "label": "Spacious" }
+      ],
+      "default": "0.75"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2, "max": 6, "step": 0.5,
+      "unit": "rem",
+      "default": 2.5,
+      "label": "Heading size (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "heading_max_width",
+      "label": "Heading container width",
+      "options": [
+        { "value": "600",  "label": "Narrow (600px)" },
+        { "value": "900",  "label": "Medium (900px)" },
+        { "value": "1200", "label": "Wide (1200px)" },
+        { "value": "1400", "label": "Full (1400px)" }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "heading_spacing",
+      "label": "Space below heading",
+      "options": [
+        { "value": "1",    "label": "Tight" },
+        { "value": "1.75", "label": "Compact" },
+        { "value": "2.5",  "label": "Normal" },
+        { "value": "3.5",  "label": "Loose" },
+        { "value": "5",    "label": "Spacious" }
+      ],
+      "default": "2.5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_scale",
+      "label": "Mobile heading scale",
+      "info": "How aggressively the heading shrinks on mobile.",
+      "options": [
+        { "value": "40",  "label": "Aggressive (40%)" },
+        { "value": "55",  "label": "Balanced (55%)" },
+        { "value": "65",  "label": "Default (65%)" },
+        { "value": "80",  "label": "Gentle (80%)" },
+        { "value": "100", "label": "Same as desktop" }
+      ],
+      "default": "65"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "info": "Optional eyebrow above the heading."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "section_heading",
+      "label": "Section heading",
+      "info": "Optional heading above the stats grid."
+    },
+    {
+      "type": "header",
+      "content": "Stats grid"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" },
+        { "value": "5", "label": "5 columns" },
+        { "value": "6", "label": "6 columns" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns (mobile)",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "stat_number_size",
+      "label": "Stat number size",
+      "info": "Controls the display size of every stat number.",
+      "options": [
+        { "value": "sm", "label": "Small (2rem)" },
+        { "value": "md", "label": "Medium (3rem)" },
+        { "value": "lg", "label": "Large (4.5rem)" },
+        { "value": "xl", "label": "X-Large (6rem)" }
+      ],
+      "default": "lg"
+    },
+    {
+      "type": "select",
+      "id": "stat_alignment",
+      "label": "Stat alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left",   "label": "Left" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "label": "Show dividers between columns",
+      "default": false,
+      "info": "Vertical lines between columns on desktop."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "30",
+          "info": "The headline number (e.g. 30, 2, 90)."
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "label": "Unit",
+          "info": "Optional suffix after the number (e.g. +, %, yrs, $)."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Years of research"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source / footnote",
+          "info": "Optional small print (e.g. \"n=80, 90 days\")."
+        },
+        {
+          "type": "product",
+          "id": "linked_product",
+          "label": "Linked product",
+          "info": "Optional — makes the stat cell a link to this product."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stats bar — 4 columns",
+      "settings": {
+        "columns_desktop": "4",
+        "stat_number_size": "lg"
+      },
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "30",
+            "unit": "+",
+            "label": "Years of research"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "2",
+            "label": "University-led trials"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "5",
+            "label": "Gold-standard ingredients"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "100",
+            "unit": "%",
+            "label": "GRAS-certified"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stats bar — 5 columns large numbers",
+      "settings": {
+        "columns_desktop": "5",
+        "columns_mobile": "2",
+        "stat_number_size": "xl",
+        "show_dividers": true
+      },
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "42",
+            "unit": "%",
+            "label": "Faster recall",
+            "source": "n=80, 90 days"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "31",
+            "unit": "%",
+            "label": "Sharper focus",
+            "source": "n=80, 90 days"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "28",
+            "unit": "%",
+            "label": "Less mental fatigue",
+            "source": "n=80, 90 days"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "90",
+            "unit": "d",
+            "label": "Trial duration"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "2",
+            "label": "Peer-reviewed publications"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
