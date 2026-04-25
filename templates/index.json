@@ -162,13 +162,13 @@
       "name": "Igniton Trust Bar",
       "settings": {
         "color_scheme": "scheme-2",
-        "container_width": "default",
+        "container_width": "wide",
         "padding_block_start_desktop": 24,
         "padding_block_end_desktop": 24,
         "padding_block_start_mobile": 16,
         "padding_block_end_mobile": 16,
-        "label_size": "100",
-        "label_spacing": "0",
+        "label_size": "120",
+        "label_spacing": "0.25",
         "show_separators": true,
         "item_gap": "3",
         "item_alignment": "center"
