@@ -15,19 +15,19 @@
         "eyebrow_HPNGH4": {
           "type": "eyebrow",
           "settings": {
-            "text": "Clinically studied · University proven · No stimulants"
+            "text": "University studied · Peer-Reviewed Publications · No stimulants"
           }
         },
         "headline_DiEygD": {
           "type": "headline",
           "settings": {
-            "heading": "Think faster.<br> Age <em>slower.<br></em> Feel the difference."
+            "heading": "Think quickly.<br> Age <em>better.<br></em> Feel the difference."
           }
         },
         "subheadline_UfhyAg": {
           "type": "subheadline",
           "settings": {
-            "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days.Longevity biomarkers reduced.<br> No caffeine, no crash, no fillers.</p>"
+            "text": "<p>Results in 30 days:  </p><p>- Stronger Memory, Focus, Cognitive Speed</p><p>- Lower Stress & Inflammation Markers</p><p>- More REM Sleep</p>"
           }
         },
         "buttons_ACHtnU": {
@@ -36,7 +36,7 @@
             "button_label_1": "Try Igniton",
             "button_link_1": "shopify://products/igni-cognition",
             "button_style_1": "primary",
-            "button_label_2": "See the clinical results →",
+            "button_label_2": "See the university results →",
             "button_link_2": "shopify://pages/igni-longevity-test-report-july-2024",
             "button_style_2": "link"
           }
@@ -44,25 +44,25 @@
         "stat_fwPKVF": {
           "type": "stat",
           "settings": {
-            "number": "83",
+            "number": "25-83",
             "unit": "%",
-            "label": "Short-term memory improvement"
+            "label": "Cognitive Improvements"
           }
         },
         "stat_8taXJN": {
           "type": "stat",
           "settings": {
-            "number": "51",
+            "number": "8-37",
             "unit": "%",
-            "label": "Improvement in attention"
+            "label": "Biomarker Improvements"
           }
         },
         "stat_HXmCG6": {
           "type": "stat",
           "settings": {
-            "number": "30",
+            "number": "25",
             "unit": "%",
-            "label": "Days to measurable results"
+            "label": "more REM Sleep"
           }
         },
         "stat_rwUPHj": {
@@ -124,7 +124,7 @@
         "trust_item_j9dNmz": {
           "type": "trust_item",
           "settings": {
-            "text": "University-led clinical trials"
+            "text": "University-led trials"
           }
         },
         "trust_item_yYmePb": {
@@ -136,7 +136,7 @@
         "trust_item_HwRjVz": {
           "type": "trust_item",
           "settings": {
-            "text": "GRAS-certified ingredients"
+            "text": "Quantum-charged GRAS ingredients"
           }
         },
         "trust_item_QXLhTM": {
@@ -184,14 +184,14 @@
             "featured": false,
             "tag": "Cognition",
             "custom_name": "IgniCognition™",
-            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash. Your sharpest thinking, sustained throughout the day.",
+            "custom_description": "Improves memory, focus, and mental speed — without stimulants or the inevitable crash. Your sharpest thinking, sustained throughout the day.",
             "show_stats": true,
-            "stat_1_num": "100%",
-            "stat_1_label": "Memory improvement",
-            "stat_2_num": "83%",
-            "stat_2_label": "Performance quality",
+            "stat_1_num": "47%",
+            "stat_1_label": "Avg. Mental Improvement",
+            "stat_2_num": "25-83%",
+            "stat_2_label": "Range of Improvements",
             "stat_3_num": "30 days",
-            "stat_3_label": "To measurable results",
+            "stat_3_label": "To Measurable Results",
             "show_price": true,
             "price_note": "Subscribe & save 20%",
             "custom_link": "",
@@ -206,14 +206,36 @@
             "featured": false,
             "tag": "Longevity",
             "custom_name": "IgniLongevity™",
-            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory. Support your body's natural repair systems — so you don't just live longer, you feel better doing it.",
+            "custom_description": "Targets the inflammatory and aging biomarkers. Supports your body's natural repair systems — so you don't just live longer, you feel better doing it.",
             "show_stats": true,
-            "stat_1_num": "hs-CRP",
-            "stat_1_label": "Inflammation marker",
-            "stat_2_num": "NAD⁺",
-            "stat_2_label": "Cellular energy support",
-            "stat_3_num": "60 days",
-            "stat_3_label": "To longevity results",
+            "stat_1_num": "19%",
+            "stat_1_label": "Avg. Biomarker Improvement",
+            "stat_2_num": "8-37%",
+            "stat_2_label": "Range of Biomarker Improvements",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To Measurable Results",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_link": "",
+            "link_text": "Shop IgniLongevity",
+            "button_style_secondary": false
+          }
+        },
+        "product_card_VnAzfn": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-longevity",
+            "featured": false,
+            "tag": "REM SLEEP",
+            "custom_name": "IgniREM Sleep™",
+            "custom_description": "Targeted support at the nervous system & relaxation, sleep signaling neurotransmitters, REM sleep architecture and cellular recovery layers — so you get more deep sleep and recovery.",
+            "show_stats": true,
+            "stat_1_num": "25%",
+            "stat_1_label": "More REM Sleep",
+            "stat_2_num": "",
+            "stat_2_label": "",
+            "stat_3_num": "Less than 30 days",
+            "stat_3_label": "To Better Sleep",
             "show_price": true,
             "price_note": "Subscribe & save 20%",
             "custom_link": "",
@@ -247,13 +269,14 @@
       "block_order": [
         "product_card_WfJh8E",
         "product_card_aYxHBz",
+        "product_card_VnAzfn",
         "product_card_3gaHJq"
       ],
       "name": "Products Showcase",
       "settings": {
         "color_scheme": "",
         "container_width": "default",
-        "eyebrow": "Two products. One breakthrough.",
+        "eyebrow": "Multiple products. One breakthrough.",
         "heading": "Every ingredient enhanced for maximum effect.",
         "padding_block_start_desktop": 96,
         "padding_block_end_desktop": 96,
