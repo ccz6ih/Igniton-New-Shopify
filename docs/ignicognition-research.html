@@ -1,0 +1,127 @@
+<!-- Igniton research section: paste into a Shopify Custom Liquid block/section. CSS is scoped to .igniton-research. -->
+<style>
+.igniton-research{--ir-border:#d9dde3;--ir-muted:#5f6875;--ir-bg:#f7f8fa;--ir-head:#111827;font-family:inherit;color:inherit;line-height:1.5;max-width:100%;}
+.igniton-research *{box-sizing:border-box;}
+.igniton-research__header{margin:0 0 2rem;}
+.igniton-research__header h2{margin:0 0 .5rem;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.2;color:var(--ir-head);}
+.igniton-research__intro{margin:.4rem 0;color:var(--ir-muted);max-width:72ch;}
+.igniton-research__ingredient{margin:0 0 2.5rem;scroll-margin-top:6rem;}
+.igniton-research__ingredient h3{margin:0 0 .65rem;font-size:1.25rem;line-height:1.3;color:var(--ir-head);}
+.igniton-research__note{margin:.5rem 0 1rem;padding:.8rem 1rem;background:var(--ir-bg);border-left:3px solid var(--ir-border);font-size:.95rem;}
+.igniton-research__search{margin:.55rem 0 1rem;font-size:.95rem;}
+.igniton-research__search a,.igniton-research__table a{word-break:break-word;text-underline-offset:2px;}
+.igniton-research__table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.igniton-research__table{width:100%;border-collapse:collapse;table-layout:auto;font-size:.92rem;}
+.igniton-research__table th{padding:.7rem .65rem;text-align:left;vertical-align:bottom;background:var(--ir-bg);border-bottom:2px solid var(--ir-border);font-weight:700;color:var(--ir-head);}
+.igniton-research__table td{padding:.75rem .65rem;vertical-align:top;border-bottom:1px solid var(--ir-border);}
+.igniton-research__table td:nth-child(1){min-width:16rem;}
+.igniton-research__table td:nth-child(2){min-width:12rem;}
+.igniton-research__table td:nth-child(3){white-space:nowrap;}
+.igniton-research__table td:nth-child(4){min-width:20rem;}
+.igniton-research__empty{margin:.6rem 0 1rem;color:var(--ir-muted);font-style:italic;}
+.igniton-research__disclaimer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--ir-border);font-size:.85rem;color:var(--ir-muted);max-width:80ch;}
+@media (max-width:720px){
+  .igniton-research__table,.igniton-research__table tbody,.igniton-research__table tr,.igniton-research__table td{display:block;width:100%;}
+  .igniton-research__table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .igniton-research__table tr{padding:.9rem 0;border-bottom:1px solid var(--ir-border);}
+  .igniton-research__table td{display:grid;grid-template-columns:8.25rem minmax(0,1fr);gap:.6rem;border:0;padding:.3rem 0;min-width:0!important;white-space:normal!important;}
+  .igniton-research__table td::before{content:attr(data-label);font-weight:700;color:var(--ir-head);}
+}
+</style>
+<section class="igniton-research" data-product="IgniCognition">
+<header class="igniton-research__header">
+<h2><em>Igni</em>Cognition Ingredient Research</h2>
+<p class="igniton-research__intro">Published research on the individual ingredients in this product. Studies are grouped by ingredient and link to the underlying publication record.</p>
+</header>
+<section class="igniton-research__ingredient" id="ignicognition-citicoline-cdp-choline">
+<h3>Citicoline (CDP-choline)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=citicoline+human+randomized+cognition" target="_blank" rel="noopener noreferrer">Search PubMed for additional Citicoline (CDP-choline) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Citicoline and Memory Function in Healthy Older Adults: A Randomized, Double-Blind, Placebo-Controlled Clinical Trial</td>
+<td data-label="Journal">The Journal of Nutrition</td>
+<td data-label="Year">2021</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled trial; 100 adults aged 50-85; 500 mg/day for 12 weeks.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/33978188/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Double-blind placebo-controlled study with citicoline in APOE genotyped Alzheimer&#x27;s disease patients. Effects on cognitive performance, brain bioelectrical activity and cerebral perfusion</td>
+<td data-label="Journal">Methods and Findings in Experimental and Clinical Pharmacology</td>
+<td data-label="Year">2000</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled clinical trial in mild-to-moderate Alzheimer disease.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/10669911/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignicognition-alpha-gpc-choline-alphoscerate-l-alpha-glycerylphosphorylcholine">
+<h3>Alpha-GPC (choline alphoscerate; L-alpha glycerylphosphorylcholine)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22alpha+GPC%22+OR+%22choline+alphoscerate%22+OR+%22glycerylphosphorylcholine%22" target="_blank" rel="noopener noreferrer">Search PubMed for additional Alpha-GPC (choline alphoscerate; L-alpha glycerylphosphorylcholine) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Efficacy and safety of choline alphoscerate for amnestic mild cognitive impairment: a randomized double-blind placebo-controlled trial</td>
+<td data-label="Journal">Alzheimer&#x27;s Research &amp; Therapy</td>
+<td data-label="Year">2024</td>
+<td data-label="Study Note">Multicenter randomized placebo-controlled trial; 100 participants with mild cognitive impairment; 600 mg alpha-GPC for 12 weeks.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/39300341/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignicognition-phosphatidylserine">
+<h3>Phosphatidylserine</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=phosphatidylserine+human+randomized+cognition+stress" target="_blank" rel="noopener noreferrer">Search PubMed for additional Phosphatidylserine research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">The effect of phosphatidylserine administration on memory and symptoms of attention-deficit hyperactivity disorder: a randomised, double-blind, placebo-controlled clinical trial</td>
+<td data-label="Journal">Journal of Human Nutrition and Dietetics</td>
+<td data-label="Year">2014</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled trial; soy-derived phosphatidylserine 200 mg/day for 2 months.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/23495677/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignicognition-coenzyme-q10-coq10-ubiquinone-ubiquinol-literature">
+<h3>Coenzyme Q10 (CoQ10; ubiquinone/ubiquinol literature)</h3>
+<p class="igniton-research__note">A very large CoQ10 literature exists across cardiovascular, mitochondrial, neurologic and fatigue outcomes. The study listed below includes CoQ10 in combination with NADH; use the comprehensive PubMed link for the larger isolated-CoQ10 literature.</p>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22coenzyme+Q10%22+OR+ubiquinone+OR+ubiquinol" target="_blank" rel="noopener noreferrer">Search PubMed for additional Coenzyme Q10 (CoQ10; ubiquinone/ubiquinol literature) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Effect of Dietary Coenzyme Q10 Plus NADH Supplementation on Fatigue Perception and Health-Related Quality of Life in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Prospective, Randomized, Double-Blind, Placebo-Controlled Trial</td>
+<td data-label="Journal">Nutrients</td>
+<td data-label="Year">2021</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled trial of CoQ10 + NADH. Included because it directly studies CoQ10 but is not isolated-ingredient evidence.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/34444817/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignicognition-nadh-reduced-nicotinamide-adenine-dinucleotide">
+<h3>NADH (reduced nicotinamide adenine dinucleotide)</h3>
+<p class="igniton-research__note">Human studies exist in fatigue, Parkinson disease and related contexts, but many are small or use combination products. Combination evidence is explicitly labeled.</p>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=NADH+supplementation+human" target="_blank" rel="noopener noreferrer">Search PubMed for additional NADH (reduced nicotinamide adenine dinucleotide) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Effect of Dietary Coenzyme Q10 Plus NADH Supplementation on Fatigue Perception and Health-Related Quality of Life in Individuals with Myalgic Encephalomyelitis/Chronic Fatigue Syndrome: A Prospective, Randomized, Double-Blind, Placebo-Controlled Trial</td>
+<td data-label="Journal">Nutrients</td>
+<td data-label="Year">2021</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled trial; 20 mg NADH + 200 mg CoQ10 daily. Combination evidence, not isolated NADH evidence.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/34444817/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignicognition-n-acetyl-l-tyrosine-nalt">
+<h3>N-Acetyl-L-Tyrosine (NALT)</h3>
+<p class="igniton-research__note">Direct human clinical literature on the N-acetyl derivative itself is sparse. Most performance-under-stress trials use L-tyrosine, which should not be treated as equivalent evidence for NALT without pharmacokinetic justification. No direct human clinical study was selected for the curated layer because the exact-ingredient evidence is sparse or not clearly separable from related compounds/formulations. Use the comprehensive PubMed link above for the full indexed literature.</p>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22N-acetyl-L-tyrosine%22+OR+%22N+acetyl+tyrosine%22" target="_blank" rel="noopener noreferrer">Search PubMed for additional N-Acetyl-L-Tyrosine (NALT) research</a></p>
+<p class="igniton-research__empty">No direct human clinical study was selected for the curated study table for this exact ingredient/form.</p>
+</section>
+<p class="igniton-research__disclaimer">Research references are provided for educational and scientific context. Published studies on individual ingredients do not establish that this product will produce the same outcomes, and some cited studies use different doses, routes, populations, or combination formulations. Links open to PubMed records where available.</p>
+</section>

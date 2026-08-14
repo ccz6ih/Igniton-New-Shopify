@@ -1,0 +1,283 @@
+<!-- Igniton research section: paste into a Shopify Custom Liquid block/section. CSS is scoped to .igniton-research. -->
+<style>
+.igniton-research{--ir-border:#d9dde3;--ir-muted:#5f6875;--ir-bg:#f7f8fa;--ir-head:#111827;font-family:inherit;color:inherit;line-height:1.5;max-width:100%;}
+.igniton-research *{box-sizing:border-box;}
+.igniton-research__header{margin:0 0 2rem;}
+.igniton-research__header h2{margin:0 0 .5rem;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.2;color:var(--ir-head);}
+.igniton-research__intro{margin:.4rem 0;color:var(--ir-muted);max-width:72ch;}
+.igniton-research__ingredient{margin:0 0 2.5rem;scroll-margin-top:6rem;}
+.igniton-research__ingredient h3{margin:0 0 .65rem;font-size:1.25rem;line-height:1.3;color:var(--ir-head);}
+.igniton-research__note{margin:.5rem 0 1rem;padding:.8rem 1rem;background:var(--ir-bg);border-left:3px solid var(--ir-border);font-size:.95rem;}
+.igniton-research__search{margin:.55rem 0 1rem;font-size:.95rem;}
+.igniton-research__search a,.igniton-research__table a{word-break:break-word;text-underline-offset:2px;}
+.igniton-research__table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.igniton-research__table{width:100%;border-collapse:collapse;table-layout:auto;font-size:.92rem;}
+.igniton-research__table th{padding:.7rem .65rem;text-align:left;vertical-align:bottom;background:var(--ir-bg);border-bottom:2px solid var(--ir-border);font-weight:700;color:var(--ir-head);}
+.igniton-research__table td{padding:.75rem .65rem;vertical-align:top;border-bottom:1px solid var(--ir-border);}
+.igniton-research__table td:nth-child(1){min-width:16rem;}
+.igniton-research__table td:nth-child(2){min-width:12rem;}
+.igniton-research__table td:nth-child(3){white-space:nowrap;}
+.igniton-research__table td:nth-child(4){min-width:20rem;}
+.igniton-research__empty{margin:.6rem 0 1rem;color:var(--ir-muted);font-style:italic;}
+.igniton-research__disclaimer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--ir-border);font-size:.85rem;color:var(--ir-muted);max-width:80ch;}
+@media (max-width:720px){
+  .igniton-research__table,.igniton-research__table tbody,.igniton-research__table tr,.igniton-research__table td{display:block;width:100%;}
+  .igniton-research__table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .igniton-research__table tr{padding:.9rem 0;border-bottom:1px solid var(--ir-border);}
+  .igniton-research__table td{display:grid;grid-template-columns:8.25rem minmax(0,1fr);gap:.6rem;border:0;padding:.3rem 0;min-width:0!important;white-space:normal!important;}
+  .igniton-research__table td::before{content:attr(data-label);font-weight:700;color:var(--ir-head);}
+}
+</style>
+<section class="igniton-research" data-product="IgniLongevity">
+<header class="igniton-research__header">
+<h2><em>Igni</em>Longevity Ingredient Research</h2>
+<p class="igniton-research__intro">Published research on the individual ingredients in this product. Studies are grouped by ingredient and link to the underlying publication record.</p>
+</header>
+<section class="igniton-research__ingredient" id="ignilongevity-nicotinamide-riboside-nr">
+<h3>Nicotinamide Riboside (NR)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22nicotinamide+riboside%22" target="_blank" rel="noopener noreferrer">Search PubMed for additional Nicotinamide Riboside (NR) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Nicotinamide riboside is uniquely and orally bioavailable in mice and humans</td>
+<td data-label="Journal">Nature Communications</td>
+<td data-label="Year">2016</td>
+<td data-label="Study Note">Human pharmacokinetic/biomarker trial demonstrating oral NR raises the NAD+ metabolome.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/27721479/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Chronic nicotinamide riboside supplementation is well-tolerated and elevates NAD+ in healthy middle-aged and older adults</td>
+<td data-label="Journal">Nature Communications</td>
+<td data-label="Year">2018</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled crossover trial in healthy middle-aged and older adults.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/29599478/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">A randomized placebo-controlled trial of nicotinamide riboside in older adults with mild cognitive impairment</td>
+<td data-label="Journal">GeroScience</td>
+<td data-label="Year">2023</td>
+<td data-label="Study Note">Randomized placebo-controlled pilot; NR increased blood NAD+; exploratory cognitive/CBF outcomes.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/37994989/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignilongevity-resveratrol-including-trans-resveratrol">
+<h3>Resveratrol (including trans-resveratrol)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=resveratrol+human+randomized+clinical+trial" target="_blank" rel="noopener noreferrer">Search PubMed for additional Resveratrol (including trans-resveratrol) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Calorie restriction-like effects of 30 days of resveratrol supplementation on energy metabolism and metabolic profile in obese humans</td>
+<td data-label="Journal">Cell Metabolism</td>
+<td data-label="Year">2011</td>
+<td data-label="Study Note">Randomized double-blind crossover study; 150 mg/day resveratrol for 30 days.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/22055504/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Effects of resveratrol on cerebral blood flow variables and cognitive performance in humans: a double-blind, placebo-controlled, crossover investigation</td>
+<td data-label="Journal">The American Journal of Clinical Nutrition</td>
+<td data-label="Year">2010</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled crossover acute-dose study.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/20357044/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Effects of Resveratrol on Cognitive Performance, Mood and Cerebrovascular Function in Post-Menopausal Women; A 14-Week Randomised Placebo-Controlled Intervention Trial</td>
+<td data-label="Journal">Nutrients</td>
+<td data-label="Year">2017</td>
+<td data-label="Study Note">Randomized placebo-controlled 14-week trial in 80 postmenopausal women.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/28054939/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Long-term effects of resveratrol on cognition, cerebrovascular function and cardio-metabolic markers in postmenopausal women: A 24-month randomised, double-blind, placebo-controlled, crossover study</td>
+<td data-label="Journal">Clinical Nutrition</td>
+<td data-label="Year">2021</td>
+<td data-label="Study Note">24-month randomized double-blind placebo-controlled crossover trial.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/32900519/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Impact of Resveratrol on Glucose Control, Hippocampal Structure and Connectivity, and Memory Performance in Patients with Mild Cognitive Impairment</td>
+<td data-label="Journal">Frontiers in Neuroscience</td>
+<td data-label="Year">2017</td>
+<td data-label="Study Note">Randomized double-blind intervention in mild cognitive impairment; mixed cognitive findings.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/28326010/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Safety and metabolic outcomes of resveratrol supplementation in older adults: results of a twelve-week, placebo-controlled pilot study</td>
+<td data-label="Journal">Experimental Gerontology</td>
+<td data-label="Year">2014</td>
+<td data-label="Study Note">Randomized placebo-controlled pilot in overweight older adults.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/24866496/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">High-dose resveratrol supplementation in obese men: an investigator-initiated, randomized, placebo-controlled clinical trial of substrate metabolism, insulin sensitivity, and body composition</td>
+<td data-label="Journal">Diabetes</td>
+<td data-label="Year">2013</td>
+<td data-label="Study Note">Randomized placebo-controlled trial reporting largely null metabolic effects.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/23193181/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Resveratrol supplementation does not improve metabolic function in nonobese women with normal glucose tolerance</td>
+<td data-label="Journal">Cell Metabolism</td>
+<td data-label="Year">2012</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled trial reporting no improvement in measured metabolic outcomes.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/23102619/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Resveratrol as Add-on Therapy in Subjects With Well-Controlled Type 2 Diabetes: A Randomized Controlled Trial</td>
+<td data-label="Journal">Diabetes Care</td>
+<td data-label="Year">2016</td>
+<td data-label="Study Note">Randomized double-blind crossover study in type 2 diabetes.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/27852684/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">The effects of chronic trans-resveratrol supplementation on aspects of cognitive function, mood, sleep, health and cerebral blood flow in healthy, young humans</td>
+<td data-label="Journal">British Journal of Nutrition</td>
+<td data-label="Year">2015</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled 28-day trial in healthy young adults.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/26344014/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignilongevity-reduced-glutathione-gsh">
+<h3>Reduced Glutathione (GSH)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22oral+glutathione%22+OR+%22reduced+glutathione%22+human" target="_blank" rel="noopener noreferrer">Search PubMed for additional Reduced Glutathione (GSH) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Effects of oral glutathione supplementation on systemic oxidative stress biomarkers in human volunteers</td>
+<td data-label="Journal">Journal of Alternative and Complementary Medicine</td>
+<td data-label="Year">2011</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled clinical trial.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/21875351/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Randomized controlled trial of oral glutathione supplementation on body stores of glutathione</td>
+<td data-label="Journal">European Journal of Nutrition</td>
+<td data-label="Year">2015</td>
+<td data-label="Study Note">6-month randomized double-blind placebo-controlled trial; 250 or 1,000 mg/day.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/24791752/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Glutathione as an oral whitening agent: a randomized, double-blind, placebo-controlled study</td>
+<td data-label="Journal">Journal of Dermatological Treatment</td>
+<td data-label="Year">2012</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled oral glutathione trial; 500 mg/day for 4 weeks.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/20524875/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">A Targeted Metabolomic Assessment of Oral Glutathione Bioavailability and Safety in Humans: A Randomized Crossover Clinical Trial</td>
+<td data-label="Journal">Antioxidants</td>
+<td data-label="Year">2026</td>
+<td data-label="Study Note">Randomized crossover pharmacokinetic study comparing oral glutathione delivery forms; includes standard glutathione arm.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/41897500/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignilongevity-berberine">
+<h3>Berberine</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=berberine+human+randomized+clinical+trial" target="_blank" rel="noopener noreferrer">Search PubMed for additional Berberine research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Treatment of type 2 diabetes and dyslipidemia with the natural plant alkaloid berberine</td>
+<td data-label="Journal">The Journal of Clinical Endocrinology &amp; Metabolism</td>
+<td data-label="Year">2008</td>
+<td data-label="Study Note">Randomized placebo-controlled trial; 116 patients; 1 g/day for 3 months.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/18397984/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Efficacy of berberine in patients with type 2 diabetes mellitus</td>
+<td data-label="Journal">Metabolism: Clinical and Experimental</td>
+<td data-label="Year">2008</td>
+<td data-label="Study Note">Clinical study including randomized comparison with metformin and adjunctive cohort.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/18442638/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Efficacy and Safety of Berberine Alone for Several Metabolic Disorders: A Systematic Review and Meta-Analysis of Randomized Clinical Trials</td>
+<td data-label="Journal">Frontiers in Pharmacology</td>
+<td data-label="Year">2021</td>
+<td data-label="Study Note">Systematic review/meta-analysis of randomized clinical trials.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/33981233/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Effects of berberine on blood glucose in patients with type 2 diabetes mellitus: a systematic literature review and a meta-analysis</td>
+<td data-label="Journal">Endocrine Journal</td>
+<td data-label="Year">2019</td>
+<td data-label="Study Note">Meta-analysis of 28 randomized controlled trials (2,313 participants).</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/30393248/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Overall and Sex-Specific Effect of Berberine on Glycemic and Insulin-Related Traits: a Systematic Review and Meta-Analysis of Randomized Controlled Trials</td>
+<td data-label="Journal">The Journal of Nutrition</td>
+<td data-label="Year">2023</td>
+<td data-label="Study Note">Meta-analysis of 20 randomized trials (1,761 participants).</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/37598753/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Efficacy and safety of berberine on the components of metabolic syndrome: a systematic review and meta-analysis of randomized placebo-controlled trials</td>
+<td data-label="Journal">Frontiers in Pharmacology</td>
+<td data-label="Year">2025</td>
+<td data-label="Study Note">Systematic review/meta-analysis of placebo-controlled trials.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/40740996/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignilongevity-l-methylfolate-5-mthf">
+<h3>L-Methylfolate (5-MTHF)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22L-methylfolate%22+OR+%225-MTHF%22+clinical" target="_blank" rel="noopener noreferrer">Search PubMed for additional L-Methylfolate (5-MTHF) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">L-methylfolate as adjunctive therapy for SSRI-resistant major depression: results of two randomized, double-blind, parallel-sequential trials</td>
+<td data-label="Journal">The American Journal of Psychiatry</td>
+<td data-label="Year">2012</td>
+<td data-label="Study Note">Two randomized double-blind placebo-controlled trials; evidence is in adjunctive treatment of major depression, not longevity.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/23212058/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignilongevity-pyrroloquinoline-quinone-pqq">
+<h3>Pyrroloquinoline Quinone (PQQ)</h3>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22pyrroloquinoline+quinone%22+human" target="_blank" rel="noopener noreferrer">Search PubMed for additional Pyrroloquinoline Quinone (PQQ) research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">Effect of Dietary Pyrroloquinoline Quinone Disodium Salt on Cognitive Function in Healthy Volunteers: A Randomized, Double-Blind, Placebo-Controlled, Parallel-Group Study</td>
+<td data-label="Journal">Journal of the American College of Nutrition</td>
+<td data-label="Year">2021</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled 12-week trial; PQQ disodium salt 21.5 mg/day.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/34415830/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="igniton-research__ingredient" id="ignilongevity-cycloastragenol">
+<h3>Cycloastragenol</h3>
+<p class="igniton-research__note">Human evidence commonly involves TA-65/Astragalus-derived telomerase-activator preparations rather than chemically isolated cycloastragenol. Those studies are therefore indirect and should not be represented as isolated-cycloastragenol trials.</p>
+<p class="igniton-research__search"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=cycloastragenol+human" target="_blank" rel="noopener noreferrer">Search PubMed for additional Cycloastragenol research</a></p>
+<div class="igniton-research__table-wrap" role="region" aria-label="Published studies" tabindex="0">
+<table class="igniton-research__table">
+<thead><tr><th scope="col">Published Study</th><th scope="col">Journal</th><th scope="col">Year</th><th scope="col">Relevance / Study Note</th><th scope="col">Study Link</th></tr></thead><tbody>
+<tr>
+<td data-label="Published Study">A Natural Product Telomerase Activator Lengthens Telomeres in Humans: A Randomized, Double Blind, and Placebo Controlled Study</td>
+<td data-label="Journal">Rejuvenation Research</td>
+<td data-label="Year">2016</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled study of TA-65, an Astragalus-derived telomerase-activator formulation; not proof for isolated cycloastragenol.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/26950204/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+<tr>
+<td data-label="Published Study">Evaluation of an oral telomerase activator for early age-related macular degeneration - a pilot study</td>
+<td data-label="Journal">Clinical Ophthalmology</td>
+<td data-label="Year">2016</td>
+<td data-label="Study Note">Randomized double-blind placebo-controlled pilot of TA-65; formulation evidence, not isolated cycloastragenol.</td>
+<td data-label="Study Link"><a href="https://pubmed.ncbi.nlm.nih.gov/26869760/" target="_blank" rel="noopener noreferrer">View study</a></td>
+</tr>
+</tbody></table></div>
+</section>
+<p class="igniton-research__disclaimer">Research references are provided for educational and scientific context. Published studies on individual ingredients do not establish that this product will produce the same outcomes, and some cited studies use different doses, routes, populations, or combination formulations. Links open to PubMed records where available.</p>
+</section>
