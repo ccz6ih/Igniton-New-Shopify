@@ -1,0 +1,91 @@
+---
+description: Igniton Dawn rebuild — docs are the source of truth, schema standard, deploy traps
+globs:
+alwaysApply: true
+---
+
+# Igniton rebuild — read before changing anything
+
+This is the **ground-up Dawn 15.4.1 rebuild**, not the theme currently serving
+igniton.com. See §5 if you are unsure which repo you are in — it is easy to
+get wrong, and the two have different rules.
+
+## 1. `docs/` is the source of truth
+
+From `docs/README.md`: *"nothing ships to the theme without a decision
+recorded here first."* That is the governing rule of this repo. Read in this
+order before your first task:
+
+1. `docs/README.md` — orientation
+2. `docs/brand.md` — who Igniton is, how the site should feel
+3. `docs/design-system.md` — tokens, type scale, motion rules every section obeys
+4. `docs/sections.md` — what is being built, in what order
+5. `docs/workflow.md` — conventions, and its "What NOT to do" list
+6. `docs/section-schema-standard.md` — before writing any schema
+
+If a change contradicts the docs, update the doc in the same commit or don't
+make the change. Don't let code and docs drift — the whole point of this
+rebuild was escaping a theme where they had.
+
+## 2. Every section follows the Section Schema Standard
+
+`docs/section-schema-standard.md` defines seven canonical control groups
+(colour scheme, container width, spacing, label, heading, body, image) with
+copy-paste blocks and a CSS variable contract. New sections adopt it; existing
+ones are being retrofitted. Don't invent a bespoke schema shape — copy the
+canonical blocks and consume the CSS variable contract in §4–5 of that doc.
+
+## 3. Never write `"default": ""`
+
+Shopify rejects the file at sync time with
+`Invalid schema: setting with id="X" default can't be blank`, then **deploys
+every other file in the commit and reports success**. The theme keeps serving
+the previous version of that one file, indefinitely and silently.
+
+To make a setting optional, **omit the `default` key entirely**. It behaves
+identically and validates.
+
+- `shopify theme check` does **not** catch this — zero offenses on a file
+  Shopify is actively rejecting.
+- The only place the real error appears is **Shopify admin → Online Store →
+  Themes → GitHub connection activity log**.
+- This cost four weeks on the live theme's memory-quiz page in Sept 2026, and
+  one instance was found lurking here in `product-overview.liquid`.
+
+If a rendered page doesn't match the repo but other files deploy fine, check
+that log before anything else.
+
+## 4. House conventions
+
+- Fonts: use `var(--font-heading-family)` / `var(--font-body-family)`. Never
+  hardcode a `font-family` stack.
+- No inline `<style>` blocks in sections — use the section's CSS file.
+- No new colour values — add a token to `docs/design-system.md` first.
+- Shopify auto-commits admin edits back to `main` as "Update from Shopify
+  for theme ...", so **always pull, not just fetch**, before pushing.
+- Commit only the files for your task; the working tree often carries
+  unrelated in-progress work.
+
+## 5. Which repo am I in? (check before every task)
+
+| Repo | Path | Serves igniton.com? |
+|---|---|---|
+| **This one** — Dawn rebuild | `Igniton-New-Shopify` | **No** |
+| Live theme | `Shopify-Igniton-Download` (repo `Shopify-Igniton-Stripped`) | **Yes** — `ig-*` prod sections live there |
+| Reward backend | `igniton-review-reward` | Vercel fn, Recharge discounts |
+
+The live theme is the one where a push reaches customers in about a minute.
+It has its own `.cursor/rules/igniton.mdc`, plus `README.md` and a 500-line
+`DEVELOPER.md`.
+
+**A push here does deploy somewhere.** This repo is connected to a Shopify
+theme called **`Igniton-New-Shopify/main`** — Shopify auto-commits admin edits
+back to this branch constantly (25 such commits landed in one recent stretch),
+which is why you must always **pull before pushing** or you will clobber
+someone's customizer work.
+
+That theme is not the one serving igniton.com — theme 41, from the
+`Shopify-Igniton-Stripped` repo, is. So `docs/workflow.md`'s line that `main`
+here "auto-deploys to the live theme" appears stale from kickoff. Treat a push
+here as deploying to a real but unpublished theme, and confirm with Craig
+before assuming it is invisible to customers.
