@@ -15,19 +15,19 @@
         "eyebrow_HPNGH4": {
           "type": "eyebrow",
           "settings": {
-            "text": "Clinically studied · University proven · No stimulants"
+            "text": "University studied · Peer-Reviewed Publications · No stimulants"
           }
         },
         "headline_DiEygD": {
           "type": "headline",
           "settings": {
-            "heading": "Think faster.<br> Age <em>slower.<br></em> Feel the difference."
+            "heading": "Think quickly.<br> Age <em>better.<br></em> Feel the difference."
           }
         },
         "subheadline_UfhyAg": {
           "type": "subheadline",
           "settings": {
-            "text": "<p>Memory, focus, and cognitive speed — measurably improved in 30 days.Longevity biomarkers reduced.<br> No caffeine, no crash, no fillers.</p>"
+            "text": "<p>Results in 30 days:  </p><p>- Stronger Memory, Focus, Cognitive Speed</p><p>- Lower Stress & Inflammation Markers</p><p>- More REM Sleep</p>"
           }
         },
         "buttons_ACHtnU": {
@@ -36,7 +36,7 @@
             "button_label_1": "Try Igniton",
             "button_link_1": "shopify://products/igni-cognition",
             "button_style_1": "primary",
-            "button_label_2": "See the clinical results →",
+            "button_label_2": "See the university results →",
             "button_link_2": "shopify://pages/igni-longevity-test-report-july-2024",
             "button_style_2": "link"
           }
@@ -44,25 +44,25 @@
         "stat_fwPKVF": {
           "type": "stat",
           "settings": {
-            "number": "83",
+            "number": "25-83",
             "unit": "%",
-            "label": "Short-term memory improvement"
+            "label": "Cognitive Improvements"
           }
         },
         "stat_8taXJN": {
           "type": "stat",
           "settings": {
-            "number": "51",
+            "number": "8-37",
             "unit": "%",
-            "label": "Improvement in attention"
+            "label": "Biomarker Improvements"
           }
         },
         "stat_HXmCG6": {
           "type": "stat",
           "settings": {
-            "number": "30",
+            "number": "25",
             "unit": "%",
-            "label": "Days to measurable results"
+            "label": "more REM Sleep"
           }
         },
         "stat_rwUPHj": {
@@ -87,26 +87,35 @@
       "name": "Igniton Hero",
       "settings": {
         "color_scheme": "scheme-1",
-        "min_height": 750,
+        "container_width": "medium",
+        "min_height": 400,
+        "padding_block_start_desktop": 64,
+        "padding_block_end_desktop": 80,
+        "padding_block_start_mobile": "64",
+        "padding_block_end_mobile": "64",
+        "label_size": 120,
+        "label_spacing": "1.25",
+        "heading_size": 8,
+        "heading_max_width": "1200",
+        "heading_spacing": "1.75",
+        "mobile_heading_scale": 55,
+        "body_size": 1.1,
+        "body_max_width": "480",
         "show_orb": true,
         "orb_image": "shopify://shop_images/Home_Log_V02.jpg",
         "orb_image_position": "center center",
-        "orb_image_scale": 120,
-        "orb_style": "cream",
+        "orb_image_scale": 110,
+        "orb_style": "gold",
         "orb_position": "right",
-        "orb_offset_x": 20,
-        "orb_size": 600,
+        "orb_offset_x": 4,
+        "orb_size": 750,
         "orb_opacity": 65,
-        "content_max_width": 1200,
-        "content_padding_x": 5,
-        "desktop_content_position": "top-left",
+        "desktop_content_position": "top-center",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "text_animation": "slide-left",
-        "heading_size": 10.5,
-        "mobile_heading_scale": 55,
-        "text_size": 170,
-        "proof_num_size": 5.8
+        "text_animation": "fade-in",
+        "proof_num_size": 5.7,
+        "text_size": 150
       }
     },
     "ig_trust_bar_qywBVA": {
@@ -115,7 +124,7 @@
         "trust_item_j9dNmz": {
           "type": "trust_item",
           "settings": {
-            "text": "University-led clinical trials"
+            "text": "University-led trials"
           }
         },
         "trust_item_yYmePb": {
@@ -127,7 +136,7 @@
         "trust_item_HwRjVz": {
           "type": "trust_item",
           "settings": {
-            "text": "GRAS-certified ingredients"
+            "text": "Quantum-charged GRAS ingredients"
           }
         },
         "trust_item_QXLhTM": {
@@ -152,8 +161,135 @@
       ],
       "name": "Igniton Trust Bar",
       "settings": {
+        "color_scheme": "scheme-2",
+        "container_width": "wide",
+        "padding_block_start_desktop": 24,
+        "padding_block_end_desktop": 24,
+        "padding_block_start_mobile": 16,
+        "padding_block_end_mobile": 16,
+        "label_size": "120",
+        "label_spacing": "0.25",
+        "show_separators": true,
+        "item_gap": "3",
+        "item_alignment": "center"
+      }
+    },
+    "ig_products_showcase_Gp4Axm": {
+      "type": "ig-products-showcase",
+      "blocks": {
+        "product_card_WfJh8E": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition",
+            "featured": false,
+            "tag": "Cognition",
+            "custom_name": "IgniCognition™",
+            "custom_description": "Improves memory, focus, and mental speed — without stimulants or the inevitable crash. Your sharpest thinking, sustained throughout the day.",
+            "show_stats": true,
+            "stat_1_num": "47%",
+            "stat_1_label": "Avg. Mental Improvement",
+            "stat_2_num": "25-83%",
+            "stat_2_label": "Range of Improvements",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To Measurable Results",
+            "show_price": true,
+            "price_note": "Subscribe & save 15%",
+            "custom_link": "shopify://products/igni-cognition",
+            "link_text": "Shop IgniCognition",
+            "button_style_secondary": false
+          }
+        },
+        "product_card_aYxHBz": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-longevity",
+            "featured": false,
+            "tag": "Longevity",
+            "custom_name": "IgniLongevity™",
+            "custom_description": "Targets the inflammatory and aging biomarkers. Supports your body's natural repair systems — so you don't just live longer, you feel better doing it.",
+            "show_stats": true,
+            "stat_1_num": "19%",
+            "stat_1_label": "Avg. Biomarker Improvement",
+            "stat_2_num": "8-37%",
+            "stat_2_label": "Range of Biomarker Improvements",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To Measurable Results",
+            "show_price": true,
+            "price_note": "Subscribe & save 15%",
+            "custom_link": "shopify://products/igni-longevity",
+            "link_text": "Shop IgniLongevity",
+            "button_style_secondary": false
+          }
+        },
+        "product_card_VnAzfn": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-longevity",
+            "featured": false,
+            "tag": "REM SLEEP",
+            "custom_name": "IgniREM Sleep™",
+            "custom_description": "Targeted support at the nervous system & relaxation, sleep signaling neurotransmitters, REM sleep architecture and cellular recovery layers — so you get more deep sleep and recovery.",
+            "show_stats": true,
+            "stat_1_num": "25%",
+            "stat_1_label": "More REM Sleep",
+            "stat_2_num": "",
+            "stat_2_label": "",
+            "stat_3_num": "Less than 30 days",
+            "stat_3_label": "To Better Sleep",
+            "show_price": true,
+            "price_note": "Subscribe & save 20%",
+            "custom_link": "",
+            "link_text": "Shop IgniLongevity",
+            "button_style_secondary": false
+          }
+        },
+        "product_card_3gaHJq": {
+          "type": "product_card",
+          "settings": {
+            "product": "igni-cognition-longevity-pack",
+            "featured": true,
+            "tag": "Best Value",
+            "custom_name": "The Complete Stack — Cognition + Longevity",
+            "custom_description": "Both formulas together for comprehensive brain and body support. The most complete approach to human performance and longevity.",
+            "show_stats": false,
+            "stat_1_num": "100%",
+            "stat_1_label": "Memory improvement",
+            "stat_2_num": "83%",
+            "stat_2_label": "Performance quality",
+            "stat_3_num": "30 days",
+            "stat_3_label": "To measurable results",
+            "show_price": true,
+            "price_note": "Subscribe & save 15%",
+            "custom_link": "",
+            "link_text": "Shop the Bundle",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "product_card_WfJh8E",
+        "product_card_aYxHBz",
+        "product_card_VnAzfn",
+        "product_card_3gaHJq"
+      ],
+      "name": "Products Showcase",
+      "settings": {
         "color_scheme": "",
-        "font_size": 130
+        "container_width": "default",
+        "eyebrow": "Multiple products. One breakthrough.",
+        "heading": "Every ingredient enhanced for maximum effect.",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": "150",
+        "label_spacing": "0.5",
+        "heading_size": 5,
+        "heading_max_width": "1200",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": "65",
+        "body_size": 1.4,
+        "body_max_width": "640"
       }
     },
     "ig_how_it_works_8BeyQe": {
@@ -200,16 +336,223 @@
       ],
       "name": "Igniton How It Works",
       "settings": {
-        "color_scheme": "scheme-5",
-        "background_color": "#f5f0e8",
+        "color_scheme": "scheme-1",
+        "container_width": "default",
         "section_label": "How it works",
         "section_title": "Good ingredients aren't enough. They have to work.",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": 100,
+        "label_spacing": "0.75",
         "heading_size": 5,
-        "text_size": 130,
+        "heading_max_width": "1200",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": 65,
+        "body_size": 1,
+        "body_max_width": "640",
+        "alternate_steps": false,
         "footer_link_text": "Read the full clinical studies →",
-        "footer_link_url": "",
-        "padding_top": 100,
-        "padding_bottom": 100
+        "footer_link_url": ""
+      }
+    },
+    "ig_guarantee_strip_gaPm3M": {
+      "type": "ig-guarantee-strip",
+      "name": "Igniton Guarantee Strip",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "full",
+        "padding_block_start_desktop": 24,
+        "padding_block_end_desktop": 24,
+        "padding_block_start_mobile": 20,
+        "padding_block_end_mobile": 20,
+        "body_size": "1.2",
+        "body_max_width": "1000",
+        "icon": "🛡",
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
+      }
+    },
+    "ig_results_split_gyih9T": {
+      "type": "ig-results-split",
+      "blocks": {
+        "big_stat_UfGffH": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "100%",
+            "stat_label": "Short-term & operational memory improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80",
+            "linked_product": ""
+          }
+        },
+        "big_stat_Uwx6MT": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "83%",
+            "stat_label": "Quality of performance improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80",
+            "linked_product": ""
+          }
+        },
+        "big_stat_iX6VBC": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "51%",
+            "stat_label": "Sustained attention improvement",
+            "stat_source": "IgniCognition trial · 90 days · n=80",
+            "linked_product": ""
+          }
+        },
+        "big_stat_L6VAnP": {
+          "type": "big_stat",
+          "settings": {
+            "stat_number": "30d",
+            "stat_label": "When most users first notice the difference",
+            "stat_source": "Based on participant-reported outcomes",
+            "linked_product": ""
+          }
+        },
+        "testimonial_UwyNFE": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "My brain is sharper than it's been in a long time. And my shoulder finally seems to be getting better. This stuff works.",
+            "portrait": "shopify://shop_images/portrait-of-senior-couple-walking-along-shoreline-2026-03-10-03-20-58-utc_1.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        },
+        "testimonial_gDFigP": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I'm 71 years old. I can't believe the difference — my mind is very sharp and I feel amazing. You are changing my life one day at a time.",
+            "portrait": "shopify://shop_images/focusfor_addults.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        },
+        "testimonial_YLCbQ9": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I feel so much sharper and my mind feels so clear after taking this for over two weeks.",
+            "portrait": "shopify://shop_images/an-adult-thoughtful-man-in-formal-attire-sits-on-t-2026-01-05-01-03-04-utc.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        },
+        "testimonial_HVdnmq": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 5,
+            "quote": "I have seen huge improvements physically and mentally..",
+            "portrait": "shopify://shop_images/portrait-of-a-beautiful-funny-young-girl-on-the-wh-2026-03-26-05-33-32-utc.jpg",
+            "customer_meta": "Verified customer · IgniCognition",
+            "linked_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "big_stat_UfGffH",
+        "big_stat_Uwx6MT",
+        "big_stat_iX6VBC",
+        "big_stat_L6VAnP",
+        "testimonial_UwyNFE",
+        "testimonial_gDFigP",
+        "testimonial_YLCbQ9",
+        "testimonial_HVdnmq"
+      ],
+      "name": "Igniton Results Split",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "default",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": 150,
+        "label_spacing": "0.25",
+        "heading_size": 5,
+        "heading_max_width": "900",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": "65",
+        "body_size": 1.4,
+        "body_max_width": "640",
+        "image_ratio": "circle",
+        "stat_number_size": "xl",
+        "disclaimer_text": "<p>** These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
+        "testimonials_label": "What customers say",
+        "reviews_link_text": "Read all reviews →",
+        "reviews_link_url": "",
+        "section_label": "Clinical results",
+        "section_title": "Numbers from the university study, not our marketing team."
+      }
+    },
+    "ig_why_different_8Wikxr": {
+      "type": "ig-why-different",
+      "blocks": {
+        "feature_card_AA9awy": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z\"></path></svg>",
+            "title": "No fillers. Ever.",
+            "description": "Every capsule contains only active ingredients — no excipients, no flow agents, no bulking compounds. Pure, dense nutrition."
+          }
+        },
+        "feature_card_pCwPk9": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z\"></path></svg>",
+            "title": "Enhanced, not just formulated",
+            "description": "Ingredients are processed using cold plasma and laser-photonics technology — a process shown to increase bioavailability at the cellular level."
+          }
+        },
+        "feature_card_4Qbxm7": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\"></path></svg>",
+            "title": "University-tested, not just claimed",
+            "description": "Results come from peer-reviewed, randomized controlled trials published in academic journals — not from internal marketing metrics."
+          }
+        },
+        "feature_card_fdGYDq": {
+          "type": "feature_card",
+          "settings": {
+            "icon_emoji": "",
+            "icon_svg": "<svg viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 10V3L4 14h7v7l9-11h-7z\"></path></svg>",
+            "title": "No stimulants. No crash.",
+            "description": "Cognitive benefits come from enhanced cellular function, not caffeine or synthetic stimulants. Sustained energy without the inevitable afternoon drop."
+          }
+        }
+      },
+      "block_order": [
+        "feature_card_AA9awy",
+        "feature_card_pCwPk9",
+        "feature_card_4Qbxm7",
+        "feature_card_fdGYDq"
+      ],
+      "name": "Igniton Why Different",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "default",
+        "section_label": "Why Igniton is different",
+        "section_title": "Not just what's in it. What's been done to it.",
+        "padding_block_start_desktop": 96,
+        "padding_block_end_desktop": 96,
+        "padding_block_start_mobile": 48,
+        "padding_block_end_mobile": 48,
+        "label_size": "100",
+        "label_spacing": "0.75",
+        "heading_size": 5,
+        "heading_max_width": "900",
+        "heading_spacing": "2.5",
+        "mobile_heading_scale": "65",
+        "body_size": 1.2,
+        "body_max_width": "640"
       }
     },
     "featured_blog_JWPYVA": {
@@ -219,7 +562,7 @@
         "blog": "cognitive-health",
         "post_limit": 4,
         "heading": "Blog posts",
-        "heading_size": "h1",
+        "heading_size": "h0",
         "columns_desktop": 4,
         "show_view_all": true,
         "show_image": true,
@@ -230,121 +573,80 @@
         "padding_bottom": 36
       }
     },
+    "ig_final_cta_Ckrc3c": {
+      "type": "ig-final-cta",
+      "blocks": {
+        "button_ULBjmm": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniCognition",
+            "button_link": "",
+            "button_style": "primary"
+          }
+        },
+        "button_aTfgnB": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop IgniLongevity",
+            "button_link": "",
+            "button_style": "muted"
+          }
+        }
+      },
+      "block_order": [
+        "button_ULBjmm",
+        "button_aTfgnB"
+      ],
+      "name": "Igniton Final CTA",
+      "settings": {
+        "color_scheme": "",
+        "container_width": "default",
+        "section_label": "Ready to start",
+        "section_title": "Most customers feel the difference within two weeks.",
+        "subtitle_text": "<p>Backed by a 30-day guarantee. Subscribe and save 20%.</p>",
+        "padding_block_start_desktop": 120,
+        "padding_block_end_desktop": 120,
+        "padding_block_start_mobile": 64,
+        "padding_block_end_mobile": 64,
+        "label_size": "100",
+        "label_spacing": "0.75",
+        "heading_size": 5,
+        "heading_max_width": "600",
+        "heading_spacing": "1.75",
+        "mobile_heading_scale": "65",
+        "body_size": "1.1",
+        "body_max_width": "640",
+        "enable_gradient": true,
+        "footer_text": "<p>Questions? <a href=\"#\">Read the FAQ</a> or <a href=\"#\">contact us</a>.</p>"
+      }
+    },
     "ig_guarantee_strip_FWmACi": {
       "type": "ig-guarantee-strip",
       "name": "Igniton Guarantee Strip",
       "settings": {
         "color_scheme": "",
-        "background_color": "#b49153",
-        "text_color": "#fdfaf5",
+        "container_width": "full",
+        "padding_block_start_desktop": 24,
+        "padding_block_end_desktop": 24,
+        "padding_block_start_mobile": 20,
+        "padding_block_end_mobile": 20,
+        "body_size": "1",
+        "body_max_width": "1000",
         "icon": "🛡",
-        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>",
-        "text_size": 115
-      }
-    },
-    "ig_products_grid_mey3Ey": {
-      "type": "ig-products-grid",
-      "blocks": {
-        "product_card_43HthG": {
-          "type": "product_card",
-          "settings": {
-            "product": "igni-cognition",
-            "show_image": true,
-            "image_size": 400,
-            "tag": "Cognition",
-            "custom_name": "IgniCognition™",
-            "custom_description": "Clinically proven to improve memory, focus, and mental speed — without stimulants or the inevitable crash.",
-            "show_stats": true,
-            "stat_1_num": "100%",
-            "stat_1_label": "Memory improvement",
-            "stat_2_num": "83%",
-            "stat_2_label": "Performance quality",
-            "stat_3_num": "30 days",
-            "stat_3_label": "To measurable results",
-            "show_price": true,
-            "price_note": "Subscribe & save 20%",
-            "custom_price": "",
-            "custom_link": "",
-            "link_text": "Shop Now →",
-            "full_width": false,
-            "custom_background": ""
-          }
-        },
-        "product_card_Urm3Vr": {
-          "type": "product_card",
-          "settings": {
-            "product": "igni-longevity",
-            "show_image": true,
-            "image_size": 400,
-            "tag": "Longevity",
-            "custom_name": "IgniLongevity™",
-            "custom_description": "Targets the inflammatory and aging biomarkers that predict your 10-year health trajectory.",
-            "show_stats": true,
-            "stat_1_num": "hs-CRP",
-            "stat_1_label": "Inflammation marker",
-            "stat_2_num": "NAD⁺",
-            "stat_2_label": "Cellular energy support",
-            "stat_3_num": "60 days",
-            "stat_3_label": "To longevity results",
-            "show_price": true,
-            "price_note": "Subscribe & save 20%",
-            "custom_price": "",
-            "custom_link": "",
-            "link_text": "Shop Now →",
-            "full_width": false,
-            "custom_background": ""
-          }
-        },
-        "product_card_GxE8VF": {
-          "type": "product_card",
-          "settings": {
-            "product": "igni-cognition-longevity-pack",
-            "show_image": true,
-            "image_size": 400,
-            "tag": "Best Value",
-            "custom_name": "The Complete Stack — Cognition + Longevity",
-            "custom_description": "Both formulas together for comprehensive brain and body support.",
-            "show_stats": false,
-            "stat_1_num": "",
-            "stat_1_label": "",
-            "stat_2_num": "",
-            "stat_2_label": "",
-            "stat_3_num": "",
-            "stat_3_label": "",
-            "show_price": true,
-            "price_note": "Subscribe & save 20%",
-            "custom_price": "",
-            "custom_link": "",
-            "link_text": "Shop Now →",
-            "full_width": true,
-            "custom_background": "#f5f0e8"
-          }
-        }
-      },
-      "block_order": [
-        "product_card_43HthG",
-        "product_card_Urm3Vr",
-        "product_card_GxE8VF"
-      ],
-      "name": "Igniton Products Grid",
-      "settings": {
-        "color_scheme": "",
-        "section_label": "Two products. One breakthrough.",
-        "section_title": "Every ingredient enhanced for maximum effect.",
-        "heading_size": 4,
-        "product_heading_size": 2.7,
-        "text_size": 130,
-        "padding_top": 100,
-        "padding_bottom": 100
+        "guarantee_text": "<p><strong>30-day satisfaction guarantee.</strong> If you don't feel a measurable difference, we'll refund you. No questions asked.</p>"
       }
     }
   },
   "order": [
     "ig_hero_f8eHk9",
     "ig_trust_bar_qywBVA",
+    "ig_products_showcase_Gp4Axm",
     "ig_how_it_works_8BeyQe",
+    "ig_guarantee_strip_gaPm3M",
+    "ig_results_split_gyih9T",
+    "ig_why_different_8Wikxr",
     "featured_blog_JWPYVA",
-    "ig_guarantee_strip_FWmACi",
-    "ig_products_grid_mey3Ey"
+    "ig_final_cta_Ckrc3c",
+    "ig_guarantee_strip_FWmACi"
   ]
 }
