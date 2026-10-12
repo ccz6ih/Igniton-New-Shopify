@@ -14,8 +14,12 @@
 
 ## Reference material
 
-- Previous theme source: `c:/Projects/Igniton-Shopify/`
-- Previous theme guide: `c:/Projects/Igniton-Shopify/THEME-GUIDE.md`
+- Previous theme source:
+  [`ccz6ih/Igniton-Shopify`](https://github.com/ccz6ih/Igniton-Shopify)
+  — **archived** (read-only) as of 2026-10-12. Reference only; nothing is
+  deployed from it. Locally at `c:/Projects/Igniton-Shopify/` if that clone
+  still exists, otherwise clone it read-only from GitHub.
+- Previous theme guide: `THEME-GUIDE.md` in that repo (32 KB).
 - Fresh Dawn docs: https://shopify.dev/themes/architecture
 
 ## What's different this time
