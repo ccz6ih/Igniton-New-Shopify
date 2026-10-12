@@ -71,7 +71,7 @@ that log before anything else.
 | Repo | Path | Serves igniton.com? |
 |---|---|---|
 | **This one** — Dawn rebuild | `Igniton-New-Shopify` | **No** |
-| Live theme | `Shopify-Igniton-Download` (repo `Shopify-Igniton-Stripped`) | **Yes** — `ig-*` prod sections live there |
+| Live theme | `Shopify-Igniton-Stripped-NEW-Setup` | **Yes** — `ig-*` prod sections live there |
 | Reward backend | `igniton-review-reward` | Vercel fn, Recharge discounts |
 
 The live theme is the one where a push reaches customers in about a minute.
@@ -85,7 +85,7 @@ which is why you must always **pull before pushing** or you will clobber
 someone's customizer work.
 
 That theme is not the one serving igniton.com — theme 41, from the
-`Shopify-Igniton-Stripped` repo, is. So `docs/workflow.md`'s line that `main`
+`Shopify-Igniton-Stripped-NEW-Setup` repo, is. So `docs/workflow.md`'s line that `main`
 here "auto-deploys to the live theme" appears stale from kickoff. Treat a push
 here as deploying to a real but unpublished theme, and confirm with Craig
 before assuming it is invisible to customers.

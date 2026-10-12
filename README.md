@@ -5,8 +5,9 @@ install, carrying the brand and conversion learnings forward from the previous
 theme without its accumulated customization.
 
 > **This is not the theme serving igniton.com.** That is
-> [`Shopify-Igniton-Stripped`](https://github.com/ccz6ih/Shopify-Igniton-Stripped),
-> checked out locally as `Shopify-Igniton-Download`. Pushes there reach
+> [`Shopify-Igniton-Stripped-NEW-Setup`](https://github.com/ccz6ih/Shopify-Igniton-Stripped-NEW-Setup)
+> (renamed from `Shopify-Igniton-Stripped`; the old URL still redirects, so an
+> old clone gives no sign it is stale). Pushes there reach
 > customers in about a minute. Pushes here do not. Check which repo you are in
 > before you start — see the table at the bottom.
 
@@ -59,5 +60,5 @@ This cost four weeks on the live theme's memory-quiz page in September 2026.
 | Repo | Local path | Serves igniton.com? |
 |---|---|---|
 | **This one** — Dawn rebuild | `Igniton-New-Shopify` | No |
-| Live theme | `Shopify-Igniton-Download` | **Yes** |
+| Live theme | `Shopify-Igniton-Stripped-NEW-Setup` | **Yes** |
 | Reward backend | `igniton-review-reward` | Vercel fn applying Recharge discounts |
